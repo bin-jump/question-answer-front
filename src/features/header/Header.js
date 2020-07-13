@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import NavBar from './components/NavBar';
@@ -7,38 +8,33 @@ import Search from './components/Search';
 import User from './components/User';
 import './Header.less';
 
-class Header extends Component {
-  render() {
-    const { pathname } = this.props;
-    return (
-      <div className="header">
-        <div className="header-container">
-          <Grid container spacing={1}>
-            <Grid item xs={1}></Grid>
-            <Grid item xs={1}>
-              <div className="header-logo">LOGO</div>
-            </Grid>
-            <Grid item xs={2}>
-              <NavBar pathname={pathname} />
-            </Grid>
-            <Grid item xs={1}>
-              <Ask />
-            </Grid>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={1}>
-              <Search />
-            </Grid>
-            <Grid item xs={1}></Grid>
-            <Grid item xs={1}>
-              <User />
-            </Grid>
+export default function Header(props) {
+  const location = useLocation();
+
+  return (
+    <div className="header">
+      <div className="header-container">
+        <Grid container spacing={1}>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={1}>
+            <div className="header-logo">LOGO</div>
           </Grid>
-        </div>
+          <Grid item xs={2}>
+            <NavBar pathname={location.pathname} />
+          </Grid>
+          <Grid item xs={1}>
+            <Ask />
+          </Grid>
+          <Grid item xs={3}></Grid>
+          <Grid item xs={1}>
+            <Search />
+          </Grid>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={1}>
+            <User />
+          </Grid>
+        </Grid>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-const mapStateToProps = (state) => ({});
-
-export default connect(mapStateToProps, null)(Header);

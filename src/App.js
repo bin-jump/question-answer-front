@@ -7,14 +7,19 @@ import history from './common/history';
 import Header from './features/header/Header';
 import Footer from './features/footer/Footer';
 import Home from './features/home/Home';
+import PinUser from './features/auth/PinUser';
 import './styles/index.less';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8080';
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Header pathname={history.location.pathname} />
+          <Header />
+          <PinUser />
           <Route path="/" component={Home}></Route>
         </Router>
         <Footer />

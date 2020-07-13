@@ -1,0 +1,1 @@
+export const AUTH_UPDATE_SIGNIN = 'AUTH_UPDATE_SIGNIN';

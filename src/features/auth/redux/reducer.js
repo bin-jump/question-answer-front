@@ -1,17 +1,19 @@
+import { reducer as pinUser } from './pinUser';
+
 const initialState = {
-  count: 0,
-  homeList: [],
+  id: 111,
+  user: null,
 };
 
-const reducers = [];
+const reducers = [pinUser];
 
 export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
+    // Handle cross-topic actions here
     default:
       newState = state;
       break;
   }
-
   return reducers.reduce((s, r) => r(s, action), newState);
 }

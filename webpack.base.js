@@ -9,6 +9,19 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          // this takes care of all the vendors in your files
+          // no need to add as an entrypoint.
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   module: {
     rules: [
       {

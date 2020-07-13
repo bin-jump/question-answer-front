@@ -50,7 +50,7 @@ export default function Ask() {
         Ask Question
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="alert-dialog-title">{'Ask a Question'}</DialogTitle>
+        <DialogTitle>{'Ask a Question'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Please write you question and description and click submit.
@@ -66,7 +66,13 @@ export default function Ask() {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleSubmit} color="primary">
+          <Button
+            onClick={handleSubmit}
+            style={{
+              color: '#33b2dd',
+              marginLeft: '100px',
+            }}
+          >
             Submit
           </Button>
         </DialogActions>

@@ -38,13 +38,16 @@ class ContentEditor extends Component {
               'inline',
               //'blockType',
               //'fontSize',
-              //'list',
+              'list',
               //'textAlign',
               //'history',
               'image',
             ],
             inline: {
               options: ['bold', 'italic', 'underline'],
+            },
+            list: {
+              options: ['unordered', 'ordered'],
             },
           }}
           editorState={editorState}
