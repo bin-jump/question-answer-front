@@ -10,7 +10,7 @@ export default function User() {
         variant="outlined"
         style={{ border: '1px solid rgb(255, 255, 255)', color: 'white' }}
         component={Link}
-        to="/login"
+        to="/signin"
       >
         Signin
       </Button>
