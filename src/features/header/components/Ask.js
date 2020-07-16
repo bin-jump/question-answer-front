@@ -9,10 +9,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { ContentEditor } from '../../common';
 import './Ask.less';
 
-export default function Ask() {
+export default function Ask(props) {
   const [open, setOpen] = React.useState(false);
   const [question, setQuestion] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const user = props.user;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,6 +47,7 @@ export default function Ask() {
           fontSize: '12px',
         }}
         onClick={handleClickOpen}
+        disabled={user == null}
       >
         Ask Question
       </Button>

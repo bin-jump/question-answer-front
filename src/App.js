@@ -34,19 +34,23 @@ const theme = createMuiTheme({
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-            <PinUser />
-            <Route path="/" exact component={Home}></Route>
-            <Route path="/signin" exact component={Signin}></Route>
-            <Route path="/signup" exact component={Signin}></Route>
-          </Router>
-          <Footer />
-          <CssBaseline />
-        </Provider>
-      </MuiThemeProvider>
+      <div>
+        <div className="app-container">
+          <MuiThemeProvider theme={theme}>
+            <Provider store={store}>
+              <Router history={history}>
+                <Header />
+                <PinUser />
+                <Route path="/" exact component={Home}></Route>
+                <Route path="/signin" exact component={Signin}></Route>
+                <Route path="/signup" exact component={Signin}></Route>
+              </Router>
+              <CssBaseline />
+            </Provider>
+          </MuiThemeProvider>
+        </div>
+        <Footer />
+      </div>
     );
   }
 }

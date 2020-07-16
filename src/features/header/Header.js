@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import NavBar from './components/NavBar';
@@ -9,6 +10,7 @@ import './Header.less';
 
 export default function Header(props) {
   const location = useLocation();
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <div className="header">
@@ -19,10 +21,10 @@ export default function Header(props) {
             <div className="header-logo">LOGO</div>
           </Grid>
           <Grid item xs={2}>
-            <NavBar pathname={location.pathname} />
+            <NavBar pathname={location.pathname} user={user} />
           </Grid>
           <Grid item xs={1}>
-            <Ask />
+            <Ask user={user} />
           </Grid>
           <Grid item xs={3} />
           <Grid item xs={1}>
@@ -30,7 +32,7 @@ export default function Header(props) {
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={1}>
-            <User />
+            <User user={user} />
           </Grid>
         </Grid>
       </div>
