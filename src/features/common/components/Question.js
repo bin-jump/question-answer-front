@@ -1,21 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CommentIcon from '@material-ui/icons/Comment';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+//import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import RssFeedIcon from '@material-ui/icons/RssFeed';
+import CreateIcon from '@material-ui/icons/Create';
 import TagList from './TagList';
 import { milisecToDate } from '../helper';
 
 function Answer(props) {
-  const anwser = props.anwser;
-  return <div></div>;
+  const answer = props.answer;
+  const [show, setShow] = useState(true);
+  const LEN_LIMIT = 120;
+
+  useEffect(() => {
+    if (answer.body.length > LEN_LIMIT) {
+      setShow(false);
+    }
+  }, [answer]);
+
+  return (
+    <div className="common-question-answer">
+      <div className="common-question-answer-content">
+        <Link to={`/user/${answer.author.id}`}>{`${answer.author.name}`}</Link>
+        {show ? `:  ${answer.body}` : `: ${answer.body.slice(0, LEN_LIMIT)} `}
+        {show ? null : (
+          <div
+            style={{
+              display: 'inline',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+            onClick={() => setShow(true)}
+          >
+            {'[show all...]'}
+          </div>
+        )}
+      </div>
+      <div className="common-answer-info-container">
+        <div className="common-answer-info">
+          <ArrowUpwardIcon />
+          <div className="common-answer-info-word">3</div>
+          <div className="common-answer-info-word">UpVotes</div>
+        </div>
+        <div className="common-answer-info">
+          <CommentIcon />
+          <div className="common-answer-info-word">3</div>
+          <div className="common-answer-info-word">Answers</div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function Question(props) {
   const question = props.question;
-  const anwser = question.cover;
+  const answer = question.cover;
 
   return (
     <Paper
@@ -44,23 +87,27 @@ export default function Question(props) {
           <TagList tags={question.tags} />
         </div>
 
-        <div className="common-question-info-container">
-          <div className="common-question-info">
-            <ArrowUpwardIcon />
-            <div className="common-question-info-word">3</div>
-            <div className="common-question-info-word">UpVotes</div>
+        {answer ? (
+          <Answer answer={answer} />
+        ) : (
+          <div className="common-question-info-container">
+            <Button color="primary" variant="outlined" style={{ height: 35 }}>
+              Follow
+            </Button>
+            <Button
+              color="primary"
+              variant="outlined"
+              style={{ height: 35, marginLeft: 16 }}
+            >
+              <CreateIcon style={{ marginRight: 5 }} /> Write Answer
+            </Button>
+            <div className="common-question-info">
+              <RssFeedIcon />
+              <div className="common-question-info-word">3</div>
+              <div className="common-question-info-word">Follow</div>
+            </div>
           </div>
-          <div className="common-question-info">
-            <CommentIcon />
-            <div className="common-question-info-word">3</div>
-            <div className="common-question-info-word">Answers</div>
-          </div>
-          <div className="common-question-info">
-            <ThumbUpIcon />
-            <div className="common-question-info-word">3</div>
-            <div className="common-question-info-word">Good</div>
-          </div>
-        </div>
+        )}
       </div>
     </Paper>
   );

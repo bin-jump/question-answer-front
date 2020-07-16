@@ -7,8 +7,10 @@ import history from './common/history';
 import Header from './features/header/Header';
 import Footer from './features/footer/Footer';
 import Home from './features/home/Home';
+import QuestionDetail from './features/question/QuestionDetail';
 import PinUser from './features/auth/PinUser';
 import Signin from './features/auth/Signin';
+
 import './styles/index.less';
 import axios from 'axios';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -44,6 +46,11 @@ class App extends Component {
                 <Route path="/" exact component={Home}></Route>
                 <Route path="/signin" exact component={Signin}></Route>
                 <Route path="/signup" exact component={Signin}></Route>
+                <Route
+                  path="/question/:id"
+                  exact
+                  component={QuestionDetail}
+                ></Route>
               </Router>
               <CssBaseline />
             </Provider>
