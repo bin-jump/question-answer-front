@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { listFetch } from '../../common/helper';
 import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
