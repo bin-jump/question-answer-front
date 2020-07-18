@@ -4,7 +4,7 @@ import './NavBar.less';
 
 export default function NavBar(props) {
   const { pathname } = props;
-  console.log(pathname);
+
   return (
     <div className="header-navBar">
       <ul>

@@ -27,9 +27,12 @@ export function useFetchQuestion() {
     shallowEqual,
   );
 
-  const boundAction = useCallback(() => {
-    dispatch(fetchQuestion());
-  }, [dispatch]);
+  const boundAction = useCallback(
+    (id) => {
+      dispatch(fetchQuestion(id));
+    },
+    [dispatch],
+  );
 
   return {
     fetchQuestion: boundAction,

@@ -1,20 +1,24 @@
 import { reducer as fetchQuestionReducer } from './fetchQuestion';
+import { reducer as fetchCommentReducer } from './fetchComments';
 
 const initialState = {
   question: null,
+  questionComments: [],
   answers: [],
+  answerComments: {},
+
   fetchQuestionPending: false,
   fetchAnswerPending: false,
   fetchAnswerAfter: null,
-
-  addAnswerPending: false,
-  addQuestionCommentPending: false,
-  addAnswerCommentPending: {},
 
   fetchQuesionCommentPendiong: false,
   fetchAnswerCommentPending: {},
   fetchQuesionCommentAfter: null,
   fetchAnswerCommentAfter: {},
+
+  addAnswerPending: false,
+  addQuestionCommentPending: false,
+  addAnswerCommentPending: {},
 
   questionThumbUpPending: false,
   answerVotePending: {},
@@ -22,7 +26,7 @@ const initialState = {
   lastError: null,
 };
 
-const reducers = [fetchQuestionReducer];
+const reducers = [fetchQuestionReducer, fetchCommentReducer];
 
 export default function reducer(state = initialState, action) {
   let newState;
