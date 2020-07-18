@@ -8,7 +8,6 @@ function makeListFetch(url, beginConst, successConst, failureConst) {
 
     const promise = new Promise((resolve, reject) => {
       const doRequest = axios.get(url);
-
       doRequest.then(
         (res) => {
           dispatch({

@@ -1,0 +1,1 @@
+export { useFetchQuestion } from './fetchQuestion';

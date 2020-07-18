@@ -1,3 +1,5 @@
+import { reducer as fetchQuestionReducer } from './fetchQuestion';
+
 const initialState = {
   question: null,
   answers: [],
@@ -20,7 +22,7 @@ const initialState = {
   lastError: null,
 };
 
-const reducers = [];
+const reducers = [fetchQuestionReducer];
 
 export default function reducer(state = initialState, action) {
   let newState;

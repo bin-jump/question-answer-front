@@ -32,9 +32,38 @@ export function useFetchQuestion() {
   }, [dispatch]);
 
   return {
-    fetchQuestionList: boundAction,
+    fetchQuestion: boundAction,
     question,
     fetchQuestionPending,
     error,
   };
+}
+
+export function reducer(state, action) {
+  switch (action.type) {
+    case QUESTION_FETCH_QUESTION_BEGIN:
+      return {
+        ...state,
+        fetchQuestionPending: true,
+        lastError: null,
+      };
+
+    case QUESTION_FETCH_QUESTION_SUCCESS:
+      return {
+        ...state,
+        question: action.data.data,
+        fetchQuestionPending: false,
+        lastError: null,
+      };
+
+    case QUESTION_FETCH_QUESTION_FAILURE:
+      return {
+        ...state,
+        fetchQuestionPending: false,
+        lastError: action.data.error,
+      };
+
+    default:
+      return state;
+  }
 }

@@ -7,9 +7,13 @@ import {
   HOME_FETCH_QUESTION_LIST_FAILURE,
 } from './constants';
 
-export function fetchQuestionList() {
+export function fetchQuestionList(after) {
+  let url = '/api/question';
+  if (after) {
+    url = `${url}?after=${after}`;
+  }
   return listFetch(
-    '/api/question',
+    url,
     HOME_FETCH_QUESTION_LIST_BEGIN,
     HOME_FETCH_QUESTION_LIST_SUCCESS,
     HOME_FETCH_QUESTION_LIST_FAILURE,
@@ -33,9 +37,12 @@ export function useFetchQuestionList() {
     shallowEqual,
   );
 
-  const boundAction = useCallback(() => {
-    dispatch(fetchQuestionList());
-  }, [dispatch]);
+  const boundAction = useCallback(
+    (questionAfter) => {
+      dispatch(fetchQuestionList(questionAfter));
+    },
+    [dispatch],
+  );
 
   return {
     questionList,
@@ -58,7 +65,7 @@ export function reducer(state, action) {
     case HOME_FETCH_QUESTION_LIST_SUCCESS:
       return {
         ...state,
-        questionList: action.data.data.children,
+        questionList: [...state.questionList, ...action.data.data.children],
         questionAfter: action.data.data.dist ? action.data.data.after : null,
         fetchQuestionListPending: false,
         fetchQuestionListError: null,
