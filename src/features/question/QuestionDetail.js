@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import QuestionTitle from './components/QuestionTitle';
+import Answers from './components/Answers';
 import './QuestionDetail.less';
 
 export default function QuestionDetail(props) {
@@ -15,6 +16,7 @@ export default function QuestionDetail(props) {
         <Grid item xs={2} />
         <Grid item xs={7}>
           <QuestionTitle questionId={id} user={user} />
+          <Answers questionId={id} user={user} />
         </Grid>
       </Grid>
     </div>

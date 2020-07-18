@@ -1,2 +1,6 @@
 export { useFetchQuestion } from './fetchQuestion';
-export { useFetchQuestionComment } from './fetchComments';
+export {
+  useFetchQuestionComment,
+  useFetchAnswerComment,
+} from './fetchComments';
+export { useFetchAnswers } from './fetchAnswer';

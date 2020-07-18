@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-function makeListFetch(url, beginConst, successConst, failureConst) {
+function makeListFetch(url, beginConst, successConst, failureConst, id) {
   return (dispatch) => {
     dispatch({
       type: beginConst,
+      id: id,
     });
 
     const promise = new Promise((resolve, reject) => {
@@ -13,6 +14,7 @@ function makeListFetch(url, beginConst, successConst, failureConst) {
           dispatch({
             type: successConst,
             data: res.data,
+            id: id,
           });
           resolve(res);
         },
@@ -21,6 +23,7 @@ function makeListFetch(url, beginConst, successConst, failureConst) {
           dispatch({
             type: failureConst,
             data: { error: err },
+            id: id,
           });
           reject(err);
         },
@@ -31,8 +34,8 @@ function makeListFetch(url, beginConst, successConst, failureConst) {
   };
 }
 
-export function listFetch(url, beginConst, successConst, failureConst) {
-  return makeListFetch(url, beginConst, successConst, failureConst);
+export function listFetch(url, beginConst, successConst, failureConst, id) {
+  return makeListFetch(url, beginConst, successConst, failureConst, id);
 }
 
 export function milisecToDate(timeLong) {
