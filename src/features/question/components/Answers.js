@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useFetchAnswers, useFetchAnswerComment } from '../redux/hooks';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,8 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import InfiniteScroll from 'react-infinite-scroller';
+import Loading from '../../common/components/Loading';
 import Comments from './Comments';
 import { milisecToDate } from '../../common/helper';
 import LoadableList from '../../common/components/LoadableList';
@@ -111,7 +113,7 @@ export default function Answers(props) {
 
   return (
     <div className="feature-question-answer-list">
-      {fetchAnswerPending ? (
+      {fetchAnswerPending && fetchAnswers.length === 0 ? (
         <CircularProgress />
       ) : (
         <Paper square style={{ minHeight: 180, padding: '20px 20px' }}>
@@ -121,7 +123,25 @@ export default function Answers(props) {
             <div>
               <Typography variant="h6">{`${answerCount} Answer(s)`}</Typography>
               <hr />
-              <LoadableList
+
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={() => fetchAnswers(questionId, fetchAnswerAfter)}
+                hasMore={fetchAnswerAfter}
+                loader={<Loading />}
+              >
+                {answers.map((item, i) => (
+                  <Answer
+                    answer={item}
+                    idx={i}
+                    size={answers.length}
+                    commentLoadHandle={fetchAnswerComment}
+                    user={user}
+                  />
+                ))}
+              </InfiniteScroll>
+
+              {/* <LoadableList
                 hasMore={fetchAnswerAfter}
                 loading={fetchAnswerPending}
                 onLoadClick={() => fetchAnswers(questionId, fetchAnswerAfter)}
@@ -135,7 +155,7 @@ export default function Answers(props) {
                     user={user}
                   />
                 ))}
-              </LoadableList>
+              </LoadableList> */}
               {/* <Button>Load more answers...</Button> */}
             </div>
           )}
