@@ -11,11 +11,10 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import InfiniteScroll from 'react-infinite-scroller';
-import Loading from '../../common/components/Loading';
+//import InfiniteScroll from 'react-infinite-scroller';
+import { Loading, LoadableList } from '../../common';
 import Comments from './Comments';
 import { milisecToDate } from '../../common/helper';
-import LoadableList from '../../common/components/LoadableList';
 import './Answers.less';
 
 function Answer(props) {
@@ -124,7 +123,7 @@ export default function Answers(props) {
               <Typography variant="h6">{`${answerCount} Answer(s)`}</Typography>
               <hr />
 
-              <InfiniteScroll
+              {/* <InfiniteScroll
                 pageStart={0}
                 loadMore={() => fetchAnswers(questionId, fetchAnswerAfter)}
                 hasMore={fetchAnswerAfter}
@@ -139,13 +138,8 @@ export default function Answers(props) {
                     user={user}
                   />
                 ))}
-              </InfiniteScroll>
-
-              {/* <LoadableList
-                hasMore={fetchAnswerAfter}
-                loading={fetchAnswerPending}
-                onLoadClick={() => fetchAnswers(questionId, fetchAnswerAfter)}
-              >
+              </InfiniteScroll> */}
+              <div>
                 {answers.map((item, i) => (
                   <Answer
                     answer={item}
@@ -155,7 +149,25 @@ export default function Answers(props) {
                     user={user}
                   />
                 ))}
-              </LoadableList> */}
+                {fetchAnswerAfter ? (
+                  <Paper
+                    style={{ width: '100%', display: 'flex', marginTop: 20 }}
+                  >
+                    <Button
+                      style={{ width: '100%', height: 50 }}
+                      disabled={fetchAnswerPending}
+                      onClick={() => fetchAnswers(questionId, fetchAnswerAfter)}
+                    >
+                      {fetchAnswerPending ? (
+                        <Loading />
+                      ) : (
+                        'Load more answers...'
+                      )}
+                    </Button>
+                  </Paper>
+                ) : null}
+              </div>
+
               {/* <Button>Load more answers...</Button> */}
             </div>
           )}
