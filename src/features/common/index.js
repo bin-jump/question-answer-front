@@ -5,6 +5,7 @@ import Question from './components/Question';
 import TagList from './components/TagList';
 import Pendable from './components/Pendable';
 import PendButton from './components/PendButton';
+import PendIcon from './components/PendIcon';
 
 export {
   ContentEditor,
@@ -14,4 +15,5 @@ export {
   TagList,
   Pendable,
   PendButton,
+  PendIcon,
 };

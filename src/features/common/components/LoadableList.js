@@ -6,7 +6,6 @@ import './LoadableList.less';
 
 export default function LoadableList(props) {
   const { loading, hasMore, onLoadClick, children } = { ...props };
-
   const onClick = () => {
     if (onLoadClick) {
       onLoadClick();

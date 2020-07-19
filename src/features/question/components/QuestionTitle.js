@@ -11,8 +11,8 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { milisecToDate } from '../../common/helper';
-import Comments from './Comments';
-import { TagList, LoadableList } from '../../common';
+import Comments, { CommentButton } from './Comments';
+import { TagList, LoadableList, PendIcon } from '../../common';
 import './QuestionTitle.less';
 
 export default function QuestionTitle(props) {
@@ -57,15 +57,17 @@ export default function QuestionTitle(props) {
                 <Avatar
                   alt="User"
                   src={question.author.avatarUrl}
-                  style={{ margin: 'auto' }}
+                  style={{ margin: 'auto', marginBottom: 10 }}
                 />
-                <ThumbUpIcon
-                  className={question.thumbup ? 'icon-selected' : ''}
-                />
+                <PendIcon selected={question.thumbup}>
+                  <ThumbUpIcon />
+                </PendIcon>
+
                 <div>{question.goodCount}</div>
-                <RssFeedIcon
-                  className={question.following ? 'icon-selected' : ''}
-                />
+                <PendIcon selected={question.following}>
+                  <RssFeedIcon />
+                </PendIcon>
+
                 <div>{question.followCount}</div>
               </div>
             </Grid>
@@ -95,20 +97,14 @@ export default function QuestionTitle(props) {
                     comments={questionComments}
                     commentCount={question.commentCount}
                     user={user}
+                    pending={fetchQuestionCommentPending}
                   />
                 </LoadableList>
               ) : (
-                <Button
-                  color="primary"
-                  disabled={question.commentCount === 0}
-                  onClick={() => setShowComment(true)}
-                  style={{ marginTop: -12 }}
-                >
-                  <QuestionAnswerIcon
-                    style={{ marginRight: 5, marginBottom: 10 }}
-                  />
-                  {`${question.commentCount} Comment`}
-                </Button>
+                <CommentButton
+                  clickHandler={() => setShowComment(true)}
+                  commentCount={question.commentCount}
+                />
               )}
             </Grid>
           </Grid>

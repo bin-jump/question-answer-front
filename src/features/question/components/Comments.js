@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { milisecToDate } from '../../common/helper';
 import Button from '@material-ui/core/Button';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import { Loading } from '../../common';
 import './Comments.less';
 
 function Comment(idx, cmt, size, user) {
@@ -39,8 +41,23 @@ function Comment(idx, cmt, size, user) {
   );
 }
 
+export function CommentButton(props) {
+  const { commentCount, clickHandler, style } = { ...props };
+  return (
+    <Button
+      color="primary"
+      disabled={commentCount === 0}
+      onClick={clickHandler}
+      style={{ display: 'flex', ...style }}
+    >
+      <QuestionAnswerIcon style={{ marginRight: 5, marginTop: 4 }} />
+      {`${commentCount} Comment`}
+    </Button>
+  );
+}
+
 export default function Comments(props) {
-  const { comments, user, commentCount } = { ...props };
+  const { comments, user, commentCount, pending } = { ...props };
   // in case if new comment added while comment counter not updated...
   const commentCnt =
     comments.length > commentCount ? comments.length : commentCount;
@@ -50,6 +67,7 @@ export default function Comments(props) {
       <div className="feature-comments-title">{`${commentCnt} Comment`}</div>
       <hr />
       {comments.map((item, i) => Comment(i, item, comments.length, user))}
+      {pending && comments.length === 0 ? <Loading /> : null}
       {user ? (
         <div className="feature-comments-talk-container">
           <div className="feature-comments-talk-body">

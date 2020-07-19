@@ -5,15 +5,13 @@ import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CircularProgress from '@material-ui/core/CircularProgress';
 //import InfiniteScroll from 'react-infinite-scroller';
-import { Loading, LoadableList, PendButton } from '../../common';
-import Comments from './Comments';
+import { LoadableList, PendButton, PendIcon } from '../../common';
+import Comments, { CommentButton } from './Comments';
 import { milisecToDate } from '../../common/helper';
 import './Answers.less';
 
@@ -33,12 +31,14 @@ function Answer(props) {
           }}
         >
           <div className="feature-question-title-side">
-            <ArrowDropUpIcon
-              style={{ fontSize: 40, marginTop: 1 }}
-              className={answer.upvoted ? 'icon-selected' : ''}
-            />
+            <PendIcon selected={answer.upvoted}>
+              <ArrowDropUpIcon style={{ fontSize: 40 }} />
+            </PendIcon>
+
             <div style={{ fontSize: 20 }}>{answer.upvoteCount}</div>
-            <ArrowDropDownIcon style={{ fontSize: 40, marginTop: 1 }} />
+            <PendIcon selected={answer.downvoted}>
+              <ArrowDropDownIcon style={{ fontSize: 40 }} />
+            </PendIcon>
           </div>
         </Grid>
         <Grid item xs={10} style={{ display: 'inline-block', marginLeft: 16 }}>
@@ -55,7 +55,7 @@ function Answer(props) {
             >{` ${answer.author.name} `}</Link>
             {` on ${milisecToDate(answer.created)}.`}
           </div>
-          {answer.showComment ? (
+          {answer.commentPending || answer.showComment ? (
             <LoadableList
               hasMore={answer.commentAfter}
               loading={answer.commentPending}
@@ -67,20 +67,17 @@ function Answer(props) {
                 comments={answer.comments}
                 commentCount={answer.commentCount}
                 user={user}
+                pending={answer.commentPending}
               />
             </LoadableList>
           ) : (
-            <Button
-              color="primary"
-              disabled={answer.commentCount === 0}
-              onClick={() => commentLoadHandle(answer.id, answer.commentAfter)}
-              style={{ display: 'flex', float: 'right' }}
-            >
-              <QuestionAnswerIcon
-                style={{ marginRight: 5, marginBottom: 10 }}
-              />
-              {`${answer.commentCount} Comment`}
-            </Button>
+            <CommentButton
+              clickHandler={() =>
+                commentLoadHandle(answer.id, answer.commentAfter)
+              }
+              commentCount={answer.commentCount}
+              style={{ float: 'right', marginTop: 10 }}
+            />
           )}
         </Grid>
       </Grid>
