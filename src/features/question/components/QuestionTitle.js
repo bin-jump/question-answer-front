@@ -102,6 +102,7 @@ export default function QuestionTitle(props) {
                   color="primary"
                   disabled={question.commentCount === 0}
                   onClick={() => setShowComment(true)}
+                  style={{ marginTop: -12 }}
                 >
                   <QuestionAnswerIcon
                     style={{ marginRight: 5, marginBottom: 10 }}

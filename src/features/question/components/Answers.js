@@ -6,16 +6,18 @@ import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Comments from './Comments';
 import { milisecToDate } from '../../common/helper';
+import LoadableList from '../../common/components/LoadableList';
 import './Answers.less';
 
-function Answer(answer, idx, size, commentLoadHandle) {
-  //const {comments, commentCount, showComment, author, body} = {...answer};
+function Answer(props) {
+  const { answer, idx, size, commentLoadHandle, user } = { ...props };
 
   return (
     <div className="feature-question-answer-container">
@@ -53,16 +55,25 @@ function Answer(answer, idx, size, commentLoadHandle) {
             {` on ${milisecToDate(answer.created)}.`}
           </div>
           {answer.showComment ? (
-            <Comments
-              comments={answer.comments}
-              commentCount={answer.commentCount}
-              user={answer.user}
-            />
+            <LoadableList
+              hasMore={answer.commentAfter}
+              loading={answer.commentPending}
+              onLoadClick={() =>
+                commentLoadHandle(answer.id, answer.commentAfter)
+              }
+            >
+              <Comments
+                comments={answer.comments}
+                commentCount={answer.commentCount}
+                user={user}
+              />
+            </LoadableList>
           ) : (
             <Button
               color="primary"
               disabled={answer.commentCount === 0}
               onClick={() => commentLoadHandle(answer.id, answer.commentAfter)}
+              style={{ display: 'flex', float: 'right' }}
             >
               <QuestionAnswerIcon
                 style={{ marginRight: 5, marginBottom: 10 }}
@@ -73,7 +84,9 @@ function Answer(answer, idx, size, commentLoadHandle) {
         </Grid>
       </Grid>
 
-      <hr />
+      {idx + 1 < size ? (
+        <hr style={{ borderTop: '1px solid #ced7de' }} />
+      ) : null}
     </div>
   );
 }
@@ -85,7 +98,7 @@ export default function Answers(props) {
 
   const {
     answers,
-    answerAfter,
+    fetchAnswerAfter,
     fetchAnswers,
     fetchAnswerPending,
   } = useFetchAnswers();
@@ -106,11 +119,24 @@ export default function Answers(props) {
             'No answer yet.'
           ) : (
             <div>
-              <div>{`${answerCount} Answer(s)`}</div>
+              <Typography variant="h6">{`${answerCount} Answer(s)`}</Typography>
               <hr />
-              {answers.map((item, i) =>
-                Answer(item, i, answers.length, fetchAnswerComment),
-              )}
+              <LoadableList
+                hasMore={fetchAnswerAfter}
+                loading={fetchAnswerPending}
+                onLoadClick={() => fetchAnswers(questionId, fetchAnswerAfter)}
+              >
+                {answers.map((item, i) => (
+                  <Answer
+                    answer={item}
+                    idx={i}
+                    size={answers.length}
+                    commentLoadHandle={fetchAnswerComment}
+                    user={user}
+                  />
+                ))}
+              </LoadableList>
+              {/* <Button>Load more answers...</Button> */}
             </div>
           )}
         </Paper>

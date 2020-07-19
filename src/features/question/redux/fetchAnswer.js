@@ -22,10 +22,10 @@ export function fetchAnswers(id, after) {
 
 export function useFetchAnswers() {
   const dispatch = useDispatch();
-  const { answers, answerAfter, fetchAnswerPending, error } = useSelector(
+  const { answers, fetchAnswerAfter, fetchAnswerPending, error } = useSelector(
     (state) => ({
       answers: state.question.answers,
-      answerAfter: state.question.fetchAnswerAfter,
+      fetchAnswerAfter: state.question.fetchAnswerAfter,
       fetchAnswerPending: state.question.fetchAnswerPending,
       error: state.question.lastError,
     }),
@@ -42,7 +42,7 @@ export function useFetchAnswers() {
   return {
     fetchAnswers: boundAction,
     answers,
-    answerAfter,
+    fetchAnswerAfter,
     fetchAnswerPending,
     error,
   };
@@ -67,10 +67,13 @@ export function reducer(state, action) {
             item.commentAfter = null;
             item.commentPending = false;
             item.showComment = false;
+            item.addCommentPending = false;
+            item.upvotePending = false;
+            item.downvotePending = false;
             return item;
           }),
         ],
-        answerAfter: action.data.data.dist ? action.data.data.after : null,
+        fetchAnswerAfter: action.data.data.dist ? action.data.data.after : null,
         fetchAnswerPending: false,
         lastError: null,
       };

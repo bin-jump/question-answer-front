@@ -6,23 +6,18 @@ const initialState = {
   question: null,
   questionComments: [],
   answers: [],
-  answerComments: {},
 
   fetchQuestionPending: false,
   fetchAnswerPending: false,
   fetchAnswerAfter: null,
 
   fetchQuesionCommentPending: false,
-  fetchAnswerCommentPending: {},
   fetchQuesionCommentAfter: null,
-  fetchAnswerCommentAfter: {},
 
   addAnswerPending: false,
   addQuestionCommentPending: false,
-  addAnswerCommentPending: {},
 
   questionThumbUpPending: false,
-  answerVotePending: {},
 
   lastError: null,
 };
