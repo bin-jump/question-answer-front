@@ -10,14 +10,14 @@ import Avatar from '@material-ui/core/Avatar';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import TagList from '../../common/components/TagList';
 import { milisecToDate } from '../../common/helper';
 import Comments from './Comments';
-import LoadableList from '../../common/components/LoadableList';
+import { TagList, LoadableList } from '../../common';
 import './QuestionTitle.less';
 
 export default function QuestionTitle(props) {
   const { questionId, user } = { ...props };
+  //console.log(location);
 
   const { question, fetchQuestion, fetchQuestionPending } = useFetchQuestion();
   const {

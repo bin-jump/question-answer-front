@@ -12,7 +12,7 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CircularProgress from '@material-ui/core/CircularProgress';
 //import InfiniteScroll from 'react-infinite-scroller';
-import { Loading, LoadableList } from '../../common';
+import { Loading, LoadableList, PendButton } from '../../common';
 import Comments from './Comments';
 import { milisecToDate } from '../../common/helper';
 import './Answers.less';
@@ -150,21 +150,13 @@ export default function Answers(props) {
                   />
                 ))}
                 {fetchAnswerAfter ? (
-                  <Paper
-                    style={{ width: '100%', display: 'flex', marginTop: 20 }}
+                  <PendButton
+                    pending={fetchAnswerPending}
+                    style={{ width: '100%', height: 50, color: 'white' }}
+                    onClick={() => fetchAnswers(questionId, fetchAnswerAfter)}
                   >
-                    <Button
-                      style={{ width: '100%', height: 50 }}
-                      disabled={fetchAnswerPending}
-                      onClick={() => fetchAnswers(questionId, fetchAnswerAfter)}
-                    >
-                      {fetchAnswerPending ? (
-                        <Loading />
-                      ) : (
-                        'Load more answers...'
-                      )}
-                    </Button>
-                  </Paper>
+                    {'Load more answers...'}
+                  </PendButton>
                 ) : null}
               </div>
 

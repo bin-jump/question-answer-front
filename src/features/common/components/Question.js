@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -57,7 +58,7 @@ function Answer(props) {
 }
 
 export default function Question(props) {
-  const question = props.question;
+  const { question } = { ...props };
   const answer = question.cover;
 
   return (
@@ -91,19 +92,24 @@ export default function Question(props) {
           <Answer answer={answer} />
         ) : (
           <div className="common-question-info-container">
-            <Button color="primary" variant="outlined" style={{ height: 35 }}>
+            {/* <Button color="primary" variant="outlined" style={{ height: 35 }}>
               Follow
-            </Button>
+            </Button> */}
             <Button
               color="primary"
               variant="outlined"
-              style={{ height: 35, marginLeft: 16 }}
+              style={{ height: 35 }}
+              component={HashLink}
+              to={`/question/${question.id}#write`}
             >
               <CreateIcon style={{ marginRight: 5 }} /> Write Answer
             </Button>
+
             <div className="common-question-info">
               <RssFeedIcon />
-              <div className="common-question-info-word">3</div>
+              <div className="common-question-info-word">
+                {question.followCount}
+              </div>
               <div className="common-question-info-word">Follow</div>
             </div>
           </div>

@@ -9,10 +9,18 @@ import './ContentEditor.less';
 class ContentEditor extends Component {
   constructor(props) {
     super(props);
+    this.setDomEditorRef = (ref) => (this.domEditor = ref);
     this.state = {
       //content: '',
       editorState: EditorState.createEmpty(),
     };
+  }
+
+  componentDidMount() {
+    //console.log('componentDidMount', this.props.autoFocus);
+    if (this.props.autoFocus) {
+      this.domEditor.focusEditor();
+    }
   }
 
   onEditorStateChange = (editorState) => {
@@ -33,6 +41,7 @@ class ContentEditor extends Component {
     return (
       <div className="common-content-editor">
         <Editor
+          ref={this.setDomEditorRef}
           toolbar={{
             options: [
               'inline',
