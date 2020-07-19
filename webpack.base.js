@@ -5,6 +5,10 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: './src/index.js',
+  devtool: false,
+  performance: {
+    hints: process.env.NODE_ENV === 'production' ? 'warning' : false,
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
