@@ -1,0 +1,23 @@
+.common-content-container {
+  li {
+    display: block;
+  }
+  ul {
+    list-style-type: square;
+    li:before {
+      content: '•';
+      font-size: 20px;
+      padding-right: 6px;
+      font-weight: bold;
+    }
+    padding-right: 5px;
+  }
+  ol {
+    counter-reset: my-counter;
+    li::before {
+      counter-increment: my-counter;
+      content: counter(my-sec-counter) '. ';
+    }
+    padding-right: 5px;
+  }
+}

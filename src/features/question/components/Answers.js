@@ -16,7 +16,13 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CreateIcon from '@material-ui/icons/Create';
 //import InfiniteScroll from 'react-infinite-scroller';
-import { Loading, LoadableList, PendButton, PendIcon } from '../../common';
+import {
+  Loading,
+  LoadableList,
+  PendButton,
+  PendIcon,
+  Content,
+} from '../../common';
 import Comments, { CommentButton } from './Comments';
 import { milisecToDate } from '../../common/helper';
 import './Answers.less';
@@ -54,7 +60,7 @@ function Answer(props) {
           </div>
         </Grid>
         <Grid item xs={10} style={{ display: 'inline-block', marginLeft: 16 }}>
-          {answer.body}
+          <Content content={answer.body} />
           <div className="feature-question-answer-author">
             {`Posted by `}
             <Avatar

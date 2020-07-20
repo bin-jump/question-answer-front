@@ -10,6 +10,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import CreateIcon from '@material-ui/icons/Create';
 import TagList from './TagList';
+import Content from './Content';
 import { milisecToDate } from '../helper';
 
 function Answer(props) {
@@ -23,11 +24,17 @@ function Answer(props) {
     }
   }, [answer]);
 
+  const content = show ? (
+    <Content content={`${answer.body}`} />
+  ) : (
+    `${answer.body.slice(0, LEN_LIMIT)} `
+  );
   return (
     <div className="common-question-answer">
       <div className="common-question-answer-content">
         <Link to={`/user/${answer.author.id}`}>{`${answer.author.name}`}</Link>
-        {show ? `:  ${answer.body}` : `: ${answer.body.slice(0, LEN_LIMIT)} `}
+        {': '}
+        {content}
         {show ? null : (
           <div
             style={{

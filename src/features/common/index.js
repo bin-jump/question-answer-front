@@ -9,6 +9,7 @@ import TagList from './components/TagList';
 import Pendable from './components/Pendable';
 import PendButton from './components/PendButton';
 import PendIcon from './components/PendIcon';
+import Content from './components/Content';
 
 export {
   toHtml,
@@ -21,4 +22,5 @@ export {
   Pendable,
   PendButton,
   PendIcon,
+  Content,
 };

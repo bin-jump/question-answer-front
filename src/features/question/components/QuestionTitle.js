@@ -13,7 +13,13 @@ import Avatar from '@material-ui/core/Avatar';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import { milisecToDate } from '../../common/helper';
 import Comments, { CommentButton } from './Comments';
-import { Loading, TagList, LoadableList, PendIcon } from '../../common';
+import {
+  Loading,
+  TagList,
+  LoadableList,
+  PendIcon,
+  Content,
+} from '../../common';
 import './QuestionTitle.less';
 
 export default function QuestionTitle(props) {
@@ -96,7 +102,9 @@ export default function QuestionTitle(props) {
               </div>
               <TagList tags={question.tags} />
               <hr />
-              <div className="feature-question-title-body">{question.body}</div>
+              <div className="feature-question-title-body">
+                <Content content={question.body} />
+              </div>
               {showComment ? (
                 <LoadableList
                   hasMore={quesionCommentAfter}
