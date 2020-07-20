@@ -19,9 +19,10 @@ function requestFromMethod({
     throw new Error(`Invalid request method ${method}`);
   }
 
-  let req = axios.get(url, config);
-
-  if (method === 'POST') {
+  let req = null;
+  if (method === 'GET') {
+    req = axios.get(url, config);
+  } else if (method === 'POST') {
     req = axios.post(url, data, config);
   } else if (method === 'PUT') {
     req = axios.put(url, data, config);
@@ -91,6 +92,17 @@ export function postRequest(
     url,
     data,
     method: 'POST',
+    beginConst,
+    successConst,
+    failureConst,
+    id,
+  });
+}
+
+export function deleteRequest(url, beginConst, successConst, failureConst, id) {
+  return makeRequest({
+    url,
+    method: 'DELETE',
     beginConst,
     successConst,
     failureConst,

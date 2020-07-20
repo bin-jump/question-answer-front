@@ -48,7 +48,7 @@ function Answer(props) {
             display: 'inline-block',
           }}
         >
-          <div className="feature-question-title-side">
+          <div className="feature-question-title-side feature-question-answer-side">
             <PendIcon selected={answer.upvoted}>
               <ArrowDropUpIcon style={{ fontSize: 40 }} />
             </PendIcon>

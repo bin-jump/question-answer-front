@@ -3,6 +3,7 @@ import { reducer as fetchCommentReducer } from './fetchComments';
 import { reducer as fetchAnswerReducer } from './fetchAnswer';
 import { reducer as addCommentReducer } from './addComment';
 import { reducer as addAnswerReducer } from './addAnswer';
+import { reducer as addVoteReducer } from './addVote';
 import { QUESTION_RESET } from './constants';
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
   addAnswerPending: false,
   addQuestionCommentPending: false,
 
-  questionThumbUpPending: false,
+  questionVotePending: false,
+  questionFollowPending: false,
 
   lastError: null,
 };
@@ -31,6 +33,7 @@ const reducers = [
   fetchAnswerReducer,
   addCommentReducer,
   addAnswerReducer,
+  addVoteReducer,
 ];
 
 export default function reducer(state = initialState, action) {

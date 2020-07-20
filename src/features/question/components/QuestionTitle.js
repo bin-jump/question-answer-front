@@ -3,6 +3,7 @@ import {
   useFetchQuestion,
   useFetchQuestionComment,
   useAddQuestionComment,
+  useVoteQuestion,
 } from '../redux/hooks';
 import { Link } from 'react-router-dom';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
@@ -38,6 +39,8 @@ export default function QuestionTitle(props) {
     addQuestionCommentPending,
   } = useAddQuestionComment();
 
+  const { voteQuestion, questionVotePending } = useVoteQuestion();
+
   const [showComment, setShowComment] = useState(false);
 
   const addComment = (content) => {
@@ -71,15 +74,22 @@ export default function QuestionTitle(props) {
             >
               <div className="feature-question-title-side">
                 <Avatar
-                  alt="User"
+                  alt={question.author.name}
                   src={question.author.avatarUrl}
                   style={{ margin: 'auto', marginBottom: 10 }}
                 />
-                <PendIcon selected={question.thumbup}>
+                <PendIcon
+                  selected={question.upvoted}
+                  onClick={() =>
+                    voteQuestion(questionId, 'UPVOTE', question.upvoted)
+                  }
+                  pending={questionVotePending}
+                  disabled={true}
+                >
                   <ThumbUpIcon />
                 </PendIcon>
 
-                <div>{question.goodCount}</div>
+                <div>{question.voteupCount}</div>
                 <PendIcon selected={question.following}>
                   <RssFeedIcon />
                 </PendIcon>
