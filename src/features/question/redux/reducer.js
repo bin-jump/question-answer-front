@@ -1,6 +1,7 @@
 import { reducer as fetchQuestionReducer } from './fetchQuestion';
 import { reducer as fetchCommentReducer } from './fetchComments';
 import { reducer as fetchAnswerReducer } from './fetchAnswer';
+import { QUESTION_RESET } from './constants';
 
 const initialState = {
   question: null,
@@ -31,6 +32,8 @@ const reducers = [
 export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
+    case QUESTION_RESET:
+      return initialState;
     default:
       newState = state;
       break;

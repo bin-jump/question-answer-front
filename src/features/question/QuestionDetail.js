@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import QuestionTitle from './components/QuestionTitle';
 import Answers from './components/Answers';
 import WriteAnswer from './components/WriteAnswer';
+import { useReset } from './redux/resetState';
 import './QuestionDetail.less';
 
 export default function QuestionDetail(props) {
   const { id } = useParams();
   const user = useSelector((state) => state.auth.user);
+  const { resetState } = useReset();
+
+  useEffect(() => {
+    return () => {
+      resetState();
+    };
+  }, [resetState]);
 
   return (
     <div className="feature-questiondetail">

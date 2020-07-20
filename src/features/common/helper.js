@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-function makeListFetch(url, beginConst, successConst, failureConst, id) {
+function makeRequest(url, beginConst, successConst, failureConst, id) {
   return (dispatch) => {
     dispatch({
       type: beginConst,
@@ -34,8 +34,8 @@ function makeListFetch(url, beginConst, successConst, failureConst, id) {
   };
 }
 
-export function listFetch(url, beginConst, successConst, failureConst, id) {
-  return makeListFetch(url, beginConst, successConst, failureConst, id);
+export function getRequest(url, beginConst, successConst, failureConst, id) {
+  return makeRequest(url, beginConst, successConst, failureConst, id);
 }
 
 export function milisecToDate(timeLong) {

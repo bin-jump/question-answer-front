@@ -1,4 +1,4 @@
-import { listFetch } from '../../common/helper';
+import { getRequest } from '../../common/helper';
 import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
@@ -15,7 +15,7 @@ export function fetchQuestionComment(id, after) {
   if (after) {
     url = `${url}?after=${after}`;
   }
-  return listFetch(
+  return getRequest(
     url,
     QUESTION_FETCH_QUESTION_COMMENT_BEGIN,
     QUESTION_FETCH_QUESTION_COMMENT_SUCCESS,
@@ -62,7 +62,7 @@ export function fetchAnswerComment(id, after) {
   if (after) {
     url = `${url}?after=${after}`;
   }
-  return listFetch(
+  return getRequest(
     url,
     QUESTION_FETCH_ANSWER_COMMENT_BEGIN,
     QUESTION_FETCH_ANSWER_COMMENT_SUCCESS,

@@ -2,15 +2,17 @@ import React, { useEffect } from 'react';
 import { useFetchAnswers, useFetchAnswerComment } from '../redux/hooks';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CreateIcon from '@material-ui/icons/Create';
 //import InfiniteScroll from 'react-infinite-scroller';
-import { LoadableList, PendButton, PendIcon } from '../../common';
+import { Loading, LoadableList, PendButton, PendIcon } from '../../common';
 import Comments, { CommentButton } from './Comments';
 import { milisecToDate } from '../../common/helper';
 import './Answers.less';
@@ -109,33 +111,31 @@ export default function Answers(props) {
 
   return (
     <div className="feature-question-answer-list">
-      {fetchAnswerPending && fetchAnswers.length === 0 ? (
-        <CircularProgress />
+      {fetchAnswerPending && answers.length === 0 ? (
+        <Loading />
       ) : (
         <Paper square style={{ minHeight: 180, padding: '20px 20px' }}>
-          {answerCount === 0 ? (
-            'No answer yet.'
-          ) : (
-            <div>
-              <Typography variant="h6">{`${answerCount} Answer(s)`}</Typography>
-              <hr />
-
-              {/* <InfiniteScroll
-                pageStart={0}
-                loadMore={() => fetchAnswers(questionId, fetchAnswerAfter)}
-                hasMore={fetchAnswerAfter}
-                loader={<Loading />}
-              >
-                {answers.map((item, i) => (
-                  <Answer
-                    answer={item}
-                    idx={i}
-                    size={answers.length}
-                    commentLoadHandle={fetchAnswerComment}
-                    user={user}
-                  />
-                ))}
-              </InfiniteScroll> */}
+          <Typography variant="h6">{`${answerCount} Answer(s)`}</Typography>
+          <hr />
+          <div className="feature-question-answer-list-inner">
+            {answerCount === 0 ? (
+              <div>
+                <div>
+                  {'Seems no one answered yet. '}
+                  <Button
+                    color="primary"
+                    component={HashLink}
+                    to={`/question/${questionId}#write`}
+                    style={{ fontSize: 12 }}
+                  >
+                    <CreateIcon
+                      style={{ marginRight: 5, marginBottom: 2, fontSize: 18 }}
+                    />
+                    {'Write One'}
+                  </Button>
+                </div>
+              </div>
+            ) : (
               <div>
                 {answers.map((item, i) => (
                   <Answer
@@ -156,10 +156,26 @@ export default function Answers(props) {
                   </PendButton>
                 ) : null}
               </div>
+            )}
+          </div>
+          {/* <InfiniteScroll
+                pageStart={0}
+                loadMore={() => fetchAnswers(questionId, fetchAnswerAfter)}
+                hasMore={fetchAnswerAfter}
+                loader={<Loading />}
+              >
+                {answers.map((item, i) => (
+                  <Answer
+                    answer={item}
+                    idx={i}
+                    size={answers.length}
+                    commentLoadHandle={fetchAnswerComment}
+                    user={user}
+                  />
+                ))}
+              </InfiniteScroll> */}
 
-              {/* <Button>Load more answers...</Button> */}
-            </div>
-          )}
+          {/* <Button>Load more answers...</Button> */}
         </Paper>
       )}
     </div>

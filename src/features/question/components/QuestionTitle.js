@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useFetchQuestion, useFetchQuestionComment } from '../redux/hooks';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { milisecToDate } from '../../common/helper';
 import Comments, { CommentButton } from './Comments';
-import { TagList, LoadableList, PendIcon } from '../../common';
+import { Loading, TagList, LoadableList, PendIcon } from '../../common';
 import './QuestionTitle.less';
 
 export default function QuestionTitle(props) {
@@ -41,7 +38,7 @@ export default function QuestionTitle(props) {
 
   return (
     <div>
-      {question ? (
+      {question && !fetchQuestionPending ? (
         <Paper square style={{ minHeight: 240, padding: '20px 20px' }}>
           <Grid container spacing={1}>
             <Grid
@@ -110,7 +107,7 @@ export default function QuestionTitle(props) {
           </Grid>
         </Paper>
       ) : (
-        <CircularProgress />
+        <Loading />
       )}
     </div>
   );

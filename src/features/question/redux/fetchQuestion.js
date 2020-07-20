@@ -1,4 +1,4 @@
-import { listFetch } from '../../common/helper';
+import { getRequest } from '../../common/helper';
 import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 export function fetchQuestion(id) {
-  return listFetch(
+  return getRequest(
     `/api/question/${id}`,
     QUESTION_FETCH_QUESTION_BEGIN,
     QUESTION_FETCH_QUESTION_SUCCESS,

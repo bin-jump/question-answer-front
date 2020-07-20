@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 //import InfiniteScroll from 'react-infinite-scroller';
 import { useFetchQuestionList } from './redux/hooks';
+import { useReset } from './redux/resetState';
 import { Loading, Question, LoadableList } from '../common';
 import './Home.less';
 
@@ -14,25 +15,25 @@ export default function Home(props) {
     fetchQuestionListPending,
   } = useFetchQuestionList();
   //const scroll = useRef({});
-  let scroll = { cur: null };
+  //let scroll = { cur: null };
+
+  const { resetState } = useReset();
 
   useEffect(() => {
     fetchQuestionList();
   }, [fetchQuestionList]);
 
-  const clear = () => {
-    console.log('clear', scroll);
-    //scroller.current.reset();
-    scroll.pageLoaded = 0;
-  };
+  // const clear = () => {
+  //   console.log('clear', scroll);
+  //   //scroller.current.reset();
+  //   scroll.pageLoaded = 0;
+  // };
 
   useEffect(() => {
-    // Your code here
-
     return () => {
-      //clear();
+      resetState();
     };
-  }, []);
+  }, [resetState]);
 
   return (
     <div className="feature-home">
