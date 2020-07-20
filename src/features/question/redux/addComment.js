@@ -92,6 +92,10 @@ export function reducer(state, action) {
       return {
         ...state,
         questionComments: [action.data.data, ...state.questionComments],
+        question: {
+          ...state.question,
+          commentCount: state.question.commentCount + 1,
+        },
         addQuestionCommentPending: false,
         lastError: null,
       };
@@ -121,6 +125,7 @@ export function reducer(state, action) {
         answers: state.answers.map((item, i) => {
           if (item.id === action.id) {
             item.addCommentPending = false;
+            item.commentCount += 1;
             item.comments = [action.data.data, ...item.comments];
           }
           return { ...item };

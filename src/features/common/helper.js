@@ -51,7 +51,7 @@ function makeRequest({
       const doRequest = requestFromMethod({ url, method, data });
       doRequest.then(
         (res) => {
-          console.log(res);
+          //console.log(res);
           dispatch({
             type: successConst,
             data: res.data,

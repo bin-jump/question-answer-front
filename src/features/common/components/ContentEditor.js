@@ -5,15 +5,24 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './ContentEditor.less';
 
+export function toHtml(editorContent) {
+  let content = stateToHTML(editorContent);
+  return content;
+}
+
+export function CreateEmptyState() {
+  return EditorState.createEmpty();
+}
+
 //doc: https://jpuri.github.io/react-draft-wysiwyg/#/docs
 class ContentEditor extends Component {
   constructor(props) {
     super(props);
     this.setDomEditorRef = (ref) => (this.domEditor = ref);
-    this.state = {
-      //content: '',
-      editorState: EditorState.createEmpty(),
-    };
+    // this.state = {
+    //   //content: null,
+    //   editorState: EditorState.createEmpty(),
+    // };
   }
 
   componentDidMount() {
@@ -23,21 +32,26 @@ class ContentEditor extends Component {
     }
   }
 
-  onEditorStateChange = (editorState) => {
-    this.setState({ editorState });
-  };
+  // onEditorStateChange = (editorState) => {
+  //   this.setState({ editorState });
+  // };
 
-  onContentStateChange = (contentState) => {
-    //this.setState({ content: content });
-    if (this.props.onContentChange) {
-      let content = stateToHTML(this.state.editorState.getCurrentContent());
-      this.props.onContentChange(content);
-    }
-  };
+  // onContentStateChange = (contentState) => {
+  //   //console.log('as HTML:', draftToHtml(contentState));
+  //   this.setState({ contentState });
+  // };
+
+  // onContentStateChange = (contentState) => {
+  //   this.setState({ content: contentState });
+  //   if (this.props.onContentChange) {
+  //     let content = stateToHTML(this.state.editorState.getCurrentContent());
+  //     this.props.onContentChange(content);
+  //   }
+  // };
 
   render() {
-    const { editorState } = this.state;
-
+    //const { editorState } = this.state;
+    const { editorState, onEditorStateChange } = this.props;
     return (
       <div className="common-content-editor">
         <Editor
@@ -60,10 +74,12 @@ class ContentEditor extends Component {
             },
           }}
           editorState={editorState}
+          //editorContent={editorContent}
+          //contentState={editorContent}
           wrapperClassName="rich-editor"
           editorClassName="common-content-editor"
-          onEditorStateChange={this.onEditorStateChange}
-          onContentStateChange={this.onContentStateChange}
+          onEditorStateChange={onEditorStateChange}
+          //onContentStateChange={onContentStateChange}
           placeholder="The content goes here..."
         />
       </div>

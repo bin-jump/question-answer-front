@@ -1,4 +1,7 @@
-import ContentEditor from './components/ContentEditor';
+import ContentEditor, {
+  toHtml,
+  CreateEmptyState,
+} from './components/ContentEditor';
 import LoadableList from './components/LoadableList';
 import Loading from './components/Loading';
 import Question from './components/Question';
@@ -8,6 +11,8 @@ import PendButton from './components/PendButton';
 import PendIcon from './components/PendIcon';
 
 export {
+  toHtml,
+  CreateEmptyState,
   ContentEditor,
   LoadableList,
   Loading,
