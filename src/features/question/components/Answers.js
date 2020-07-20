@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { useFetchAnswers, useFetchAnswerComment } from '../redux/hooks';
+import {
+  useFetchAnswers,
+  useFetchAnswerComment,
+  useAddAnswerComment,
+} from '../redux/hooks';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -18,7 +22,13 @@ import { milisecToDate } from '../../common/helper';
 import './Answers.less';
 
 function Answer(props) {
-  const { answer, idx, size, commentLoadHandle, user } = { ...props };
+  const { answer, idx, size, commentLoadHandle, user, addCommentHandler } = {
+    ...props,
+  };
+
+  const handleCommentAdd = (content) => {
+    addCommentHandler(answer.id, content);
+  };
 
   return (
     <div className="feature-question-answer-container">
@@ -70,6 +80,8 @@ function Answer(props) {
                 commentCount={answer.commentCount}
                 user={user}
                 pending={answer.commentPending}
+                addPending={answer.addCommentPending}
+                addCommentHandler={handleCommentAdd}
               />
             </LoadableList>
           ) : (
@@ -104,6 +116,8 @@ export default function Answers(props) {
   } = useFetchAnswers();
 
   const { fetchAnswerComment } = useFetchAnswerComment();
+
+  const { addAnswerComment } = useAddAnswerComment();
 
   useEffect(() => {
     fetchAnswers(questionId);
@@ -143,6 +157,7 @@ export default function Answers(props) {
                     idx={i}
                     size={answers.length}
                     commentLoadHandle={fetchAnswerComment}
+                    addCommentHandler={addAnswerComment}
                     user={user}
                   />
                 ))}
