@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useFetchQuestion, useFetchQuestionComment } from '../redux/hooks';
+import {
+  useFetchQuestion,
+  useFetchQuestionComment,
+  useAddQuestionComment,
+} from '../redux/hooks';
 import { Link } from 'react-router-dom';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import Paper from '@material-ui/core/Paper';
@@ -14,7 +18,6 @@ import './QuestionTitle.less';
 
 export default function QuestionTitle(props) {
   const { questionId, user } = { ...props };
-  //console.log(location);
 
   const { question, fetchQuestion, fetchQuestionPending } = useFetchQuestion();
   const {
@@ -24,7 +27,17 @@ export default function QuestionTitle(props) {
     fetchQuestionCommentPending,
   } = useFetchQuestionComment();
 
+  const {
+    addQuestionComment,
+    addQuestionCommentPending,
+  } = useAddQuestionComment();
+
   const [showComment, setShowComment] = useState(false);
+
+  const addComment = (content) => {
+    //console.log(content);
+    addQuestionComment(questionId, content);
+  };
 
   useEffect(() => {
     fetchQuestion(questionId);
@@ -95,6 +108,8 @@ export default function QuestionTitle(props) {
                     commentCount={question.commentCount}
                     user={user}
                     pending={fetchQuestionCommentPending}
+                    addPending={addQuestionCommentPending}
+                    addCommentHandler={addComment}
                   />
                 </LoadableList>
               ) : (

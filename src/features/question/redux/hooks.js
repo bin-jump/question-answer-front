@@ -4,3 +4,5 @@ export {
   useFetchAnswerComment,
 } from './fetchComments';
 export { useFetchAnswers } from './fetchAnswer';
+
+export { useAddQuestionComment } from './addComment';

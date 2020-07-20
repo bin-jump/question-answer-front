@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { milisecToDate } from '../../common/helper';
 import Button from '@material-ui/core/Button';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import { Loading } from '../../common';
+import { Loading, PendButton } from '../../common';
 import './Comments.less';
 
 function Comment(idx, cmt, size, user) {
@@ -57,10 +57,31 @@ export function CommentButton(props) {
 }
 
 export default function Comments(props) {
-  const { comments, user, commentCount, pending } = { ...props };
+  const {
+    comments,
+    user,
+    commentCount,
+    pending,
+    addPending,
+    addCommentHandler,
+  } = {
+    ...props,
+  };
+  const [cmtContent, setCmtContent] = useState('');
+
   // in case if new comment added while comment counter not updated...
   const commentCnt =
     comments.length > commentCount ? comments.length : commentCount;
+
+  const onCommantAdd = () => {
+    if (!cmtContent) {
+      return;
+    }
+    if (addCommentHandler) {
+      addCommentHandler(cmtContent);
+    }
+    setCmtContent('');
+  };
 
   return (
     <div className="feature-comments">
@@ -87,15 +108,22 @@ export default function Comments(props) {
               style={{ width: 30, height: 30 }}
             />
             <div className="talk-bubble tri-right left-in">
-              <textarea cols="40" rows="2"></textarea>
+              <textarea
+                cols="40"
+                rows="2"
+                value={cmtContent}
+                onChange={(e) => setCmtContent(e.target.value)}
+              ></textarea>
             </div>
-            <Button
+            <PendButton
               variant="outlined"
               color="primary"
-              style={{ marginLeft: 10 }}
+              style={{ marginLeft: 10, height: 70 }}
+              onClick={onCommantAdd}
+              pending={addPending}
             >
               Add Comment
-            </Button>
+            </PendButton>
           </div>
         </div>
       ) : null}
