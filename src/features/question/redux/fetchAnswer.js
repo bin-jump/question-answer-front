@@ -68,8 +68,7 @@ export function reducer(state, action) {
             item.commentPending = false;
             item.showComment = false;
             item.addCommentPending = false;
-            item.upvotePending = false;
-            item.downvotePending = false;
+            item.votePending = false;
             return item;
           }),
         ],

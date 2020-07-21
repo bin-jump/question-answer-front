@@ -73,20 +73,6 @@ export function fetchAnswerComment(id, after) {
 
 export function useFetchAnswerComment() {
   const dispatch = useDispatch();
-  // const {
-  //   answerComments,
-  //   answerCommentAfter,
-  //   fetchAnswerCommentPending,
-  //   error,
-  // } = useSelector(
-  //   (state) => ({
-  //     answerComments: state.question.answerComments,
-  //     fetchAnswerCommentAfter: state.question.fetchAnswerCommentAfter,
-  //     fetchAnswerCommentPending: state.question.fetchAnswerCommentPending,
-  //     error: state.question.lastError,
-  //   }),
-  //   shallowEqual,
-  // );
 
   const boundAction = useCallback(
     (id, after) => {
@@ -138,8 +124,9 @@ export function reducer(state, action) {
         answers: state.answers.map((item, i) => {
           if (item.id === action.id) {
             item.commentPending = true;
+            return { ...item };
           }
-          return { ...item };
+          return item;
         }),
         lastError: null,
       };
@@ -155,8 +142,9 @@ export function reducer(state, action) {
             item.commentAfter = action.data.data.dist
               ? action.data.data.after
               : null;
+            return { ...item };
           }
-          return { ...item };
+          return item;
         }),
         lastError: null,
       };
@@ -167,8 +155,9 @@ export function reducer(state, action) {
         answers: state.answers.map((item, i) => {
           if (item.id === action.id) {
             item.commentPending = false;
+            return { ...item };
           }
-          return { ...item };
+          return item;
         }),
         lastError: action.data.error,
       };

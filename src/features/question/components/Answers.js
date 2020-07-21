@@ -3,6 +3,7 @@ import {
   useFetchAnswers,
   useFetchAnswerComment,
   useAddAnswerComment,
+  useVoteAnswer,
 } from '../redux/hooks';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -28,7 +29,15 @@ import { milisecToDate } from '../../common/helper';
 import './Answers.less';
 
 function Answer(props) {
-  const { answer, idx, size, commentLoadHandle, user, addCommentHandler } = {
+  const {
+    answer,
+    idx,
+    size,
+    user,
+    commentLoadHandle,
+    addCommentHandler,
+    voteHandler,
+  } = {
     ...props,
   };
 
@@ -49,12 +58,22 @@ function Answer(props) {
           }}
         >
           <div className="feature-question-title-side feature-question-answer-side">
-            <PendIcon selected={answer.upvoted}>
+            <PendIcon
+              pending={answer.votePending}
+              selected={answer.upvoted}
+              onClick={() => voteHandler(answer.id, 'UPVOTE', answer.upvoted)}
+            >
               <ArrowDropUpIcon style={{ fontSize: 40 }} />
             </PendIcon>
 
             <div style={{ fontSize: 20 }}>{answer.upvoteCount}</div>
-            <PendIcon selected={answer.downvoted}>
+            <PendIcon
+              pending={answer.votePending}
+              selected={answer.downvoted}
+              onClick={() =>
+                voteHandler(answer.id, 'DOWNVOTE', answer.downvoted)
+              }
+            >
               <ArrowDropDownIcon style={{ fontSize: 40 }} />
             </PendIcon>
           </div>
@@ -125,6 +144,8 @@ export default function Answers(props) {
 
   const { addAnswerComment } = useAddAnswerComment();
 
+  const { voteAnswer } = useVoteAnswer();
+
   useEffect(() => {
     fetchAnswers(questionId);
   }, [fetchAnswers, questionId]);
@@ -164,6 +185,7 @@ export default function Answers(props) {
                     size={answers.length}
                     commentLoadHandle={fetchAnswerComment}
                     addCommentHandler={addAnswerComment}
+                    voteHandler={voteAnswer}
                     user={user}
                   />
                 ))}
