@@ -18,7 +18,6 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CreateIcon from '@material-ui/icons/Create';
 //import InfiniteScroll from 'react-infinite-scroller';
 import {
-  Loading,
   AnswerLoading,
   Pendable,
   LoadableList,

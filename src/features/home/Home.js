@@ -46,7 +46,7 @@ export default function Home(props) {
             onLoadClick={() => fetchQuestionList(questionAfter)}
           >
             <Pendable
-              pending={fetchQuestionListPending}
+              pending={fetchQuestionListPending && questionList.length === 0}
               pendContent={<QuestionLoading style={{ width: 650 }} />}
               repeat={5}
             >
