@@ -19,6 +19,8 @@ import CreateIcon from '@material-ui/icons/Create';
 //import InfiniteScroll from 'react-infinite-scroller';
 import {
   Loading,
+  AnswerLoading,
+  Pendable,
   LoadableList,
   PendButton,
   PendIcon,
@@ -152,9 +154,11 @@ export default function Answers(props) {
 
   return (
     <div className="feature-question-answer-list">
-      {fetchAnswerPending && answers.length === 0 ? (
-        <Loading />
-      ) : (
+      <Pendable
+        pending={fetchAnswerPending && answers.length === 0}
+        repeat={5}
+        pendContent={<AnswerLoading style={{ margin: 0 }} />}
+      >
         <Paper square style={{ minHeight: 180, padding: '20px 20px' }}>
           <Typography variant="h6">{`${answerCount} Answer(s)`}</Typography>
           <hr />
@@ -201,26 +205,8 @@ export default function Answers(props) {
               </div>
             )}
           </div>
-          {/* <InfiniteScroll
-                pageStart={0}
-                loadMore={() => fetchAnswers(questionId, fetchAnswerAfter)}
-                hasMore={fetchAnswerAfter}
-                loader={<Loading />}
-              >
-                {answers.map((item, i) => (
-                  <Answer
-                    answer={item}
-                    idx={i}
-                    size={answers.length}
-                    commentLoadHandle={fetchAnswerComment}
-                    user={user}
-                  />
-                ))}
-              </InfiniteScroll> */}
-
-          {/* <Button>Load more answers...</Button> */}
         </Paper>
-      )}
+      </Pendable>
     </div>
   );
 }
