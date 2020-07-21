@@ -4,6 +4,7 @@ import { reducer as fetchAnswerReducer } from './fetchAnswer';
 import { reducer as addCommentReducer } from './addComment';
 import { reducer as addAnswerReducer } from './addAnswer';
 import { reducer as addVoteReducer } from './addVote';
+import { reducer as followQuestionReducer } from './addFollow';
 import { QUESTION_RESET } from './constants';
 
 const initialState = {
@@ -34,6 +35,7 @@ const reducers = [
   addCommentReducer,
   addAnswerReducer,
   addVoteReducer,
+  followQuestionReducer,
 ];
 
 export default function reducer(state = initialState, action) {

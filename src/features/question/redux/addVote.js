@@ -10,7 +10,6 @@ import {
 export function voteQuestion(id, voteType, neutral) {
   let url = `/api/question/${id}/vote`;
   let data = { voteType: voteType };
-  console.log(neutral);
   if (neutral) {
     return deleteRequest(
       url,

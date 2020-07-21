@@ -41,6 +41,7 @@ function makeRequest({
   method = 'GET',
   data = null,
   id = null,
+  extra = null,
 }) {
   return (dispatch) => {
     dispatch({
@@ -56,7 +57,8 @@ function makeRequest({
           dispatch({
             type: successConst,
             data: res.data,
-            id: id,
+            id,
+            extra,
           });
           resolve(res);
         },
@@ -65,7 +67,8 @@ function makeRequest({
           dispatch({
             type: failureConst,
             data: { error: err },
-            id: id,
+            id,
+            extra,
           });
           reject(err);
         },
@@ -76,8 +79,22 @@ function makeRequest({
   };
 }
 
-export function getRequest(url, beginConst, successConst, failureConst, id) {
-  return makeRequest({ url, beginConst, successConst, failureConst, id });
+export function getRequest(
+  url,
+  beginConst,
+  successConst,
+  failureConst,
+  id,
+  extra,
+) {
+  return makeRequest({
+    url,
+    beginConst,
+    successConst,
+    failureConst,
+    id,
+    extra,
+  });
 }
 
 export function postRequest(
@@ -87,6 +104,7 @@ export function postRequest(
   successConst,
   failureConst,
   id,
+  extra,
 ) {
   return makeRequest({
     url,
@@ -96,6 +114,7 @@ export function postRequest(
     successConst,
     failureConst,
     id,
+    extra,
   });
 }
 
