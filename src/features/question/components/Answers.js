@@ -59,7 +59,7 @@ function Answer(props) {
         >
           <div className="feature-question-title-side feature-question-answer-side">
             <PendIcon
-              pending={answer.votePending}
+              disabled={answer.votePending}
               selected={answer.upvoted}
               onClick={() => voteHandler(answer.id, 'UPVOTE', answer.upvoted)}
             >
@@ -68,7 +68,7 @@ function Answer(props) {
 
             <div style={{ fontSize: 20 }}>{answer.upvoteCount}</div>
             <PendIcon
-              pending={answer.votePending}
+              disabled={answer.votePending}
               selected={answer.downvoted}
               onClick={() =>
                 voteHandler(answer.id, 'DOWNVOTE', answer.downvoted)
