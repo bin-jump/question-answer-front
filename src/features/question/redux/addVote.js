@@ -13,6 +13,7 @@ import {
 export function voteQuestion(id, voteType, neutral) {
   let url = `/api/question/${id}/vote`;
   let data = { voteType: voteType };
+
   if (neutral) {
     return deleteRequest(
       url,
@@ -57,6 +58,7 @@ export function useVoteQuestion() {
 export function voteAnswer(id, voteType, neutral) {
   let url = `/api/answer/${id}/vote`;
   let data = { voteType: voteType };
+  let extra = { voteType: voteType };
   if (neutral) {
     return deleteRequest(
       url,
@@ -64,6 +66,7 @@ export function voteAnswer(id, voteType, neutral) {
       QUESTION_ANSWER_VOTE_SUCCESS,
       QUESTION_ANSWER_VOTE_FAILURE,
       id,
+      extra,
     );
   }
   return postRequest(
@@ -73,6 +76,7 @@ export function voteAnswer(id, voteType, neutral) {
     QUESTION_ANSWER_VOTE_SUCCESS,
     QUESTION_ANSWER_VOTE_FAILURE,
     id,
+    extra,
   );
 }
 
@@ -130,6 +134,7 @@ export function reducer(state, action) {
         answers: state.answers.map((item, i) => {
           if (item.id === action.id) {
             item.votePending = true;
+            item.votePendingType = action.extra.voteType;
             return { ...item };
           }
           return item;
@@ -142,6 +147,7 @@ export function reducer(state, action) {
         answers: state.answers.map((item, i) => {
           if (item.id === action.id) {
             item.votePending = false;
+            item.votePendingType = null;
             item.upvoteCount += item.upvoted
               ? -1
               : action.data.data.voteType === 'UPVOTE'
@@ -165,6 +171,7 @@ export function reducer(state, action) {
         ...state,
         answers: state.answers.map((item, i) => {
           if (item.id === action.id) {
+            item.votePendingType = null;
             item.votePending = false;
             return { ...item };
           }

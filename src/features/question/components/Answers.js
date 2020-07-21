@@ -61,7 +61,9 @@ function Answer(props) {
           <div className="feature-question-title-side feature-question-answer-side">
             <PendIcon
               disabled={answer.votePending}
+              pending={answer.votePendingType === 'UPVOTE'}
               selected={answer.upvoted}
+              size={30}
               onClick={() => voteHandler(answer.id, 'UPVOTE', answer.upvoted)}
             >
               <ArrowDropUpIcon style={{ fontSize: 40 }} />
@@ -70,6 +72,7 @@ function Answer(props) {
             <div style={{ fontSize: 20 }}>{answer.upvoteCount}</div>
             <PendIcon
               disabled={answer.votePending}
+              pending={answer.votePendingType === 'DOWNVOTE'}
               selected={answer.downvoted}
               onClick={() =>
                 voteHandler(answer.id, 'DOWNVOTE', answer.downvoted)

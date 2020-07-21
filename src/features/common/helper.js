@@ -46,7 +46,8 @@ function makeRequest({
   return (dispatch) => {
     dispatch({
       type: beginConst,
-      id: id,
+      id,
+      extra,
     });
 
     const promise = new Promise((resolve, reject) => {
@@ -118,7 +119,14 @@ export function postRequest(
   });
 }
 
-export function deleteRequest(url, beginConst, successConst, failureConst, id) {
+export function deleteRequest(
+  url,
+  beginConst,
+  successConst,
+  failureConst,
+  id,
+  extra,
+) {
   return makeRequest({
     url,
     method: 'DELETE',
@@ -126,6 +134,7 @@ export function deleteRequest(url, beginConst, successConst, failureConst, id) {
     successConst,
     failureConst,
     id,
+    extra,
   });
 }
 
