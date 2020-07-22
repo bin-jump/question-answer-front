@@ -8,6 +8,7 @@ import Header from './features/header/Header';
 import Footer from './features/footer/Footer';
 import Home from './features/home/Home';
 import QuestionDetail from './features/question/QuestionDetail';
+import Profile from './features/profile/Profile';
 import PinUser from './features/auth/PinUser';
 import Signin from './features/auth/Signin';
 
@@ -43,14 +44,11 @@ class App extends Component {
               <Router history={history}>
                 <Header />
                 <PinUser />
-                <Route path="/" exact component={Home}></Route>
-                <Route path="/signin" exact component={Signin}></Route>
-                <Route path="/signup" exact component={Signin}></Route>
-                <Route
-                  path="/question/:id"
-                  exact
-                  component={QuestionDetail}
-                ></Route>
+                <Route path="/" exact component={Home} />
+                <Route path="/signin" exact component={Signin} />
+                <Route path="/signup" exact component={Signin} />
+                <Route path="/question/:id" exact component={QuestionDetail} />
+                <Route path="/profile/:id" component={Profile} />
               </Router>
               <CssBaseline />
             </Provider>

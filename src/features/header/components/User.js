@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import './User.less';
 
 export default function User(props) {
-  const user = props.user;
+  const { user } = { ...props };
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -31,7 +31,11 @@ export default function User(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem component={Link} to={`/user`} onClick={handleClose}>
+            <MenuItem
+              component={Link}
+              to={`/profile/${user.id}/question`}
+              onClick={handleClose}
+            >
               Profile
             </MenuItem>
             <MenuItem component={Link} to={`/message`} onClick={handleClose}>
@@ -42,10 +46,10 @@ export default function User(props) {
             </MenuItem>
           </Menu>
           <Avatar
-            alt="User photo"
+            alt={`${user.name}`}
             src={user.avatarUrl}
             variant="rounded"
-            style={{ border: '1px solid white' }}
+            style={{ border: '1px solid white', cursor: 'pointer' }}
             onClick={handleClick}
           />
         </div>
