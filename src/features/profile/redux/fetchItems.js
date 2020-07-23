@@ -7,15 +7,21 @@ import {
   PROFILE_FETCH_ITEM_FAILURE,
 } from './constants';
 
+// drop older version response to keep items up to date
+//, consider using Redux-Saga in the future
+let version = 0;
 export function fetchItems(url, after) {
   if (after) {
     url = `${url}?after=${after}`;
   }
+  version += 1;
   return getRequest(
     url,
     PROFILE_FETCH_ITEM_BEGIN,
     PROFILE_FETCH_ITEM_SUCCESS,
     PROFILE_FETCH_ITEM_FAILURE,
+    null,
+    { version },
   );
 }
 
@@ -57,6 +63,13 @@ export function reducer(state, action) {
       };
 
     case PROFILE_FETCH_ITEM_SUCCESS:
+      // if version is not up to date,
+      // a newer response has already updated the state,
+      // so, just keep the current state
+      if (action.extra.version < version) {
+        return { ...state };
+      }
+
       return {
         ...state,
         items: [...state.items, ...action.data.data.children],

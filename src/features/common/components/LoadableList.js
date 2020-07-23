@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 import './LoadableList.less';
 
 export default function LoadableList(props) {
@@ -20,8 +19,9 @@ export default function LoadableList(props) {
           variant="outlined"
           color="primary"
           style={{
-            marginTop: 20,
-            minWidth: 100,
+            marginTop: 12,
+            minWidth: 120,
+            // display: 'block',
           }}
           disabled={loading}
           onClick={() => onClick()}

@@ -84,17 +84,14 @@ export default function Question(props) {
             {question.title}
           </Typography>
         </div>
-
         <div className="common-question-author">
           {`Asked by `}
           <Link to={`/user/${question.author.id}`}>{question.author.name}</Link>
           {` on ${milisecToDate(question.created)}.`}
         </div>
-
         <div className="common-question-tag-container">
           <TagList tags={question.tags} />
         </div>
-
         {answer ? (
           <Answer answer={answer} />
         ) : (

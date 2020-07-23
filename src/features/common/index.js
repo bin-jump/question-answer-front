@@ -3,8 +3,13 @@ import ContentEditor, {
   CreateEmptyState,
 } from './components/ContentEditor';
 import LoadableList from './components/LoadableList';
-import Loading, { QuestionLoading, AnswerLoading } from './components/Loading';
+import Loading, {
+  QuestionLoading,
+  AnswerLoading,
+  UserLoading,
+} from './components/Loading';
 import Question from './components/Question';
+import User from './components/User';
 import TagList from './components/TagList';
 import Pendable from './components/Pendable';
 import PendButton from './components/PendButton';
@@ -16,8 +21,10 @@ export {
   CreateEmptyState,
   ContentEditor,
   LoadableList,
+  UserLoading,
   Loading,
   QuestionLoading,
+  User,
   AnswerLoading,
   Question,
   TagList,

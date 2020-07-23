@@ -9,8 +9,7 @@ import {
 } from '../../common';
 
 export default function QuestionList(props) {
-  const { id } = { ...props };
-  const url = `/api/user/${id}/questions`;
+  const { id, url } = { ...props };
   const {
     items,
     fetchItems,
@@ -29,7 +28,7 @@ export default function QuestionList(props) {
       resetItem();
     };
   }, [resetItem]);
-
+  console.log(items);
   return (
     <div>
       <LoadableList

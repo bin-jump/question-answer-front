@@ -15,7 +15,7 @@ const devConfig = {
       'Access-Control-Allow-Origin': '*',
     },
   },
-  devtool: 'cheap-source-map',
+  devtool: 'inline-source-map',
 };
 
 module.exports = merge(baseConfig, devConfig);

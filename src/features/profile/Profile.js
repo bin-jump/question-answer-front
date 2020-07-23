@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import QuestionList from './components/QuestionList';
-import AnswerList from './components/AnswerList';
 import UserList from './components/UserList';
 import Head from './components/Head';
 
@@ -18,15 +17,33 @@ export default function Profile(props) {
           <div>
             <Route
               path={`/profile/${id}/question`}
-              render={(props) => <QuestionList id={id} />}
+              render={(props) => (
+                <QuestionList id={id} url={`/api/user/${id}/questions`} />
+              )}
             />
             <Route
               path={`/profile/${id}/answer`}
-              render={(props) => <AnswerList id={id} />}
+              render={(props) => (
+                <QuestionList id={id} url={`/api/user/${id}/answers`} />
+              )}
             />
             <Route
               path={`/profile/${id}/follow`}
-              render={(props) => <UserList id={id} />}
+              render={(props) => (
+                <UserList id={id} url={`/api/user/${id}/follow`} />
+              )}
+            />
+            <Route
+              path={`/profile/${id}/followee`}
+              render={(props) => (
+                <UserList id={id} url={`/api/user/${id}/followee`} />
+              )}
+            />
+            <Route
+              path={`/profile/${id}/follower`}
+              render={(props) => (
+                <UserList id={id} url={`/api/user/${id}/follower`} />
+              )}
             />
           </div>
         </Grid>

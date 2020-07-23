@@ -17,6 +17,7 @@ export default function reducer(state = initialState, action) {
     case PROFILE_RESET:
       return initialState;
     case PROFILE_ITEM_RESET:
+      console.log(PROFILE_ITEM_RESET);
       return {
         ...state,
         items: [],

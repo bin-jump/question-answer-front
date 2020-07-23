@@ -87,7 +87,7 @@ function Answer(props) {
           <div className="feature-question-answer-author">
             {`Posted by `}
             <Avatar
-              alt="User"
+              alt={answer.author.name}
               src={answer.author.avatarUrl}
               style={{ margin: 'auto' }}
             />

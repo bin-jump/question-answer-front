@@ -7,7 +7,7 @@ export default function Head(props) {
   const { id } = { ...props };
   const location = useLocation();
 
-  const keys = ['question', 'answer', 'follow'];
+  const keys = ['question', 'answer', 'follow', 'followee', 'follower'];
 
   const extractKey = () => {
     let path = location.pathname;
