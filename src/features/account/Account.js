@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, Route, Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Information from './components/Information';
 import Private from './components/Private';
 import { extractUrlKey } from '../common/helper';
@@ -73,7 +72,7 @@ export default function Account(props) {
                   </div>
                 </div>
                 <hr style={{ marginTop: 0 }} />
-                <div>
+                <div className="feature-account-content">
                   <Route
                     path={`/account`}
                     exact
@@ -87,7 +86,7 @@ export default function Account(props) {
                 </div>
               </div>
             ) : (
-              <Button>Signin</Button>
+              <Button color="primary">Signin</Button>
             )}
           </Paper>
         </Grid>

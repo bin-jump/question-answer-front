@@ -3,6 +3,9 @@ import { reducer as pinUser } from './pinUser';
 const initialState = {
   id: 111,
   user: null,
+  pinUserPending: false,
+
+  lastError: null,
 };
 
 const reducers = [pinUser];

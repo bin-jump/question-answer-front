@@ -1,47 +1,60 @@
-import axios from 'axios';
+import { getRequest } from '../../common/helper';
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AUTH_UPDATE_SIGNIN } from './constants';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import {
+  AUTH_UPDATE_SIGNIN_BEGIN,
+  AUTH_UPDATE_SIGNIN_SUCCESS,
+  AUTH_UPDATE_SIGNIN_FAILURE,
+} from './constants';
 
 export function pinUser() {
-  return (dispatch) => {
-    const promise = new Promise((resolve, reject) => {
-      const doRequest = axios.get('/api/user');
-      doRequest.then(
-        (res) => {
-          dispatch({
-            type: AUTH_UPDATE_SIGNIN,
-            data: res.data,
-          });
-          resolve(res);
-        },
-        (err) => {
-          console.log(err);
-          reject(err);
-        },
-      );
-    });
+  let url = '/api/user';
 
-    return promise;
-  };
+  return getRequest(
+    url,
+    AUTH_UPDATE_SIGNIN_BEGIN,
+    AUTH_UPDATE_SIGNIN_SUCCESS,
+    AUTH_UPDATE_SIGNIN_FAILURE,
+  );
 }
 
 export function usePinUser() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const { user, pinUserPending, error } = useSelector(
+    (state) => ({
+      user: state.auth.user,
+      pinUserPending: state.auth.pinUserPending,
+      error: state.auth.lastError,
+    }),
+    shallowEqual,
+  );
+
   const boundAction = useCallback(() => {
     dispatch(pinUser());
   }, [dispatch]);
 
-  return { user, pinUser: boundAction };
+  return { user, pinUser: boundAction, pinUserPending, error };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case AUTH_UPDATE_SIGNIN:
+    case AUTH_UPDATE_SIGNIN_BEGIN:
+      return {
+        ...state,
+        pinUserPending: true,
+      };
+    case AUTH_UPDATE_SIGNIN_SUCCESS:
       return {
         ...state,
         user: action.data.data,
+        pinUserPending: false,
+      };
+
+    case AUTH_UPDATE_SIGNIN_FAILURE:
+      return {
+        ...state,
+        pinUserPending: false,
+        fetchQuestionListError: action.data.error,
       };
 
     default:
