@@ -32,7 +32,9 @@ function Answer(props) {
   return (
     <div className="common-question-answer">
       <div className="common-question-answer-content">
-        <Link to={`/user/${answer.author.id}`}>{`${answer.author.name}`}</Link>
+        <Link
+          to={`/profile/${answer.author.id}`}
+        >{`${answer.author.name}`}</Link>
         {': '}
         {content}
         {show ? null : (
@@ -86,7 +88,9 @@ export default function Question(props) {
         </div>
         <div className="common-question-author">
           {`Asked by `}
-          <Link to={`/user/${question.author.id}`}>{question.author.name}</Link>
+          <Link to={`/profile/${question.author.id}`}>
+            {question.author.name}
+          </Link>
           {` on ${milisecToDate(question.created)}.`}
         </div>
         <div className="common-question-tag-container">

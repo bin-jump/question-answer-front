@@ -17,6 +17,12 @@ export default function Profile(props) {
         <Grid item xs={7}>
           <div>
             <Route
+              path={`/profile/${id}`}
+              render={(props) => (
+                <QuestionList id={id} url={`/api/user/${id}/questions`} />
+              )}
+            />
+            <Route
               path={`/profile/${id}/question`}
               render={(props) => (
                 <QuestionList id={id} url={`/api/user/${id}/questions`} />

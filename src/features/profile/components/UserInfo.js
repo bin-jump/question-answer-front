@@ -54,7 +54,7 @@ export default function UserInfo(props) {
                 {user.name}
               </Typography>
               <Typography style={{ fontSize: 13 }}>
-                {milisecToDate(user.created)}
+                {`Since ${milisecToDate(user.created)}`}
               </Typography>
             </div>
           </div>
@@ -109,21 +109,23 @@ export default function UserInfo(props) {
             </Typography>
             <Typography>{user.description}</Typography>
           </div>
-          <div className="feature-profile-userinfo-follow-button">
-            <PendButton
-              style={{
-                margin: 'auto',
-                marginTop: 15,
-                color: 'white',
-                backgroundColor: user.following ? '#ababab' : '#ea4c89',
-              }}
-              color="primary"
-              pending={followUserPending}
-              onClick={() => followUser(id, user.following)}
-            >
-              {user.following ? `Unfollow` : `Follow the guy`}
-            </PendButton>
-          </div>
+          {isMe ? null : (
+            <div className="feature-profile-userinfo-follow-button">
+              <PendButton
+                style={{
+                  margin: 'auto',
+                  marginTop: 15,
+                  color: 'white',
+                  backgroundColor: user.following ? '#ababab' : '#ea4c89',
+                }}
+                color="primary"
+                pending={followUserPending}
+                onClick={() => followUser(id, user.following)}
+              >
+                {user.following ? `Unfollow` : `Follow the guy`}
+              </PendButton>
+            </div>
+          )}
         </Paper>
       ) : (
         <UserLoading />
