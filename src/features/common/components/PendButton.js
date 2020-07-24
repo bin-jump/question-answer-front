@@ -7,16 +7,14 @@ export default function PendingButton(props) {
     ...props,
   };
   return (
-    <div>
-      <Button
-        variant={variant || 'contained'}
-        color={color || 'primary'}
-        style={style}
-        disabled={pending || disabled}
-        onClick={onClick}
-      >
-        {pending ? <CircularProgress size={24} /> : children}
-      </Button>
-    </div>
+    <Button
+      variant={variant || 'contained'}
+      color={color || 'primary'}
+      style={style}
+      disabled={pending || disabled}
+      onClick={onClick}
+    >
+      {pending ? <CircularProgress size={24} /> : children}
+    </Button>
   );
 }

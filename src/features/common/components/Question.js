@@ -72,7 +72,7 @@ export default function Question(props) {
     <Paper
       elevation={1}
       square
-      style={{ width: 650, minHeight: 180, margin: '8px 0' }}
+      style={{ width: 650, minHeight: 180, marginBottom: 8 }}
     >
       <div style={{ padding: '20px 30px' }}>
         <div className="common-question-title">

@@ -34,7 +34,7 @@ export function UserLoading(props) {
     <Paper square style={{ padding: '20px 30px', marginBottom: 10, ...style }}>
       <Skeleton variant="circle" width={40} height={40} />
       <Skeleton variant="text" height={25} />
-      <Skeleton variant="text" height={25} width={350} />
+      <Skeleton variant="text" height={25} />
     </Paper>
   );
 }

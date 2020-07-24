@@ -3,6 +3,7 @@ import { useParams, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import QuestionList from './components/QuestionList';
 import UserList from './components/UserList';
+import UserInfo from './components/UserInfo';
 import Head from './components/Head';
 
 export default function Profile(props) {
@@ -11,8 +12,8 @@ export default function Profile(props) {
   return (
     <div>
       <Head id={id} />
-      <Grid container spacing={1} style={{ margin: '50px 0', width: '100%' }}>
-        <Grid item xs={2} />
+      <Grid container spacing={1} style={{ margin: '40px 0', width: '100%' }}>
+        <Grid item xs={1} />
         <Grid item xs={7}>
           <div>
             <Route
@@ -30,7 +31,7 @@ export default function Profile(props) {
             <Route
               path={`/profile/${id}/follow`}
               render={(props) => (
-                <UserList id={id} url={`/api/user/${id}/follow`} />
+                <QuestionList id={id} url={`/api/user/${id}/follow`} />
               )}
             />
             <Route
@@ -46,6 +47,9 @@ export default function Profile(props) {
               )}
             />
           </div>
+        </Grid>
+        <Grid item xs={3} style={{ display: 'block' }}>
+          <UserInfo id={id} />
         </Grid>
       </Grid>
     </div>

@@ -28,7 +28,7 @@ export default function QuestionList(props) {
       resetItem();
     };
   }, [resetItem]);
-  console.log(items);
+
   return (
     <div>
       <LoadableList
