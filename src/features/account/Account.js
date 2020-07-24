@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Information from './components/Information';
 import Private from './components/Private';
 import { extractUrlKey } from '../common/helper';
+import { milisecToDate } from '../common/helper';
 import './Account.less';
 
 export default function Account(props) {
@@ -41,15 +42,19 @@ export default function Account(props) {
                     }}
                   />
                   <div style={{ marginTop: 50, display: 'flex' }}>
-                    <Typography
-                      style={{
-                        color: '#39434b',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                      }}
-                    >
-                      {user.name}
-                    </Typography>
+                    <div style={{ width: '100%' }}>
+                      <Typography
+                        style={{
+                          color: '#39434b',
+                          fontWeight: 'bold',
+                          fontSize: 20,
+                        }}
+                      >
+                        {user.name}
+                      </Typography>
+                      <div>{`since ${milisecToDate(user.created)}`}</div>
+                    </div>
+
                     <div style={{ width: 300 }} />
                     <div
                       className={`feature-account-tab-name ${
