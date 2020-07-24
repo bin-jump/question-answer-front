@@ -26,7 +26,10 @@ export default function WriteAnswer(props) {
 
   const onPostAnser = () => {
     let content = toHtml(editorState.getCurrentContent());
-    //console.log(content);
+
+    if (!editorState.getCurrentContent().hasText()) {
+      return;
+    }
     addAnswer(questionId, content);
     setEditorState(CreateEmptyState());
   };

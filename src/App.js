@@ -11,6 +11,7 @@ import QuestionDetail from './features/question/QuestionDetail';
 import Profile from './features/profile/Profile';
 import PinUser from './features/auth/PinUser';
 import Signin from './features/auth/Signin';
+import Account from './features/account/Account';
 
 import './styles/index.less';
 import axios from 'axios';
@@ -49,6 +50,7 @@ class App extends Component {
                 <Route path="/signup" exact component={Signin} />
                 <Route path="/question/:id" exact component={QuestionDetail} />
                 <Route path="/profile/:id" component={Profile} />
+                <Route path="/account" component={Account} />
               </Router>
               <CssBaseline />
             </Provider>

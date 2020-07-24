@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Link, useLocation } from 'react-router-dom';
+import { extractUrlKey } from '../../common/helper';
 import './Head.less';
 
 export default function Head(props) {
@@ -9,16 +10,7 @@ export default function Head(props) {
 
   const keys = ['question', 'answer', 'follow', 'followee', 'follower'];
 
-  const extractKey = () => {
-    let path = location.pathname;
-    if (path.endsWith('/')) {
-      path = path.slice(0, -1);
-    }
-    let key = path.split('/').slice(-1)[0];
-    return key;
-  };
-
-  const curKey = extractKey();
+  const curKey = extractUrlKey(location.pathname);
 
   return (
     <div className="feature-profile-head">

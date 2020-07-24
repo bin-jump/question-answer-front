@@ -146,3 +146,11 @@ export function milisecToDate(timeLong) {
   const mon = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
   return `${mon} ${day}, ${year}`;
 }
+
+export function extractUrlKey(path) {
+  if (path.endsWith('/')) {
+    path = path.slice(0, -1);
+  }
+  let key = path.split('/').slice(-1)[0];
+  return key;
+}

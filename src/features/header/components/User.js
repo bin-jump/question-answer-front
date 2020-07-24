@@ -38,6 +38,9 @@ export default function User(props) {
             >
               Profile
             </MenuItem>
+            <MenuItem component={Link} to={`/account`} onClick={handleClose}>
+              Account
+            </MenuItem>
             <MenuItem component={Link} to={`/message`} onClick={handleClose}>
               Message
             </MenuItem>
