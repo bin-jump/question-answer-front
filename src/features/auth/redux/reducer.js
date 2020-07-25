@@ -4,6 +4,7 @@ const initialState = {
   id: 111,
   user: null,
   pinUserPending: false,
+  userAlreadyPin: false,
 
   lastError: null,
 };

@@ -48,6 +48,7 @@ export function reducer(state, action) {
         ...state,
         user: action.data.data,
         pinUserPending: false,
+        userAlreadyPin: true,
       };
 
     case AUTH_UPDATE_SIGNIN_FAILURE:

@@ -1,23 +1,27 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, Route, Link } from 'react-router-dom';
+import { useLocation, Route, Link, Redirect } from 'react-router-dom';
+import Skeleton from '@material-ui/lab/Skeleton';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Information from './components/Information';
 import Private from './components/Private';
-import { extractUrlKey } from '../common/helper';
-import { milisecToDate } from '../common/helper';
+import { milisecToDate, extractUrlKey } from '../common/helper';
 import './Account.less';
 
 export default function Account(props) {
   const user = useSelector((state) => state.auth.user);
+  const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
   const location = useLocation();
 
   const urlKey = extractUrlKey(location.pathname);
   //console.log(urlKey);
+
+  if (userAlreadyPin && user === null) {
+    return <Redirect to="/signin" />;
+  }
 
   return (
     <div>
@@ -93,7 +97,23 @@ export default function Account(props) {
                 </div>
               </div>
             ) : (
-              <Button color="primary">Signin</Button>
+              <div style={{ padding: 50 }}>
+                <div style={{ display: 'flex' }}>
+                  <Skeleton variant="rect" height={90} width={90} />
+                  <Skeleton
+                    style={{ margin: '30px 0 0 25px' }}
+                    variant="text"
+                    height={50}
+                    width={120}
+                  />
+                </div>
+
+                <div style={{ paddingLeft: 50, paddingTop: 70 }}>
+                  <Skeleton variant="text" height={50} width={500} />
+                  <Skeleton variant="text" height={50} width={500} />
+                  <Skeleton variant="text" height={50} width={500} />
+                </div>
+              </div>
             )}
           </Paper>
         </Grid>
