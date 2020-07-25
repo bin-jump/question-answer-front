@@ -52,10 +52,12 @@ export default function Account(props) {
                       >
                         {user.name}
                       </Typography>
-                      <div>{`since ${milisecToDate(user.created)}`}</div>
+                      <div style={{ color: 'grey' }}>{`since ${milisecToDate(
+                        user.created,
+                      )}`}</div>
                     </div>
 
-                    <div style={{ width: 300 }} />
+                    <div style={{ width: 240 }} />
                     <div
                       className={`feature-account-tab-name ${
                         urlKey === 'account'

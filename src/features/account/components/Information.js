@@ -20,7 +20,12 @@ export default function Information(props) {
         <div>
           <div className="feature-account-content-item">
             <div className="feature-account-content-item-name">Email: </div>
-            <TextField disabled={!edit} value={user.email} type="email" />
+            <TextField
+              disabled={!edit}
+              value={user.email}
+              type="email"
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+            />
           </div>
           <div className="feature-account-content-item">
             <div className="feature-account-content-item-name">Age: </div>
@@ -29,6 +34,8 @@ export default function Information(props) {
               value={user.age}
               type="number"
               style={{ width: 80 }}
+              InputProps={{ inputProps: { min: 0, max: 200 } }}
+              onChange={(e) => setUser({ ...user, age: e.target.value })}
             />
             <div
               className="feature-account-content-item-name"
@@ -41,8 +48,9 @@ export default function Information(props) {
               defaultValue={user.gender}
               disabled={!edit}
               value={user.gender}
+              onChange={(e) => setUser({ ...user, gender: e.target.value })}
             >
-              <MenuItem value="">--</MenuItem>
+              <MenuItem value={''}>--</MenuItem>
               <MenuItem value={'MALE'}>Male</MenuItem>
               <MenuItem value={'FEMALE'}>Female</MenuItem>
             </Select>
@@ -51,7 +59,13 @@ export default function Information(props) {
             <div className="feature-account-content-item-name">
               Description:{' '}
             </div>
-            <TextField value={user.description} disabled={!edit} />
+            <TextField
+              onChange={(e) =>
+                setUser({ ...user, description: e.target.value })
+              }
+              value={user.description}
+              disabled={!edit}
+            />
           </div>
           {edit ? (
             <PendButton style={{ float: 'right' }}>Save</PendButton>
