@@ -18,6 +18,7 @@ export default function Profile(props) {
           <div>
             <Route
               path={`/profile/${id}`}
+              exact
               render={(props) => (
                 <QuestionList id={id} url={`/api/user/${id}/questions`} />
               )}
