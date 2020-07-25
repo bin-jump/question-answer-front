@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { ContentEditor } from '../../common';
+import {
+  toHtml,
+  CreateEmptyState,
+  ContentEditor,
+  PendButton,
+} from '../../common';
 import './Ask.less';
 
 export default function Ask(props) {
-  const [open, setOpen] = React.useState(false);
-  const [question, setQuestion] = React.useState('');
-  const [description, setDescription] = React.useState('');
+  const TAG_NUM_LIMIT = 5;
+  const [open, setOpen] = useState(false);
+  const [values, setValues] = useState({
+    title: '',
+    tagName: '',
+    tags: [],
+  });
+  const [editorState, setEditorState] = useState(CreateEmptyState());
   const user = props.user;
 
   const handleClickOpen = () => {
@@ -23,16 +34,41 @@ export default function Ask(props) {
     setOpen(false);
   };
 
-  const handleQuestionChange = (content) => {
-    setQuestion(content);
+  const handleTagDelete = (tag) => {
+    setValues({
+      ...values,
+      tags: values.tags.filter((item) => item.label !== tag.label),
+    });
   };
 
-  const handleContentChange = (content) => {
-    setDescription(content);
+  const handleTagAdd = () => {
+    if (
+      values.tags.filter((item) => item.label === values.tagName).length > 0
+    ) {
+      return;
+    }
+
+    setValues({
+      ...values,
+      tags: [...values.tags, { label: values.tagName }],
+      tagName: '',
+    });
+  };
+
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
   };
 
   const handleSubmit = () => {
-    console.log({ question, description });
+    if (values.tags.length >= TAG_NUM_LIMIT) {
+      return;
+    }
+    let content = toHtml(editorState.getCurrentContent());
+    if (!editorState.getCurrentContent().hasText()) {
+      return;
+    }
+
+    setEditorState(CreateEmptyState());
     handleClose();
   };
 
@@ -62,13 +98,58 @@ export default function Ask(props) {
             id="name"
             label="Question"
             fullWidth
-            onChange={(event) => handleQuestionChange(event.target.value)}
+            onChange={(e) => setValues({ ...values, title: e.target.value })}
           />
-          <ContentEditor onContentChange={handleContentChange} />
+          {/* <ContentEditor onContentChange={handleContentChange} /> */}
+          <ContentEditor
+            onEditorStateChange={onEditorStateChange}
+            editorState={editorState}
+          />
+          <div className="feature-header-ask">
+            <TextField
+              value={values.tagName}
+              style={{ margin: '0 20px', width: 180 }}
+              placeholder={'max 5 tags, word only...'}
+              onChange={(e) =>
+                setValues({ ...values, tagName: e.target.value })
+              }
+            />
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => handleTagAdd()}
+            >
+              Add Tag
+            </Button>
+            <div
+              style={{
+                margin: '5px 10px 0 0',
+                fontSize: 16,
+                display: 'inline-block',
+                width: 100,
+                float: 'right',
+                color: TAG_NUM_LIMIT >= values.tags.length ? '' : 'red',
+              }}
+            >{`${
+              TAG_NUM_LIMIT - values.tags.length
+            } / ${TAG_NUM_LIMIT} remains`}</div>
+          </div>
+          <div>
+            {values.tags.map((item) => {
+              return (
+                <li>
+                  <Chip
+                    label={item.label}
+                    onDelete={() => handleTagDelete(item)}
+                  />
+                </li>
+              );
+            })}
+          </div>
         </DialogContent>
 
         <DialogActions>
-          <Button
+          <PendButton
             onClick={handleSubmit}
             style={{
               color: '#33b2dd',
@@ -76,7 +157,7 @@ export default function Ask(props) {
             }}
           >
             Submit
-          </Button>
+          </PendButton>
         </DialogActions>
       </Dialog>
     </div>
