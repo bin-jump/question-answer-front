@@ -26,13 +26,13 @@ export function useFetchQuestionList() {
     questionList,
     questionAfter,
     fetchQuestionListPending,
-    fetchQuestionListError,
+    lastError,
   } = useSelector(
     (state) => ({
       questionList: state.home.questionList,
       questionAfter: state.home.questionAfter,
       fetchQuestionListPending: state.home.fetchQuestionListPending,
-      fetchQuestionListError: state.home.fetchQuestionListError,
+      lastError: state.home.lastError,
     }),
     shallowEqual,
   );
@@ -48,7 +48,7 @@ export function useFetchQuestionList() {
     questionList,
     fetchQuestionList: boundAction,
     fetchQuestionListPending,
-    fetchQuestionListError,
+    lastError,
     questionAfter,
   };
 }
@@ -59,7 +59,7 @@ export function reducer(state, action) {
       return {
         ...state,
         fetchQuestionListPending: true,
-        fetchQuestionListError: null,
+        lastError: null,
       };
 
     case HOME_FETCH_QUESTION_LIST_SUCCESS:
@@ -68,14 +68,14 @@ export function reducer(state, action) {
         questionList: [...state.questionList, ...action.data.data.children],
         questionAfter: action.data.data.dist ? action.data.data.after : null,
         fetchQuestionListPending: false,
-        fetchQuestionListError: null,
+        lastError: null,
       };
 
     case HOME_FETCH_QUESTION_LIST_FAILURE:
       return {
         ...state,
         fetchQuestionListPending: false,
-        fetchQuestionListError: action.data.error,
+        lastError: action.data.error,
       };
 
     default:

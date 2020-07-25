@@ -10,7 +10,7 @@ export default function PendingButton(props) {
     <Button
       variant={variant || 'contained'}
       color={color || 'primary'}
-      style={{ ...style, color: 'white' }}
+      style={{ ...style }}
       disabled={pending || disabled}
       onClick={onClick}
     >

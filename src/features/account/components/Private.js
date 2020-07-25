@@ -85,7 +85,9 @@ export default function Private(props) {
           }
         />
       </div>
-      <PendButton style={{ float: 'right' }}>Change Password</PendButton>
+      <PendButton style={{ float: 'right', color: 'white' }}>
+        Change Password
+      </PendButton>
     </div>
   );
 }

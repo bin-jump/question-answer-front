@@ -68,7 +68,9 @@ export default function Information(props) {
             />
           </div>
           {edit ? (
-            <PendButton style={{ float: 'right' }}>Save</PendButton>
+            <PendButton style={{ float: 'right', color: 'white' }}>
+              Save
+            </PendButton>
           ) : (
             <div
               className="feature-account-edit-click"

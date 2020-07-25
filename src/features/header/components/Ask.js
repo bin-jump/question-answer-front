@@ -13,6 +13,7 @@ import {
   ContentEditor,
   PendButton,
 } from '../../common';
+import { useAddQuestion } from '../../home/redux/addQuestion';
 import './Ask.less';
 
 export default function Ask(props) {
@@ -23,8 +24,9 @@ export default function Ask(props) {
     tagName: '',
     tags: [],
   });
+  const { addQuestion, addQuestionPending } = useAddQuestion();
   const [editorState, setEditorState] = useState(CreateEmptyState());
-  const user = props.user;
+  const { user } = { ...props };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,6 +44,9 @@ export default function Ask(props) {
   };
 
   const handleTagAdd = () => {
+    if (!values.tagName) {
+      return;
+    }
     if (
       values.tags.filter((item) => item.label === values.tagName).length > 0
     ) {
@@ -63,18 +68,22 @@ export default function Ask(props) {
     if (values.tags.length >= TAG_NUM_LIMIT) {
       return;
     }
-    let content = toHtml(editorState.getCurrentContent());
-    if (!editorState.getCurrentContent().hasText()) {
+    if (!values.title) {
       return;
     }
-
+    let content = toHtml(editorState.getCurrentContent());
+    // if (!editorState.getCurrentContent().hasText()) {
+    //   return;
+    // }
+    let question = { title: values.title, body: content, tags: values.tags };
+    addQuestion(question);
     setEditorState(CreateEmptyState());
     handleClose();
   };
 
   return (
     <div>
-      <Button
+      <PendButton
         variant="contained"
         style={{
           background: 'white',
@@ -83,10 +92,11 @@ export default function Ask(props) {
           fontSize: '12px',
         }}
         onClick={handleClickOpen}
-        disabled={user == null}
+        pending={addQuestionPending}
+        //disabled={user == null}
       >
         Ask Question
-      </Button>
+      </PendButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{'Ask a Question'}</DialogTitle>
         <DialogContent>
@@ -152,9 +162,10 @@ export default function Ask(props) {
           <PendButton
             onClick={handleSubmit}
             style={{
-              color: '#33b2dd',
+              color: 'white',
               marginLeft: '100px',
             }}
+            pending={addQuestionPending}
           >
             Submit
           </PendButton>

@@ -6,7 +6,7 @@ export default function TagList(props) {
   return (
     <div className="common-tag-container">
       {tags.map((item) => (
-        <div className="common-tag">{item.name}</div>
+        <div className="common-tag">{item.label}</div>
       ))}
     </div>
   );

@@ -1,14 +1,16 @@
 import { reducer as fetchQuestionsReducer } from './fetchQuestionList';
+import { reducer as addQuestionReducer } from './addQuestion';
 import { HOME_RESET } from './constants';
 
 const initialState = {
   questionAfter: null,
   questionList: [],
   fetchQuestionListPending: false,
-  fetchQuestionListError: null,
+  addQuestionPending: false,
+  lastError: null,
 };
 
-const reducers = [fetchQuestionsReducer];
+const reducers = [fetchQuestionsReducer, addQuestionReducer];
 
 export default function reducer(state = initialState, action) {
   let newState;
