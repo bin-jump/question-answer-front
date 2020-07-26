@@ -15,6 +15,7 @@ export default function Message(props) {
             <div className="feature-message-conversation">
               <Conversation />
             </div>
+            {/* <div style={{ borderLeft: '1px dashed green', height: 300 }} /> */}
             <div className="feature-message-chat">
               <Chat />
             </div>

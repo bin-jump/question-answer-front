@@ -147,6 +147,15 @@ export function milisecToDate(timeLong) {
   return `${mon} ${day}, ${year}`;
 }
 
+export function milisecToMonDay(timeLong) {
+  timeLong *= 1000;
+  let date = new Date(timeLong);
+  //const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+  const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+  const mon = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date);
+  return `${mon}/${day}`;
+}
+
 export function extractUrlKey(path) {
   if (path.endsWith('/')) {
     path = path.slice(0, -1);

@@ -1,0 +1,1 @@
+export { useFetchChats } from './fetchChats';
