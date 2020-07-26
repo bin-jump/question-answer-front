@@ -5,21 +5,27 @@ import Badge from '@material-ui/core/Badge';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CloseIcon from '@material-ui/icons/Close';
 import { useFetchChats } from '../redux/hooks';
 import { milisecToMonDay } from '../../common/helper';
-import { LoadableList } from '../../common';
+import { LoadableList, Loading } from '../../common';
 import './Conversation.less';
 
 function ChatItem(props) {
-  const { chat } = { ...props };
+  const { chat, selectChatUser, selected } = { ...props };
 
   return (
-    <div className="feature-message-chat-item-container">
-      <div className="feature-message-chat-item">
+    <div className={`feature-message-chat-item-container`}>
+      <div
+        onClick={() => selectChatUser(chat.withUser)}
+        className={`feature-message-chat-item ${
+          selected ? 'feature-message-chat-item-selected' : ''
+        }`}
+      >
         <Avatar
-          alt={chat.you.name}
-          src={chat.you.avatarUrl}
+          alt={chat.withUser.name}
+          src={chat.withUser.avatarUrl}
           style={{
             border: '1px solid #dce3e8',
             width: 40,
@@ -28,7 +34,7 @@ function ChatItem(props) {
           }}
         />
         <div style={{ width: 180 }}>
-          <div className="chat-user-name">{chat.you.name}</div>
+          <div className="chat-user-name">{chat.withUser.name}</div>
           <div className="chat-cover-text">{chat.coverText}</div>
         </div>
 
@@ -48,6 +54,9 @@ function ChatItem(props) {
 }
 
 export default function Conversation(props) {
+  const { chatUser, setChatUser } = { ...props };
+  const selectedId = chatUser ? chatUser.id : '';
+
   const [showSearch, setShowSearch] = useState(false);
   const {
     chats,
@@ -59,6 +68,19 @@ export default function Conversation(props) {
   useEffect(() => {
     fetchChats();
   }, [fetchChats]);
+
+  const selectChatUser = (user) => {
+    //console.log(user, chatUser);
+    if (chatUser) {
+      if (user.id === chatUser.id) {
+        setChatUser(null);
+      } else {
+        setChatUser(user);
+      }
+    } else {
+      setChatUser(user);
+    }
+  };
 
   return (
     <div className="feature-message-conversation">
@@ -108,9 +130,29 @@ export default function Conversation(props) {
             loading={fetchChatPending}
             onLoadClick={() => fetchChats(fetchChatPending)}
           >
-            {chats.map((item) => {
-              return <ChatItem chat={item} />;
-            })}
+            {fetchChatPending ? (
+              <Loading />
+            ) : (
+              chats.map((item) => {
+                return (
+                  <ChatItem
+                    chat={item}
+                    selected={item.withUser.id === selectedId}
+                    selectChatUser={selectChatUser}
+                  />
+                );
+              })
+            )}
+            {chats.length === 0 ? (
+              <ContactMailIcon
+                style={{
+                  marginTop: 60,
+                  width: 80,
+                  height: 80,
+                  color: '#dedede',
+                }}
+              />
+            ) : null}
           </LoadableList>
         )}
       </div>

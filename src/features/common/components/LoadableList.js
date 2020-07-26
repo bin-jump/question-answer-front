@@ -21,6 +21,7 @@ export default function LoadableList(props) {
           style={{
             marginTop: 12,
             minWidth: 120,
+            marginBottom: 10,
             // display: 'block',
           }}
           disabled={loading}
