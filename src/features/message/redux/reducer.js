@@ -1,6 +1,6 @@
 import { reducer as fetchChatReducer } from './fetchChats';
 import { reducer as fetchMessageReducer } from './fetchMessages';
-import { MESSAGE_RESET } from './constants';
+import { MESSAGE_RESET, MESSAGE_CHAT_LIST_RESET } from './constants';
 
 const initialState = {
   chats: [],
@@ -21,6 +21,9 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case MESSAGE_RESET:
       return initialState;
+    case MESSAGE_CHAT_LIST_RESET:
+      return { ...state, messages: [], fetchMessageAfter: null };
+
     default:
       newState = state;
       break;

@@ -130,7 +130,7 @@ export default function Conversation(props) {
             loading={fetchChatPending}
             onLoadClick={() => fetchChats(fetchChatPending)}
           >
-            {fetchChatPending ? (
+            {fetchChatPending && chats.length === 0 ? (
               <Loading />
             ) : (
               chats.map((item) => {

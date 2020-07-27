@@ -7,17 +7,21 @@ import {
   MESSAGE_FETCH_MESSAGE_FAILURE,
 } from './constants';
 
+let version = 0;
+
 export function fetchMessages(id, after) {
   let url = `/api/message/${id}`;
   if (after) {
     url = `${url}?after=${after}`;
   }
+  version += 1;
   return getRequest(
     url,
     MESSAGE_FETCH_MESSAGE_BEGIN,
     MESSAGE_FETCH_MESSAGE_SUCCESS,
     MESSAGE_FETCH_MESSAGE_FAILURE,
     id,
+    { version },
   );
 }
 
@@ -64,6 +68,10 @@ export function reducer(state, action) {
       };
 
     case MESSAGE_FETCH_MESSAGE_SUCCESS:
+      //console.log(action.extra.version);
+      if (action.extra.version < version) {
+        return state;
+      }
       return {
         ...state,
         messages: [...action.data.data.children, ...state.messages],

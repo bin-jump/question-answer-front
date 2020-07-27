@@ -4,8 +4,9 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import { useFetchMessages } from '../redux/hooks';
-import { LoadableList, PendButton } from '../../common';
+import { PendIcon, PendButton, Loading } from '../../common';
 import { milisecToTime } from '../../common/helper';
 import './Chat.less';
 
@@ -109,9 +110,24 @@ export default function Chat(props) {
             <Typography style={{ marginTop: 10, fontSize: 18 }}>
               {chatUser.name}
             </Typography>
+            {fetchMessagePending && messages.length === 0 ? (
+              <Loading style={{ marginTop: 20 }} />
+            ) : null}
           </div>
           <hr style={{ width: '80%' }} />
           <div className="feature-message-chat-content">
+            {fetchMessageAfter ? (
+              <div style={{ display: 'block', textAlign: 'center' }}>
+                <PendIcon
+                  onClick={() => fetchMessages(chatUser.id, fetchMessageAfter)}
+                  pending={fetchMessagePending}
+                  //disabled={true}
+                >
+                  <MoreHorizOutlinedIcon />
+                </PendIcon>
+              </div>
+            ) : null}
+
             {messages.map((item) => {
               return (
                 <ChatItem user={user} chatUser={chatUser} message={item} />

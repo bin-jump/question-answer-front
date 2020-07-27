@@ -39,10 +39,11 @@ export function UserLoading(props) {
   );
 }
 
-export default function Loading() {
+export default function Loading(props) {
+  const { style } = { ...props };
   return (
     <div style={{ textAlign: 'center' }} key={0}>
-      <CircularProgress />
+      <CircularProgress style={{ ...style }} />
     </div>
   );
 }

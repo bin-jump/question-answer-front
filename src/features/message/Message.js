@@ -5,11 +5,18 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Conversation from './components/Conversation';
 import Chat from './components/Chat';
+import { useChatReset } from './redux/hooks';
 import './Message.less';
 
 export default function Message(props) {
   const [chatUser, setChatUser] = useState(null);
   const user = useSelector((state) => state.auth.user);
+
+  const { resetChat } = useChatReset();
+  const selectChatUser = (u) => {
+    resetChat();
+    setChatUser(u);
+  };
 
   return (
     <div>
@@ -18,7 +25,7 @@ export default function Message(props) {
         <Grid item xs={8}>
           <Paper square style={{ height: 500, display: 'flex' }}>
             <div className="feature-message-conversation">
-              <Conversation chatUser={chatUser} setChatUser={setChatUser} />
+              <Conversation chatUser={chatUser} setChatUser={selectChatUser} />
             </div>
             {/* <div style={{ borderLeft: '1px dashed green', height: 300 }} /> */}
             <div className="feature-message-chat">
