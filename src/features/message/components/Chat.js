@@ -90,17 +90,29 @@ export default function Chat(props) {
   const [message, setMessage] = useState('');
 
   const {
-    messages,
-    fetchMessagePending,
-    fetchMessageAfter,
+    // messages,
+    // fetchMessagePending,
+    // fetchMessageAfter,
     fetchMessages,
+    chats,
   } = useFetchMessages();
 
+  let messages = [];
+  let fetchMessagePending = false;
+  let fetchMessageAfter = null;
+  chats.forEach((item) => {
+    if (chatUser && chatUser.id === item.withId) {
+      messages = item.messages;
+      fetchMessagePending = item.messagePending;
+      fetchMessageAfter = item.messageAfter;
+    }
+  });
+
   useEffect(() => {
-    if (chatUser) {
+    if (chatUser && messages.length === 0) {
       fetchMessages(chatUser.id);
     }
-  }, [fetchMessages, chatUser]);
+  }, [fetchMessages, chatUser, messages]);
 
   return (
     <div style={{ width: '100%', height: '100%' }}>

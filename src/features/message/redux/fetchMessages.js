@@ -31,12 +31,16 @@ export function useFetchMessages() {
     messages,
     fetchMessagePending,
     fetchMessageAfter,
+
+    chats,
     error,
   } = useSelector(
     (state) => ({
       messages: state.message.messages,
       fetchMessagePending: state.message.fetchMessagePending,
       fetchMessageAfter: state.message.fetchMessageAfter,
+
+      chats: state.message.chats,
       error: state.message.lastError,
     }),
     shallowEqual,
@@ -54,6 +58,8 @@ export function useFetchMessages() {
     messages,
     fetchMessagePending,
     fetchMessageAfter,
+
+    chats,
     error,
   };
 }
@@ -63,28 +69,53 @@ export function reducer(state, action) {
     case MESSAGE_FETCH_MESSAGE_BEGIN:
       return {
         ...state,
-        fetchMessagePending: true,
+        //fetchMessagePending: true,
+
+        chats: state.chats.map((item) => {
+          if (item.withId === action.id) {
+            item.messagePending = true;
+            return { ...item };
+          }
+          return item;
+        }),
         lastError: null,
       };
 
     case MESSAGE_FETCH_MESSAGE_SUCCESS:
       //console.log(action.extra.version);
-      if (action.extra.version < version) {
-        return state;
-      }
+      // if (action.extra.version < version) {
+      //   return state;
+      // }
       return {
         ...state,
-        messages: [...action.data.data.children, ...state.messages],
-        fetchMessagePending: false,
-        fetchMessageAfter: action.data.data.after,
+        // messages: [...action.data.data.children, ...state.messages],
+        // fetchMessagePending: false,
+        // fetchMessageAfter: action.data.data.after,
 
+        chats: state.chats.map((item) => {
+          if (item.withId === action.id) {
+            item.messagePending = false;
+            item.messages = [...item.messages, ...action.data.data.children];
+            item.messageAfter = action.data.data.after;
+            return { ...item };
+          }
+          return item;
+        }),
         lastError: null,
       };
 
     case MESSAGE_FETCH_MESSAGE_FAILURE:
       return {
         ...state,
-        fetchMessagePending: false,
+        //fetchMessagePending: false,
+
+        chats: state.chats.map((item) => {
+          if (item.withId === action.id) {
+            item.messagePending = false;
+            return { ...item };
+          }
+          return item;
+        }),
         lastError: action.data.error,
       };
 
