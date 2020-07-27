@@ -64,6 +64,7 @@ export function reducer(state, action) {
           ...state.chats,
           ...action.data.data.children.map((item) => {
             item.messages = [];
+            item.messagePending = false;
             item.messageAfter = null;
             return item;
           }),

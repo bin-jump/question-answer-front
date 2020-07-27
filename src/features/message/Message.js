@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation, Route, Link, Redirect } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Conversation from './components/Conversation';
@@ -7,6 +9,7 @@ import './Message.less';
 
 export default function Message(props) {
   const [chatUser, setChatUser] = useState(null);
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <div>
@@ -19,7 +22,7 @@ export default function Message(props) {
             </div>
             {/* <div style={{ borderLeft: '1px dashed green', height: 300 }} /> */}
             <div className="feature-message-chat">
-              <Chat chatUser={chatUser} />
+              <Chat user={user} chatUser={chatUser} />
             </div>
           </Paper>
         </Grid>

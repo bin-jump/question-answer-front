@@ -156,6 +156,18 @@ export function milisecToMonDay(timeLong) {
   return `${mon}/${day}`;
 }
 
+export function milisecToTime(timeLong) {
+  timeLong *= 1000;
+  let date = new Date(timeLong);
+  //const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+  const hour = new Intl.DateTimeFormat('en', {
+    hour: '2-digit',
+    hour12: false,
+  }).format(date);
+  const min = new Intl.DateTimeFormat('en', { minute: '2-digit' }).format(date);
+  return `${hour}:${min}`;
+}
+
 export function extractUrlKey(path) {
   if (path.endsWith('/')) {
     path = path.slice(0, -1);
