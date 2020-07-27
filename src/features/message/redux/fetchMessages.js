@@ -36,9 +36,9 @@ export function useFetchMessages() {
     error,
   } = useSelector(
     (state) => ({
-      messages: state.message.messages,
-      fetchMessagePending: state.message.fetchMessagePending,
-      fetchMessageAfter: state.message.fetchMessageAfter,
+      // messages: state.message.messages,
+      // fetchMessagePending: state.message.fetchMessagePending,
+      // fetchMessageAfter: state.message.fetchMessageAfter,
 
       chats: state.message.chats,
       error: state.message.lastError,

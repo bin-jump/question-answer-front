@@ -1,6 +1,8 @@
 import { reducer as fetchChatReducer } from './fetchChats';
 import { reducer as fetchMessageReducer } from './fetchMessages';
 import { reducer as fetchUnreadChatReducer } from './fetchUnreadChats';
+import { reducer as fetchUnreadMessageReducer } from './fetchUnreadMessage';
+
 import { MESSAGE_RESET, MESSAGE_CHAT_LIST_RESET } from './constants';
 
 const initialState = {
@@ -21,6 +23,7 @@ const reducers = [
   fetchChatReducer,
   fetchMessageReducer,
   fetchUnreadChatReducer,
+  fetchUnreadMessageReducer,
 ];
 
 export default function reducer(state = initialState, action) {

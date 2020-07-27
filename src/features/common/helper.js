@@ -119,6 +119,27 @@ export function postRequest(
   });
 }
 
+export function putRequest(
+  url,
+  data,
+  beginConst,
+  successConst,
+  failureConst,
+  id,
+  extra,
+) {
+  return makeRequest({
+    url,
+    data,
+    method: 'PUT',
+    beginConst,
+    successConst,
+    failureConst,
+    id,
+    extra,
+  });
+}
+
 export function deleteRequest(
   url,
   beginConst,

@@ -5,10 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
-import { useFetchMessages } from '../redux/hooks';
+import { useFetchMessages, useFetchUnreadMessages } from '../redux/hooks';
 import { PendIcon, PendButton, Loading } from '../../common';
 import { milisecToTime } from '../../common/helper';
 import './Chat.less';
+import { Button } from '@material-ui/core';
 
 function ChatItemMe(props) {
   const { messageSender, message } = { ...props };
@@ -86,7 +87,7 @@ function ChatItem(props) {
 }
 
 export default function Chat(props) {
-  const { chatUser, user } = { ...props };
+  const { chatUser, user, isNew } = { ...props };
   const [message, setMessage] = useState('');
 
   const {
@@ -97,14 +98,19 @@ export default function Chat(props) {
     chats,
   } = useFetchMessages();
 
+  const { fetchUnreadMessages } = useFetchUnreadMessages();
+
   let messages = [];
   let fetchMessagePending = false;
   let fetchMessageAfter = null;
+  let unreadMessagePending = false;
+
   chats.forEach((item) => {
     if (chatUser && chatUser.id === item.withId) {
       messages = item.messages;
       fetchMessagePending = item.messagePending;
       fetchMessageAfter = item.messageAfter;
+      unreadMessagePending = item.unreadMessagePending;
     }
   });
 
@@ -114,15 +120,23 @@ export default function Chat(props) {
     }
   }, [fetchMessages, chatUser, messages]);
 
+  const fetchUnread = () => {
+    if (chatUser) {
+      fetchUnreadMessages(chatUser.id);
+    }
+  };
+
   return (
     <div style={{ width: '100%', height: '100%' }}>
       {chatUser ? (
         <div>
           <div className="feature-message-chat-head">
+            <Button onClick={() => fetchUnread()}>Test</Button>
             <Typography style={{ marginTop: 10, fontSize: 18 }}>
               {chatUser.name}
             </Typography>
-            {fetchMessagePending && messages.length === 0 ? (
+            {(fetchMessagePending && messages.length === 0) ||
+            unreadMessagePending ? (
               <Loading style={{ marginTop: 20 }} />
             ) : null}
           </div>

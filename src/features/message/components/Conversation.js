@@ -16,6 +16,13 @@ import { Button } from '@material-ui/core';
 function ChatItem(props) {
   const { chat, selectChatUser, selected } = { ...props };
 
+  const trimText = (text) => {
+    if (text.length < 20) {
+      return text;
+    }
+    return `${text.substring(0, 20)}...`;
+  };
+
   return (
     <div className={`feature-message-chat-item-container`}>
       <div
@@ -36,7 +43,7 @@ function ChatItem(props) {
         />
         <div style={{ width: 180 }}>
           <div className="chat-user-name">{chat.withUser.name}</div>
-          <div className="chat-cover-text">{chat.coverText}</div>
+          <div className="chat-cover-text">{trimText(chat.coverText)}</div>
         </div>
 
         <div style={{ width: 50 }}>
