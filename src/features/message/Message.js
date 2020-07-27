@@ -13,9 +13,9 @@ export default function Message(props) {
   const user = useSelector((state) => state.auth.user);
 
   const { resetChat } = useChatReset();
-  const selectChatUser = (u) => {
+  const selectUser = (user) => {
     resetChat();
-    setChatUser(u);
+    setChatUser(user);
   };
 
   return (
@@ -25,7 +25,7 @@ export default function Message(props) {
         <Grid item xs={8}>
           <Paper square style={{ height: 500, display: 'flex' }}>
             <div className="feature-message-conversation">
-              <Conversation chatUser={chatUser} setChatUser={selectChatUser} />
+              <Conversation chatUser={chatUser} selectUser={selectUser} />
             </div>
             {/* <div style={{ borderLeft: '1px dashed green', height: 300 }} /> */}
             <div className="feature-message-chat">

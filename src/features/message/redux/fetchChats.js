@@ -48,6 +48,23 @@ export function useFetchChats() {
   };
 }
 
+// in case another chat list update occurred,
+// before fetch success happened
+const mergeChat = (curChats, newChats) => {
+  let ids = {};
+  curChats.forEach((item) => {
+    ids[item.id] = item;
+  });
+  let news = [];
+  newChats.forEach((item) => {
+    if (!ids[item.id]) {
+      news.push(item);
+    }
+  });
+
+  return [...curChats, ...news];
+};
+
 export function reducer(state, action) {
   switch (action.type) {
     case MESSAGE_FETCH_CHAT_BEGIN:
@@ -58,17 +75,16 @@ export function reducer(state, action) {
       };
 
     case MESSAGE_FETCH_CHAT_SUCCESS:
+      let res = action.data.data.children.map((item) => {
+        item.messages = [];
+        item.messagePending = false;
+        item.messageAfter = null;
+        return item;
+      });
+      res = mergeChat(state.chats, res);
       return {
         ...state,
-        chats: [
-          ...state.chats,
-          ...action.data.data.children.map((item) => {
-            item.messages = [];
-            item.messagePending = false;
-            item.messageAfter = null;
-            return item;
-          }),
-        ],
+        chats: res,
         fetchChatAfter: action.data.data.after,
         fetchChatPending: false,
         lastError: null,

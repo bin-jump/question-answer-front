@@ -62,7 +62,7 @@ function ChatItem(props) {
 }
 
 export default function Conversation(props) {
-  const { chatUser, setChatUser } = { ...props };
+  const { chatUser, selectUser } = { ...props };
   const selectedId = chatUser ? chatUser.id : '';
 
   const [showSearch, setShowSearch] = useState(false);
@@ -79,16 +79,14 @@ export default function Conversation(props) {
     fetchChats();
   }, [fetchChats]);
 
+  //set select and unselect
   const selectChatUser = (user) => {
     //console.log(user, chatUser);
-    if (chatUser) {
-      if (user.id === chatUser.id) {
-        setChatUser(null);
-      } else {
-        setChatUser(user);
-      }
+
+    if (chatUser && user.id === chatUser.id) {
+      selectUser(null);
     } else {
-      setChatUser(user);
+      selectUser(user);
     }
   };
 

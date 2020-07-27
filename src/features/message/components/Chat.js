@@ -104,24 +104,29 @@ export default function Chat(props) {
   let fetchMessagePending = false;
   let fetchMessageAfter = null;
   let unreadMessagePending = false;
+  let unreadCount = 0;
+  let hasChat = false;
 
   chats.forEach((item) => {
     if (chatUser && chatUser.id === item.withId) {
+      hasChat = true;
       messages = item.messages;
       fetchMessagePending = item.messagePending;
       fetchMessageAfter = item.messageAfter;
       unreadMessagePending = item.unreadMessagePending;
+      unreadCount = item.unreadCount;
     }
   });
 
   useEffect(() => {
-    if (chatUser && messages.length === 0) {
+    if (hasChat && messages.length === 0) {
       fetchMessages(chatUser.id);
     }
-  }, [fetchMessages, chatUser, messages]);
+  }, [fetchMessages, hasChat, chatUser, messages]);
 
   const fetchUnread = () => {
-    if (chatUser) {
+    if (chatUser && unreadCount > 0) {
+      console.log('unread count', unreadCount);
       fetchUnreadMessages(chatUser.id);
     }
   };
