@@ -7,10 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CloseIcon from '@material-ui/icons/Close';
-import { useFetchChats } from '../redux/hooks';
+import { useFetchChats, useFetchUnreadChats } from '../redux/hooks';
 import { milisecToMonDay } from '../../common/helper';
 import { LoadableList, Loading } from '../../common';
 import './Conversation.less';
+import { Button } from '@material-ui/core';
 
 function ChatItem(props) {
   const { chat, selectChatUser, selected } = { ...props };
@@ -65,6 +66,8 @@ export default function Conversation(props) {
     fetchChatPending,
   } = useFetchChats();
 
+  const { fetchUnreadChats, fetchUnreadChatPending } = useFetchUnreadChats();
+
   useEffect(() => {
     fetchChats();
   }, [fetchChats]);
@@ -85,6 +88,7 @@ export default function Conversation(props) {
   return (
     <div className="feature-message-conversation">
       <div className="feature-message-conversation-search">
+        <Button onClick={() => fetchUnreadChats()}>test </Button>
         <TextField
           variant="outlined"
           style={{ width: 320, height: 40 }}
@@ -129,20 +133,21 @@ export default function Conversation(props) {
             hasMore={fetchChatAfter}
             loading={fetchChatPending}
             onLoadClick={() => fetchChats(fetchChatPending)}
+            disabled={fetchUnreadChatPending}
           >
-            {fetchChatPending && chats.length === 0 ? (
+            {(fetchChatPending && chats.length === 0) ||
+            fetchUnreadChatPending ? (
               <Loading />
-            ) : (
-              chats.map((item) => {
-                return (
-                  <ChatItem
-                    chat={item}
-                    selected={item.withUser.id === selectedId}
-                    selectChatUser={selectChatUser}
-                  />
-                );
-              })
-            )}
+            ) : null}
+            {chats.map((item) => {
+              return (
+                <ChatItem
+                  chat={item}
+                  selected={item.withUser.id === selectedId}
+                  selectChatUser={selectChatUser}
+                />
+              );
+            })}
             {chats.length === 0 ? (
               <ContactMailIcon
                 style={{

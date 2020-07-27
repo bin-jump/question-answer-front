@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import './LoadableList.less';
 
 export default function LoadableList(props) {
-  const { loading, hasMore, onLoadClick, children } = { ...props };
+  const { loading, hasMore, onLoadClick, children, disabled } = { ...props };
   const onClick = () => {
     if (onLoadClick) {
       onLoadClick();
@@ -24,7 +24,7 @@ export default function LoadableList(props) {
             marginBottom: 10,
             // display: 'block',
           }}
-          disabled={loading}
+          disabled={loading || disabled}
           onClick={() => onClick()}
         >
           {loading ? <CircularProgress size={24} /> : 'LOAD MORE'}

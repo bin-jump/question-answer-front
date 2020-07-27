@@ -1,11 +1,14 @@
 import { reducer as fetchChatReducer } from './fetchChats';
 import { reducer as fetchMessageReducer } from './fetchMessages';
+import { reducer as fetchUnreadChatReducer } from './fetchUnreadChats';
 import { MESSAGE_RESET, MESSAGE_CHAT_LIST_RESET } from './constants';
 
 const initialState = {
   chats: [],
   fetchChatPending: false,
   fetchChatAfter: null,
+
+  fetchUnreadChatPending: false,
 
   messages: [],
   fetchMessagePending: false,
@@ -14,7 +17,11 @@ const initialState = {
   lastError: null,
 };
 
-const reducers = [fetchChatReducer, fetchMessageReducer];
+const reducers = [
+  fetchChatReducer,
+  fetchMessageReducer,
+  fetchUnreadChatReducer,
+];
 
 export default function reducer(state = initialState, action) {
   let newState;
