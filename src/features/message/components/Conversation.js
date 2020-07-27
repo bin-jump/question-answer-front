@@ -7,7 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CloseIcon from '@material-ui/icons/Close';
-import { useFetchChats, useFetchUnreadChats } from '../redux/hooks';
+import {
+  useFetchChats,
+  useFetchUnreadChats,
+  useFetchChatUser,
+  useChatUserReset,
+} from '../redux/hooks';
 import { milisecToMonDay } from '../../common/helper';
 import { LoadableList, Loading } from '../../common';
 import './Conversation.less';
@@ -49,7 +54,7 @@ function ChatItem(props) {
         <div style={{ width: 50 }}>
           <div className="chat-time">{milisecToMonDay(chat.lastTime)}</div>
           <Badge
-            style={{ margin: '8px 0 0 15px' }}
+            style={{ margin: '10px 0 0 15px' }}
             max={99}
             color="primary"
             badgeContent={chat.unreadCount}
@@ -61,19 +66,49 @@ function ChatItem(props) {
   );
 }
 
+function UserItem(props) {
+  const { user, selectUser } = { ...props };
+
+  return (
+    <div onClick={() => selectUser(user)} style={{ height: 60 }}>
+      <div style={{ display: 'flex' }}>
+        <Avatar
+          alt={user.name}
+          src={user.avatarUrl}
+          style={{
+            marginLeft: 10,
+            border: '1px solid #dce3e8',
+            width: 40,
+            height: 40,
+            marginRight: 8,
+          }}
+        />
+        <Typography
+          style={{ margin: '6px 0 0 6px', fontWeight: 'bold', fontSize: 16 }}
+        >
+          {user.name}
+        </Typography>
+      </div>
+      <hr style={{ borderTop: '1px solid #ced7de' }} />
+    </div>
+  );
+}
+
 export default function Conversation(props) {
   const { chatUser, selectUser } = { ...props };
   const selectedId = chatUser ? chatUser.id : '';
 
   const [showSearch, setShowSearch] = useState(false);
+  const [userName, setUserName] = useState('');
   const {
     chats,
     fetchChats,
     fetchChatAfter,
     fetchChatPending,
   } = useFetchChats();
-
   const { fetchUnreadChats, fetchUnreadChatPending } = useFetchUnreadChats();
+  const { resetChatUser } = useChatUserReset();
+  const { fetchChatUser, fetchUserPending, users } = useFetchChatUser();
 
   useEffect(() => {
     fetchChats();
@@ -82,12 +117,22 @@ export default function Conversation(props) {
   //set select and unselect
   const selectChatUser = (user) => {
     //console.log(user, chatUser);
-
     if (chatUser && user.id === chatUser.id) {
       selectUser(null);
     } else {
       selectUser(user);
     }
+  };
+
+  const onCloseSearch = () => {
+    setUserName('');
+    setShowSearch(false);
+    resetChatUser();
+  };
+
+  const chooseSearchUser = (user) => {
+    selectUser(user);
+    onCloseSearch();
   };
 
   return (
@@ -96,6 +141,8 @@ export default function Conversation(props) {
         <Button onClick={() => fetchUnreadChats()}>test </Button>
         <TextField
           variant="outlined"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
           style={{ width: 320, height: 40 }}
           inputProps={{
             style: {
@@ -106,7 +153,10 @@ export default function Conversation(props) {
           }}
           onSelect={() => setShowSearch(true)}
         />
-        <IconButton style={{ marginLeft: -50, marginTop: -5 }}>
+        <IconButton
+          onClick={() => fetchChatUser(userName)}
+          style={{ marginLeft: -50, marginTop: -5 }}
+        >
           <SearchIcon />
         </IconButton>
       </div>
@@ -117,7 +167,7 @@ export default function Conversation(props) {
             <div style={{ display: 'flex' }}>
               <Typography
                 style={{
-                  margin: '0 110px 0px 24px',
+                  margin: '0 135px 0px 24px',
                   padding: 5,
                   color: '#32b2dd',
                 }}
@@ -126,12 +176,16 @@ export default function Conversation(props) {
               </Typography>
               <IconButton
                 style={{ padding: 3 }}
-                onClick={() => setShowSearch(false)}
+                onClick={() => onCloseSearch()}
               >
                 <CloseIcon />
               </IconButton>
             </div>
-            <div className="feature-message-converation-list">search</div>
+            <div style={{ padding: '10px 15px' }}>
+              {users.map((item) => {
+                return <UserItem user={item} selectUser={chooseSearchUser} />;
+              })}
+            </div>
           </div>
         ) : (
           <LoadableList

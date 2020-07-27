@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 export function pinUser() {
-  let url = '/api/user';
+  let url = '/api/user/me';
 
   return getRequest(
     url,
