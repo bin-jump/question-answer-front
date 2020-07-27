@@ -5,4 +5,4 @@ export { useFetchUnreadMessages } from './fetchUnreadMessage';
 export { useSendMessage } from './sendMessage';
 export { useFetchChatUser, useChatUserReset } from './fetchChatUser';
 
-export { useChatReset } from './resetState';
+export { useChatReset, useResetState } from './resetState';

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, Route, Link, Redirect } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Conversation from './components/Conversation';
 import Chat from './components/Chat';
-import { useChatReset } from './redux/hooks';
+import { useChatReset, useResetState } from './redux/hooks';
 import './Message.less';
 
 export default function Message(props) {
@@ -13,10 +13,18 @@ export default function Message(props) {
   const user = useSelector((state) => state.auth.user);
 
   const { resetChat } = useChatReset();
+  const { resetState } = useResetState();
+
   const selectUser = (user) => {
     resetChat();
     setChatUser(user);
   };
+
+  useEffect(() => {
+    return () => {
+      resetState();
+    };
+  }, [resetState]);
 
   return (
     <div>
