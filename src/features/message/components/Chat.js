@@ -5,7 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import SendIcon from '@material-ui/icons/Send';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
-import { useFetchMessages, useFetchUnreadMessages } from '../redux/hooks';
+import {
+  useFetchMessages,
+  useFetchUnreadMessages,
+  useSendMessage,
+} from '../redux/hooks';
 import { PendIcon, PendButton, Loading } from '../../common';
 import { milisecToTime } from '../../common/helper';
 import './Chat.less';
@@ -87,18 +91,12 @@ function ChatItem(props) {
 }
 
 export default function Chat(props) {
-  const { chatUser, user, isNew } = { ...props };
+  const { chatUser, user } = { ...props };
   const [message, setMessage] = useState('');
 
-  const {
-    // messages,
-    // fetchMessagePending,
-    // fetchMessageAfter,
-    fetchMessages,
-    chats,
-  } = useFetchMessages();
-
+  const { fetchMessages, chats } = useFetchMessages();
   const { fetchUnreadMessages } = useFetchUnreadMessages();
+  const { sendMessage, sendMessagePending } = useSendMessage();
 
   let messages = [];
   let fetchMessagePending = false;
@@ -131,6 +129,14 @@ export default function Chat(props) {
     }
   };
 
+  const sendMsg = () => {
+    if (!message) {
+      return;
+    }
+    sendMessage(chatUser.id, { body: message });
+    setMessage('');
+  };
+
   return (
     <div style={{ width: '100%', height: '100%' }}>
       {chatUser ? (
@@ -159,11 +165,14 @@ export default function Chat(props) {
               </div>
             ) : null}
 
-            {messages.map((item) => {
-              return (
-                <ChatItem user={user} chatUser={chatUser} message={item} />
-              );
-            })}
+            {messages
+              .slice(0)
+              .reverse()
+              .map((item) => {
+                return (
+                  <ChatItem user={user} chatUser={chatUser} message={item} />
+                );
+              })}
           </div>
           <hr style={{ width: '90%' }} />
           <div className="feature-message-chat-operate">
@@ -172,7 +181,12 @@ export default function Chat(props) {
               value={message}
               style={{ width: 320, margin: '10px 15px 0 25px' }}
             />
-            <PendButton variant="outlined" style={{ marginTop: 10 }}>
+            <PendButton
+              onClick={() => sendMsg()}
+              pending={sendMessagePending}
+              variant="outlined"
+              style={{ marginTop: 10 }}
+            >
               <SendIcon style={{ marginRight: 5 }} /> Send
             </PendButton>
           </div>

@@ -74,7 +74,7 @@ export function reducer(state, action) {
             item.unreadMessagePending = false;
             item.unreadCount = 0;
             item.coverText = getCoverText(action.data.data.children);
-            item.messages = [...item.messages, ...action.data.data.children];
+            item.messages = [...action.data.data.children, ...item.messages];
             return { ...item };
           }
           return item;
