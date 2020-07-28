@@ -90,6 +90,7 @@ function ChatItem(props) {
   );
 }
 
+// TODO: add auto message check
 export default function Chat(props) {
   const { chatUser, user } = { ...props };
   const [message, setMessage] = useState('');

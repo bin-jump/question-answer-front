@@ -73,7 +73,7 @@ export function reducer(state, action) {
       return {
         ...state,
         users: [action.data.data],
-        fetchUserPending: true,
+        fetchUserPending: false,
       };
 
     case MESSAGE_FETCH_CHAT_USER_FAILURE:

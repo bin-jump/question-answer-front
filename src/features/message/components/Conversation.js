@@ -14,7 +14,7 @@ import {
   useChatUserReset,
 } from '../redux/hooks';
 import { milisecToMonDay } from '../../common/helper';
-import { LoadableList, Loading } from '../../common';
+import { LoadableList, Loading, PendIcon } from '../../common';
 import './Conversation.less';
 import { Button } from '@material-ui/core';
 
@@ -94,6 +94,7 @@ function UserItem(props) {
   );
 }
 
+//TODO: add auto chat check
 export default function Conversation(props) {
   const { chatUser, selectUser } = { ...props };
   const selectedId = chatUser ? chatUser.id : '';
@@ -135,6 +136,13 @@ export default function Conversation(props) {
     onCloseSearch();
   };
 
+  const findUserByName = () => {
+    if (!userName) {
+      return;
+    }
+    fetchChatUser(userName);
+  };
+
   return (
     <div className="feature-message-conversation">
       <div className="feature-message-conversation-search">
@@ -153,12 +161,13 @@ export default function Conversation(props) {
           }}
           onSelect={() => setShowSearch(true)}
         />
-        <IconButton
-          onClick={() => fetchChatUser(userName)}
-          style={{ marginLeft: -50, marginTop: -5 }}
+        <PendIcon
+          onClick={() => findUserByName()}
+          style={{ marginLeft: -40, marginTop: -5 }}
+          pending={fetchUserPending}
         >
           <SearchIcon />
-        </IconButton>
+        </PendIcon>
       </div>
       <hr style={{ width: '90%', marginBottom: 3 }} />
       <div className="feature-message-converation-users">

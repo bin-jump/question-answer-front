@@ -19,18 +19,17 @@ export default function PendIcon(props) {
   const size = pendSize ? pendSize : 20;
 
   return (
-    <div style={{ ...style }}>
-      <IconButton
-        color={color || 'primary'}
-        disabled={pending || disabled}
-        onClick={onClick}
-        style={{
-          padding: 5,
-          color: selected ? '#fccc55' : '#bcbcbc',
-        }}
-      >
-        {pending ? <CircularProgress size={size} /> : children}
-      </IconButton>
-    </div>
+    <IconButton
+      color={color || 'primary'}
+      disabled={pending || disabled}
+      onClick={onClick}
+      style={{
+        ...style,
+        padding: 5,
+        color: selected ? '#fccc55' : '#bcbcbc',
+      }}
+    >
+      {pending ? <CircularProgress size={size} /> : children}
+    </IconButton>
   );
 }
