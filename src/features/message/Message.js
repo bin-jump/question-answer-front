@@ -26,6 +26,11 @@ export default function Message(props) {
     };
   }, [resetState]);
 
+  const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
+  if (userAlreadyPin && user === null) {
+    return <Redirect to="/signin" />;
+  }
+
   return (
     <div>
       <Grid container spacing={1} style={{ margin: '40px 0', width: '100%' }}>
