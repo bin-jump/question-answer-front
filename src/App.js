@@ -13,6 +13,7 @@ import PinUser from './features/auth/PinUser';
 import Signin from './features/auth/Signin';
 import Account from './features/account/Account';
 import Message from './features/message/Message';
+import Search from './features/search/Search';
 
 import './styles/index.less';
 import axios from 'axios';
@@ -52,7 +53,8 @@ class App extends Component {
                 <Route path="/question/:id" exact component={QuestionDetail} />
                 <Route path="/profile/:id" component={Profile} />
                 <Route path="/account" component={Account} />
-                <Route path="/message" component={Message} />
+                <Route path="/message" exact component={Message} />
+                <Route path="/search" exact component={Search} />
               </Router>
               <CssBaseline />
             </Provider>
