@@ -8,3 +8,4 @@ export { useAddQuestionComment, useAddAnswerComment } from './addComment';
 export { useAddAnswer } from './addAnswer';
 export { useVoteQuestion, useVoteAnswer } from './addVote';
 export { useFollowQuestion } from './addFollow';
+export { useReset } from './resetState';

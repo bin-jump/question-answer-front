@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import QuestionTitle from './components/QuestionTitle';
 import Answers from './components/Answers';
 import WriteAnswer from './components/WriteAnswer';
-import { useReset } from './redux/resetState';
+import { useReset } from './redux/hooks';
 import './QuestionDetail.less';
 
 export default function QuestionDetail(props) {
