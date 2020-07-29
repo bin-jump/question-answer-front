@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
-import CreateIcon from '@material-ui/icons/Create';
 import { useFetchSearchResults, useReset } from './redux/hooks';
 import { QuestionLoading, LoadableList, Pendable, TagList } from '../common';
 import './Search.less';
@@ -16,7 +15,11 @@ function SearchAnswer(props) {
     <div className="feature-search-item-answer">
       <Link to={`/profile/${answer.author.id}`}>{`${answer.author.name}`}</Link>
       {': '}
+
       {answer.body}
+      <Link to={`/question/${answer.parentId}/answer/${answer.id}`}>
+        (see answer)
+      </Link>
     </div>
   );
 }

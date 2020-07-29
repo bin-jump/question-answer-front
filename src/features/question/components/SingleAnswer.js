@@ -56,7 +56,7 @@ export default function SingleAnswer(props) {
 
   return (
     <div>
-      <Paper square style={{ marginTop: 20, padding: 25, textAlign: 'center' }}>
+      <Paper square style={{ marginTop: 20, padding: 20, textAlign: 'center' }}>
         <Link
           style={{ textDecoration: 'none', color: '#2cafdb', fontSize: 18 }}
           to={`/question/${questionId}`}
@@ -67,7 +67,7 @@ export default function SingleAnswer(props) {
       <Pendable
         pending={fetchAnswerPending && answers.length === 0}
         repeat={1}
-        pendContent={<AnswerLoading style={{ margin: 0 }} />}
+        pendContent={<AnswerLoading style={{ marginTop: 20 }} />}
       >
         {answer ? (
           <Paper square style={{ marginTop: 20, padding: '45px 20px 0 20px' }}>
