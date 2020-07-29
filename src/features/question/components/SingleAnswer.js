@@ -121,7 +121,7 @@ export default function SingleAnswer(props) {
                     style={{ margin: 'auto' }}
                   />
                   <Link
-                    to={`/user/${answer.author.id}`}
+                    to={`/profile/${answer.author.id}`}
                   >{` ${answer.author.name} `}</Link>
                   {` on ${milisecToDate(answer.created)}.`}
                 </div>

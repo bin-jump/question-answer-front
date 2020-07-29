@@ -31,7 +31,9 @@ function Comment(idx, cmt, size, user) {
         />
         <div className="talk-bubble tri-right left-in">
           <div className="talk-bubble-info">
-            <Link>{`${cmt.author.name} `}</Link>
+            <Link
+              to={`/profile/${cmt.author.id}`}
+            >{`${cmt.author.name} `}</Link>
             {`${milisecToDate(cmt.created)}`}
           </div>
           <div className="talk-bubble-content">{cmt.body}</div>

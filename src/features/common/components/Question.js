@@ -53,13 +53,13 @@ function Answer(props) {
       <div className="common-answer-info-container">
         <div className="common-answer-info">
           <ArrowUpwardIcon />
-          <div className="common-answer-info-word">3</div>
+          <div className="common-answer-info-word">{answer.upvoteCount}</div>
           <div className="common-answer-info-word">UpVotes</div>
         </div>
         <div className="common-answer-info">
           <CommentIcon />
-          <div className="common-answer-info-word">3</div>
-          <div className="common-answer-info-word">Answers</div>
+          <div className="common-answer-info-word">{answer.commentCount}</div>
+          <div className="common-answer-info-word">Comments</div>
         </div>
       </div>
     </div>
@@ -118,7 +118,7 @@ export default function Question(props) {
               <div className="common-question-info-word">
                 {question.followCount}
               </div>
-              <div className="common-question-info-word">Follow</div>
+              <div className="common-question-info-word">Follows</div>
             </div>
           </div>
         )}

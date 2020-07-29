@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import RssFeedIcon from '@material-ui/icons/RssFeed';
 
 export default function User(props) {
   const { user, elevation } = { ...props };
@@ -24,15 +26,45 @@ export default function User(props) {
               border: '1px solid #dce3e8',
               width: 60,
               height: 60,
+              marginTop: 6,
             }}
           />
         </Grid>
         <Grid item xs={8}>
-          <Typography>{user.name}</Typography>
-          <Typography style={{ color: 'grey' }}>{user.description}</Typography>
-          <Typography
-            style={{ color: '#7f8d99' }}
-          >{`${user.answerCount} Answer  ${user.followerCount} Answer`}</Typography>
+          <Link
+            style={{
+              color: '#39434b',
+              fontWeight: 'bold',
+              fontSize: 20,
+              textDecoration: 'none',
+            }}
+            to={`/profile/${user.id}`}
+          >
+            {user.name}
+          </Link>
+
+          <Typography style={{ color: '#87a1aa' }}>
+            {user.description}
+          </Typography>
+
+          <div
+            style={{ marginLeft: -3, marginTop: 8 }}
+            className="common-answer-info-container"
+          >
+            <div className="common-answer-info">
+              <RateReviewIcon />
+              <div className="common-answer-info-word">{user.answerCount}</div>
+              <div className="common-answer-info-word">Answers</div>
+            </div>
+
+            <div className="common-answer-info">
+              <RssFeedIcon />
+              <div className="common-answer-info-word">
+                {user.followerCount}
+              </div>
+              <div className="common-answer-info-word">Follows</div>
+            </div>
+          </div>
         </Grid>
       </Grid>
     </Paper>

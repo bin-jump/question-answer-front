@@ -118,7 +118,7 @@ export default function QuestionTitle(props) {
                 <Typography variant="h6">{question.title}</Typography>
                 <div className="feature-question-title-author">
                   {`Asked by `}
-                  <Link to={`/user/${question.author.id}`}>
+                  <Link to={`/profile/${question.author.id}`}>
                     {question.author.name}
                   </Link>
                   {` on ${milisecToDate(question.created)}.`}

@@ -33,7 +33,7 @@ export default function Userist(props) {
       >
         <Pendable
           pending={fetchUserPending && users.length === 0}
-          pendContent={<UserLoading style={{ width: 680 }} />}
+          pendContent={<UserLoading style={{ width: 600 }} />}
           repeat={5}
         >
           {users.length > 0 ? users.map((item) => <User user={item} />) : null}
