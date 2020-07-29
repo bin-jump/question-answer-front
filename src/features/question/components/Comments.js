@@ -118,7 +118,7 @@ export default function Comments(props) {
             <PendButton
               variant="outlined"
               color="primary"
-              style={{ marginLeft: 10, height: 70 }}
+              style={{ marginLeft: 10, height: 70, width: 145 }}
               onClick={onCommantAdd}
               pending={addPending}
             >

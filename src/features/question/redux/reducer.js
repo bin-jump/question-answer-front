@@ -5,7 +5,8 @@ import { reducer as addCommentReducer } from './addComment';
 import { reducer as addAnswerReducer } from './addAnswer';
 import { reducer as addVoteReducer } from './addVote';
 import { reducer as followQuestionReducer } from './addFollow';
-import { QUESTION_RESET } from './constants';
+import { reducer as fetchSingleAnswerReducer } from './fetchSingleAnswer';
+import { QUESTION_RESET, QUESTION_ANSWERS_RESET } from './constants';
 
 const initialState = {
   question: null,
@@ -36,6 +37,7 @@ const reducers = [
   addAnswerReducer,
   addVoteReducer,
   followQuestionReducer,
+  fetchSingleAnswerReducer,
 ];
 
 export default function reducer(state = initialState, action) {
@@ -43,6 +45,8 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case QUESTION_RESET:
       return initialState;
+    case QUESTION_ANSWERS_RESET:
+      return { ...state, answers: [] };
     default:
       newState = state;
       break;

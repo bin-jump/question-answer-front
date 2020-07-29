@@ -50,7 +50,7 @@ class App extends Component {
                 <Route path="/" exact component={Home} />
                 <Route path="/signin" exact component={Signin} />
                 <Route path="/signup" exact component={Signin} />
-                <Route path="/question/:id" exact component={QuestionDetail} />
+                <Route path="/question/:id" component={QuestionDetail} />
                 <Route path="/profile/:id" component={Profile} />
                 <Route path="/account" component={Account} />
                 <Route path="/message" exact component={Message} />

@@ -8,4 +8,5 @@ export { useAddQuestionComment, useAddAnswerComment } from './addComment';
 export { useAddAnswer } from './addAnswer';
 export { useVoteQuestion, useVoteAnswer } from './addVote';
 export { useFollowQuestion } from './addFollow';
-export { useReset } from './resetState';
+export { useFetchSingleAnswer } from './fetchSingleAnswer';
+export { useReset, useResetAnswers } from './resetState';
