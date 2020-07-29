@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import { useFetchSearchResults, useReset } from './redux/hooks';
-import { QuestionLoading, LoadableList, Pendable, TagList } from '../common';
+import { QuestionLoading, LoadableList, Pendable } from '../common';
 import './Search.less';
 
 function SearchAnswer(props) {

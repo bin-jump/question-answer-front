@@ -9,10 +9,10 @@ export default function NavBar(props) {
     <div className="header-navBar">
       <ul>
         <li>
-          <Link to="/hoe">Home</Link>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/">News</Link>
+          <Link to="/feed">News</Link>
         </li>
       </ul>
     </div>

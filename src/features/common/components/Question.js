@@ -67,12 +67,12 @@ function Answer(props) {
 }
 
 export default function Question(props) {
-  const { question } = { ...props };
+  const { question, elevation } = { ...props };
   const answer = question.cover;
 
   return (
     <Paper
-      elevation={1}
+      elevation={elevation}
       square
       style={{ width: 650, minHeight: 150, marginBottom: 8 }}
     >

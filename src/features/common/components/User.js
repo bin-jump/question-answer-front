@@ -6,10 +6,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 
 export default function User(props) {
-  const { user } = { ...props };
+  const { user, elevation } = { ...props };
 
   return (
-    <Paper square style={{ padding: 10, width: 600, marginBottom: 10 }}>
+    <Paper
+      square
+      elevation={elevation}
+      style={{ padding: 10, width: 600, marginBottom: 10 }}
+    >
       <Grid container spacing={1} style={{ margin: '10px 0', width: '100%' }}>
         <Grid item xs={2}>
           <Avatar

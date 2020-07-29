@@ -14,6 +14,7 @@ import Signin from './features/auth/Signin';
 import Account from './features/account/Account';
 import Message from './features/message/Message';
 import Search from './features/search/Search';
+import Feed from './features/feed/Feed';
 
 import './styles/index.less';
 import axios from 'axios';
@@ -55,6 +56,7 @@ class App extends Component {
                 <Route path="/account" component={Account} />
                 <Route path="/message" exact component={Message} />
                 <Route path="/search" exact component={Search} />
+                <Route path="/feed" exact component={Feed} />
               </Router>
               <CssBaseline />
             </Provider>
