@@ -10,8 +10,6 @@ function Alert(props) {
 export default function GlobalError() {
   const { errorMessage, closeError, displayError } = useShowError();
 
-  console.log('displayError', displayError);
-
   const handleClose = (event) => {
     closeError();
   };

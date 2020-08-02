@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import SigninComp from './components/SigninComp';
@@ -8,6 +10,12 @@ import './Signin.less';
 import img from '../../../static/signin.png';
 
 export default function Signin(props) {
+  const user = useSelector((state) => state.auth.user);
+
+  if (user) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div>
       <Grid container spacing={1} style={{ margin: '50px 0', width: '100%' }}>

@@ -1,21 +1,26 @@
 import { reducer as pinUserReducer } from './pinUser';
 import { reducer as addUserReducer } from './addUser';
+import { reducer as signinReducer } from './signin';
+import { reducer as signoutReducer } from './signout';
 
 const initialState = {
-  id: 111,
   user: null,
   pinUserPending: false,
   userAlreadyPin: false,
 
   signinPending: false,
-  signinMessage: '',
+  signoutPending: false,
   signupPending: false,
-  signupMessage: '',
 
   lastError: null,
 };
 
-const reducers = [pinUserReducer, addUserReducer];
+const reducers = [
+  pinUserReducer,
+  addUserReducer,
+  signinReducer,
+  signoutReducer,
+];
 
 export default function reducer(state = initialState, action) {
   let newState;

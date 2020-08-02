@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
@@ -24,7 +23,7 @@ export default function SignupComp(props) {
     cmfPasswordError: '',
   });
 
-  const { addUser, resetMessage, signupPending } = useAddUser();
+  const { addUser, user, signupPending } = useAddUser();
 
   const onSignup = () => {
     if (

@@ -11,6 +11,7 @@ import './Message.less';
 export default function Message(props) {
   const [chatUser, setChatUser] = useState(null);
   const user = useSelector((state) => state.auth.user);
+  const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
 
   const { resetChat } = useChatReset();
   const { resetState } = useResetState();
@@ -26,7 +27,6 @@ export default function Message(props) {
     };
   }, [resetState]);
 
-  const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
   if (userAlreadyPin && user === null) {
     return <Redirect to="/signin" />;
   }

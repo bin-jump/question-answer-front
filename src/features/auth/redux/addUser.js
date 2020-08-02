@@ -5,7 +5,6 @@ import {
   AUTH_SIGNUP_BEGIN,
   AUTH_SIGNUP_SUCCESS,
   AUTH_SIGNUP_FAILURE,
-  AUTH_SIGNUP_MESSAGE_RESET,
 } from './constants';
 
 export function addUser(userName, password, email) {
@@ -22,10 +21,10 @@ export function addUser(userName, password, email) {
 
 export function useAddUser() {
   const dispatch = useDispatch();
-  const { signupPending, signupMessage, error } = useSelector(
+  const { signupPending, user, error } = useSelector(
     (state) => ({
+      user: state.auth.user,
       signupPending: state.auth.signupPending,
-      signupMessage: state.auth.signupMessage,
       error: state.auth.lastError,
     }),
     shallowEqual,
@@ -38,14 +37,9 @@ export function useAddUser() {
     [dispatch],
   );
 
-  const boundActionReset = useCallback(() => {
-    dispatch({ type: AUTH_SIGNUP_MESSAGE_RESET });
-  }, [dispatch]);
-
   return {
     addUser: boundAction,
-    resetMessage: boundActionReset,
-    signupMessage,
+    user,
     signupPending,
     error,
   };
@@ -70,12 +64,6 @@ export function reducer(state, action) {
         ...state,
         signupPending: false,
         lastError: action.data.error,
-      };
-
-    case AUTH_SIGNUP_MESSAGE_RESET:
-      return {
-        ...state,
-        signupMessage: '',
       };
 
     default:
