@@ -11,6 +11,7 @@ const initialState = {
   signinPending: false,
   signoutPending: false,
   signupPending: false,
+  userAdded: false,
 
   lastError: null,
 };

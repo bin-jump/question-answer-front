@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -22,8 +22,27 @@ export default function SignupComp(props) {
     showPassword: false,
     cmfPasswordError: '',
   });
+  let history = useHistory();
 
-  const { addUser, user, signupPending } = useAddUser();
+  const {
+    addUser,
+    user,
+    signupPending,
+    userAdded,
+    resetAddUser,
+  } = useAddUser();
+
+  useEffect(() => {
+    return () => {
+      resetAddUser();
+    };
+  }, [resetAddUser]);
+
+  useEffect(() => {
+    if (userAdded) {
+      history.push('/signin');
+    }
+  }, [userAdded, history]);
 
   const onSignup = () => {
     if (
