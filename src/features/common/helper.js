@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { COMMON_SHOW_ERROR } from './redux/constants';
 
 const methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
@@ -61,6 +62,10 @@ function makeRequest({
             id,
             extra,
           });
+
+          if (res.data.status != 'SUCCESS') {
+            dispatch({ type: COMMON_SHOW_ERROR, message: res.data.msg });
+          }
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.

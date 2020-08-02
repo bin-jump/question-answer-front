@@ -15,6 +15,7 @@ import Account from './features/account/Account';
 import Message from './features/message/Message';
 import Search from './features/search/Search';
 import Feed from './features/feed/Feed';
+import { GlobalError } from './features/common';
 
 import './styles/index.less';
 import axios from 'axios';
@@ -50,6 +51,7 @@ class App extends Component {
               <Router history={history}>
                 <Header />
                 <PinUser />
+                <GlobalError />
                 <Route path="/" exact component={Home} />
                 <Route path="/signin" exact component={Signin} />
                 <Route path="/signup" exact component={Signin} />
