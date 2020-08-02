@@ -16,7 +16,7 @@ export default function Signin(props) {
           <Paper
             square
             elevation={1}
-            style={{ height: '550px', display: 'flex' }}
+            style={{ height: '580px', display: 'flex' }}
           >
             <div className="signin-container">
               <Route path="/signin" component={SigninComp} />

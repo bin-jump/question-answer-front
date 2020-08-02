@@ -5,7 +5,7 @@ class Footer extends Component {
   render() {
     return (
       <div className="common-footer">
-        <div className="common-footer-inner ">Footer</div>
+        <div className="common-footer-inner ">SmartPost</div>
       </div>
     );
   }

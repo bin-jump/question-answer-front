@@ -21,6 +21,8 @@ import axios from 'axios';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 axios.defaults.baseURL = 'http://localhost:8080';
+//axios.defaults.withCredentials = true;
+//axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 
 const theme = createMuiTheme({
   palette: {

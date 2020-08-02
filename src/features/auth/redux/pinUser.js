@@ -55,7 +55,7 @@ export function reducer(state, action) {
       return {
         ...state,
         pinUserPending: false,
-        fetchQuestionListError: action.data.error,
+        lastError: action.data.error,
       };
 
     default:

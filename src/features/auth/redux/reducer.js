@@ -1,4 +1,5 @@
-import { reducer as pinUser } from './pinUser';
+import { reducer as pinUserReducer } from './pinUser';
+import { reducer as addUserReducer } from './addUser';
 
 const initialState = {
   id: 111,
@@ -6,10 +7,15 @@ const initialState = {
   pinUserPending: false,
   userAlreadyPin: false,
 
+  signinPending: false,
+  signinMessage: '',
+  signupPending: false,
+  signupMessage: '',
+
   lastError: null,
 };
 
-const reducers = [pinUser];
+const reducers = [pinUserReducer, addUserReducer];
 
 export default function reducer(state = initialState, action) {
   let newState;
