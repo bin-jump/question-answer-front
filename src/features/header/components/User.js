@@ -70,9 +70,7 @@ export default function User(props) {
               <MenuItem component={Link} to={`/message`} onClick={handleClose}>
                 Message
               </MenuItem>
-              <MenuItem component={Link} to={`/`} onClick={handleSignout}>
-                Signout
-              </MenuItem>
+              <MenuItem onClick={handleSignout}>Signout</MenuItem>
             </Menu>
             <Avatar
               alt={`${user.name}`}
