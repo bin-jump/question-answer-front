@@ -64,7 +64,7 @@ export function reducer(state, action) {
       return {
         ...state,
         signupMessage: action.data.msg,
-        userAdded: true,
+        userAdded: action.data.status === 'SUCCESS' ? true : false,
         signupPending: false,
       };
 

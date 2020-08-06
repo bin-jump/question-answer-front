@@ -109,12 +109,8 @@ export function reducer(state, action) {
         ...state,
         question: {
           ...state.question,
-          voteupCount: state.question.voteupCount + action.data.data.vote,
-          upvoted:
-            action.data.data.vote === 1 &&
-            action.data.data.voteType === 'UPVOTE'
-              ? true
-              : false,
+          upvoteCount: state.question.upvoteCount + action.data.data.upvoteDiff,
+          upvoted: action.data.data.voteType === 'UPVOTE' ? true : false,
         },
         questionVotePending: false,
         lastError: null,

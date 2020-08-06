@@ -96,7 +96,7 @@ export default function QuestionTitle(props) {
                     <ThumbUpIcon />
                   </PendIcon>
 
-                  <div>{question.voteupCount}</div>
+                  <div>{question.upvoteCount}</div>
                   <PendIcon
                     pending={questionFollowPending}
                     selected={question.following}

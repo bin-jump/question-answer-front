@@ -165,7 +165,7 @@ export function deleteRequest(
 }
 
 export function milisecToDate(timeLong) {
-  timeLong *= 1000;
+  //timeLong *= 1000;
   let date = new Date(timeLong);
   const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
   const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);

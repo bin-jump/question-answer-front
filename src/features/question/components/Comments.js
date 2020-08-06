@@ -25,7 +25,7 @@ function Comment(idx, cmt, size, user) {
           }}
         />
         <Avatar
-          alt="user"
+          alt={cmt.author.name}
           src={cmt.author.avatarUrl}
           style={{ width: 30, height: 30 }}
         />
@@ -48,7 +48,7 @@ export function CommentButton(props) {
   return (
     <Button
       color="primary"
-      disabled={commentCount === 0}
+      //disabled={commentCount === 0}
       onClick={clickHandler}
       style={{ display: 'flex', ...style }}
     >

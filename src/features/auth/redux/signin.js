@@ -7,13 +7,13 @@ import {
   AUTH_SIGNIN_FAILURE,
 } from './constants';
 
-export function signin(userName, password, remeberMe) {
+export function signin(userName, password, rememberMe) {
   let url = '/signin';
-  //let data = { name: userName, password, remeberMe };
+  //let data = { name: userName, password, rememberMe };
   let data = new FormData();
   data.set('username', userName);
   data.set('password', password);
-  data.set('remeberMe', remeberMe);
+  data.set('rememberme', rememberMe);
   return postRequest(
     url,
     data,
@@ -35,8 +35,8 @@ export function useSignin() {
   );
 
   const boundAction = useCallback(
-    (userName, password, remeberMe) => {
-      dispatch(signin(userName, password, remeberMe));
+    (userName, password, rememberMe) => {
+      dispatch(signin(userName, password, rememberMe));
     },
     [dispatch],
   );
