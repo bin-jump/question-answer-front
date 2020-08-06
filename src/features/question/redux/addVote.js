@@ -144,17 +144,9 @@ export function reducer(state, action) {
           if (item.id === action.id) {
             item.votePending = false;
             item.votePendingType = null;
-            item.upvoteCount += item.upvoted
-              ? -1
-              : action.data.data.voteType === 'UPVOTE'
-              ? 1
-              : 0;
-            item.upvoted =
-              action.data.data.vote === 1 &&
-              action.data.data.voteType === 'UPVOTE';
-            item.downvoted =
-              action.data.data.vote === 1 &&
-              action.data.data.voteType === 'DOWNVOTE';
+            item.upvoteCount += action.data.data.upvoteDiff;
+            item.upvoted = action.data.data.voteType === 'UPVOTE';
+            item.downvoted = action.data.data.voteType === 'DOWNVOTE';
             return { ...item };
           }
           return item;
