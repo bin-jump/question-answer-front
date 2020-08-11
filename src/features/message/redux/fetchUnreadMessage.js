@@ -7,15 +7,15 @@ import {
   MESSAGE_FETCH_UNREAD_MESSAGE_FAILURE,
 } from './constants';
 
-export function fetchUnreadMessages(withId) {
-  let url = `/api/message/${withId}/read`;
+export function fetchUnreadMessages(chatId, lastId) {
+  let url = `/api/message/${chatId}/read?lastId=${lastId}`;
   return putRequest(
     url,
     null,
     MESSAGE_FETCH_UNREAD_MESSAGE_BEGIN,
     MESSAGE_FETCH_UNREAD_MESSAGE_SUCCESS,
     MESSAGE_FETCH_UNREAD_MESSAGE_FAILURE,
-    withId,
+    chatId,
   );
 }
 
@@ -30,8 +30,8 @@ export function useFetchUnreadMessages() {
   );
 
   const boundAction = useCallback(
-    (withId) => {
-      dispatch(fetchUnreadMessages(withId));
+    (withId, lastId) => {
+      dispatch(fetchUnreadMessages(withId, lastId));
     },
     [dispatch],
   );
@@ -57,7 +57,7 @@ export function reducer(state, action) {
       return {
         ...state,
         chats: state.chats.map((item) => {
-          if (item.withId === action.id) {
+          if (item.id === action.id) {
             item.unreadMessagePending = true;
             return { ...item };
           }
@@ -70,10 +70,14 @@ export function reducer(state, action) {
       return {
         ...state,
         chats: state.chats.map((item) => {
-          if (item.withId === action.id) {
+          if (item.id === action.id) {
             item.unreadMessagePending = false;
             item.unreadCount = 0;
-            item.coverText = getCoverText(action.data.data.children);
+            if (action.data.data.children.legth > 0) {
+              item.lastTime = action.data.data.children.slice(-1)[0].lastTime;
+              item.coverId = action.data.data.children.slice(-1)[0].coverId;
+              item.coverText = getCoverText(action.data.data.children);
+            }
             item.messages = [...action.data.data.children, ...item.messages];
             return { ...item };
           }
@@ -86,7 +90,7 @@ export function reducer(state, action) {
       return {
         ...state,
         chats: state.chats.map((item) => {
-          if (item.withId === action.id) {
+          if (item.id === action.id) {
             item.unreadMessagePending = false;
             return { ...item };
           }

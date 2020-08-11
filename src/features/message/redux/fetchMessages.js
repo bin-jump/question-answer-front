@@ -93,7 +93,7 @@ export function reducer(state, action) {
         // fetchMessageAfter: action.data.data.after,
 
         chats: state.chats.map((item) => {
-          if (item.withId === action.id) {
+          if (item.id === action.id) {
             item.messagePending = false;
             // set unread count to zero if current read is the first read
             item.unreadCount =

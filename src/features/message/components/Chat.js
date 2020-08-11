@@ -105,6 +105,7 @@ export default function Chat(props) {
   let unreadMessagePending = false;
   let unreadCount = 0;
   let hasChat = false;
+  let currentChat = null;
 
   chats.forEach((item) => {
     if (chatUser && chatUser.id === item.withId) {
@@ -114,19 +115,25 @@ export default function Chat(props) {
       fetchMessageAfter = item.messageAfter;
       unreadMessagePending = item.unreadMessagePending;
       unreadCount = item.unreadCount;
+      currentChat = item;
     }
   });
 
   useEffect(() => {
-    if (hasChat && messages.length === 0) {
-      fetchMessages(chatUser.id);
+    if (currentChat != null && messages.length === 0) {
+      fetchMessages(currentChat.id);
     }
-  }, [fetchMessages, hasChat, chatUser, messages]);
+  }, [fetchMessages, currentChat, chatUser, messages]);
 
   const fetchUnread = () => {
-    if (chatUser && unreadCount > 0) {
-      console.log('unread count', unreadCount);
-      fetchUnreadMessages(chatUser.id);
+    if (currentChat != null) {
+      let lastMessage = messages.slice(-1)[0];
+      if (lastMessage.id === currentChat.coverId) {
+        return;
+      }
+      let lastId = lastMessage.id;
+      console.log('unread count', unreadCount, lastMessage);
+      fetchUnreadMessages(currentChat.id, lastId);
     }
   };
 

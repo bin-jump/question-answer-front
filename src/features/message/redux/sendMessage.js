@@ -54,6 +54,8 @@ const mergeChat = (curChats, resChat) => {
     } else {
       resChat.messages = [...resChat.messages, ...item.messages];
       resChat.unreadCount = item.unreadCount;
+      resChat.coverText = item.coverText;
+      resChat.coverId = item.coverId;
     }
   });
 

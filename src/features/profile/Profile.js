@@ -14,7 +14,7 @@ export default function Profile(props) {
       <Head id={id} />
       <Grid container spacing={1} style={{ margin: '40px 0', width: '100%' }}>
         <Grid item xs={1} />
-        <Grid item xs={7}>
+        <Grid item xs={7} style={{ display: 'block' }}>
           <div>
             <Route
               path={`/profile/${id}`}

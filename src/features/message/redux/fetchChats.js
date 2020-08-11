@@ -62,7 +62,10 @@ const mergeChat = (curChats, newChats) => {
     }
   });
 
-  return [...curChats, ...news];
+  let chats = [...curChats, ...news].sort((a, b) =>
+    a.lastTime > b.lastTime ? 1 : -1,
+  );
+  return chats;
 };
 
 export function reducer(state, action) {
