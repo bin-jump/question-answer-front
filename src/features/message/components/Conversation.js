@@ -115,6 +115,13 @@ export default function Conversation(props) {
     fetchChats();
   }, [fetchChats]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchUnreadChats();
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [fetchUnreadChats]);
+
   //set select and unselect
   const selectChatUser = (user) => {
     //console.log(user, chatUser);
@@ -146,7 +153,7 @@ export default function Conversation(props) {
   return (
     <div className="feature-message-conversation">
       <div className="feature-message-conversation-search">
-        <Button onClick={() => fetchUnreadChats()}>test </Button>
+        {/* <Button onClick={() => fetchUnreadChats()}>test </Button> */}
         <TextField
           variant="outlined"
           value={userName}
@@ -203,10 +210,7 @@ export default function Conversation(props) {
             onLoadClick={() => fetchChats(fetchChatPending)}
             disabled={fetchUnreadChatPending}
           >
-            {(fetchChatPending && chats.length === 0) ||
-            fetchUnreadChatPending ? (
-              <Loading />
-            ) : null}
+            {fetchChatPending && chats.length === 0 ? <Loading /> : null}
             {chats.map((item) => {
               return (
                 <ChatItem

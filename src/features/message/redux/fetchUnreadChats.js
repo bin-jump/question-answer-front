@@ -81,13 +81,13 @@ export function reducer(state, action) {
 
     case MESSAGE_FETCH_UNREAD_CHAT_SUCCESS:
       let newChats = mergeChats(action.data.data.children, state.chats);
-      let last = newChats.slice(-1)[0];
+      //let last = newChats.slice(-1)[0];
       return {
         ...state,
 
         chats: newChats,
         fetchUnreadChatPending: false,
-        fetchChatAfter: last ? last.withId : null,
+        fetchChatAfter: action.data.data.after,
         lastError: null,
       };
 

@@ -71,13 +71,13 @@ export function reducer(state, action) {
         ...state,
         //fetchMessagePending: true,
 
-        chats: state.chats.map((item) => {
-          if (item.withId === action.id) {
-            item.messagePending = true;
-            return { ...item };
-          }
-          return item;
-        }),
+        // chats: state.chats.map((item) => {
+        //   if (item.id === action.id) {
+        //     item.messagePending = true;
+        //     return { ...item };
+        //   }
+        //   return item;
+        // }),
         lastError: null,
       };
 
@@ -112,13 +112,13 @@ export function reducer(state, action) {
         ...state,
         //fetchMessagePending: false,
 
-        chats: state.chats.map((item) => {
-          if (item.withId === action.id) {
-            item.messagePending = false;
-            return { ...item };
-          }
-          return item;
-        }),
+        // chats: state.chats.map((item) => {
+        //   if (item.id === action.id) {
+        //     item.messagePending = false;
+        //     return { ...item };
+        //   }
+        //   return item;
+        // }),
         lastError: action.data.error,
       };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Typography from '@material-ui/core/Typography';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import TextField from '@material-ui/core/TextField';
@@ -102,18 +102,16 @@ export default function Chat(props) {
   let messages = [];
   let fetchMessagePending = false;
   let fetchMessageAfter = null;
-  let unreadMessagePending = false;
+  //let unreadMessagePending = false;
   let unreadCount = 0;
-  let hasChat = false;
   let currentChat = null;
 
   chats.forEach((item) => {
     if (chatUser && chatUser.id === item.withId) {
-      hasChat = true;
       messages = item.messages;
       fetchMessagePending = item.messagePending;
       fetchMessageAfter = item.messageAfter;
-      unreadMessagePending = item.unreadMessagePending;
+      //unreadMessagePending = item.unreadMessagePending;
       unreadCount = item.unreadCount;
       currentChat = item;
     }
@@ -125,17 +123,25 @@ export default function Chat(props) {
     }
   }, [fetchMessages, currentChat, chatUser, messages]);
 
-  const fetchUnread = () => {
+  const fetchUnread = useCallback(() => {
     if (currentChat != null) {
-      let lastMessage = messages.slice(-1)[0];
+      let lastMessage = messages[0];
       if (lastMessage.id === currentChat.coverId) {
         return;
       }
+      console.log('fetchUnread');
       let lastId = lastMessage.id;
-      console.log('unread count', unreadCount, lastMessage);
+      //console.log('unread count', unreadCount, lastMessage);
       fetchUnreadMessages(currentChat.id, lastId);
     }
-  };
+  }, [fetchUnreadMessages, messages, currentChat]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchUnread();
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [fetchUnread]);
 
   const sendMsg = () => {
     if (!message) {
@@ -144,18 +150,17 @@ export default function Chat(props) {
     sendMessage(chatUser.id, { body: message });
     setMessage('');
   };
-
   return (
     <div style={{ width: '100%', height: '100%' }}>
       {chatUser ? (
         <div>
           <div className="feature-message-chat-head">
-            <Button onClick={() => fetchUnread()}>Test</Button>
+            {/* <Button onClick={() => fetchUnread()}>Test</Button> */}
             <Typography style={{ marginTop: 10, fontSize: 18 }}>
               {chatUser.name}
             </Typography>
             {(fetchMessagePending && messages.length === 0) ||
-            unreadMessagePending ? (
+            currentChat.messagePending ? (
               <Loading style={{ marginTop: 20 }} />
             ) : null}
           </div>
@@ -164,7 +169,9 @@ export default function Chat(props) {
             {fetchMessageAfter ? (
               <div style={{ display: 'block', textAlign: 'center' }}>
                 <PendIcon
-                  onClick={() => fetchMessages(chatUser.id, fetchMessageAfter)}
+                  onClick={() =>
+                    fetchMessages(currentChat.id, fetchMessageAfter)
+                  }
                   pending={fetchMessagePending}
                   //disabled={true}
                 >
