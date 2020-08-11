@@ -72,7 +72,7 @@ export function reducer(state, action) {
       }
       return {
         ...state,
-        users: [action.data.data],
+        users: action.data.data ? [action.data.data] : state.users,
         fetchUserPending: false,
       };
 

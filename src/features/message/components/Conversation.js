@@ -94,7 +94,6 @@ function UserItem(props) {
   );
 }
 
-//TODO: add auto chat check
 export default function Conversation(props) {
   const { chatUser, selectUser } = { ...props };
   const selectedId = chatUser ? chatUser.id : '';
@@ -110,6 +109,7 @@ export default function Conversation(props) {
   const { fetchUnreadChats, fetchUnreadChatPending } = useFetchUnreadChats();
   const { resetChatUser } = useChatUserReset();
   const { fetchChatUser, fetchUserPending, users } = useFetchChatUser();
+  const CHECK_INTERVAL = 10000;
 
   useEffect(() => {
     fetchChats();
@@ -118,7 +118,7 @@ export default function Conversation(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchUnreadChats();
-    }, 15000);
+    }, CHECK_INTERVAL);
     return () => clearInterval(interval);
   }, [fetchUnreadChats]);
 

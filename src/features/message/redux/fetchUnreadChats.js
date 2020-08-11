@@ -87,7 +87,6 @@ export function reducer(state, action) {
 
         chats: newChats,
         fetchUnreadChatPending: false,
-        fetchChatAfter: action.data.data.after,
         lastError: null,
       };
 

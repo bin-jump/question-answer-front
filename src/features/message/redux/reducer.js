@@ -19,7 +19,8 @@ const initialState = {
 
   // fetchUnreadChatPending: false,
   // messages: [],
-  // fetchMessagePending: false,
+
+  fetchMessagePending: false,
   // fetchMessageAfter: null,
 
   lastError: null,

@@ -37,7 +37,7 @@ export function useFetchMessages() {
   } = useSelector(
     (state) => ({
       // messages: state.message.messages,
-      // fetchMessagePending: state.message.fetchMessagePending,
+      fetchMessagePending: state.message.fetchMessagePending,
       // fetchMessageAfter: state.message.fetchMessageAfter,
 
       chats: state.message.chats,
@@ -69,7 +69,7 @@ export function reducer(state, action) {
     case MESSAGE_FETCH_MESSAGE_BEGIN:
       return {
         ...state,
-        //fetchMessagePending: true,
+        fetchMessagePending: true,
 
         // chats: state.chats.map((item) => {
         //   if (item.id === action.id) {
@@ -89,7 +89,7 @@ export function reducer(state, action) {
       return {
         ...state,
         // messages: [...action.data.data.children, ...state.messages],
-        // fetchMessagePending: false,
+        fetchMessagePending: false,
         // fetchMessageAfter: action.data.data.after,
 
         chats: state.chats.map((item) => {
@@ -110,7 +110,7 @@ export function reducer(state, action) {
     case MESSAGE_FETCH_MESSAGE_FAILURE:
       return {
         ...state,
-        //fetchMessagePending: false,
+        fetchMessagePending: false,
 
         // chats: state.chats.map((item) => {
         //   if (item.id === action.id) {

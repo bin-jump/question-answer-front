@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Typography from '@material-ui/core/Typography';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +13,6 @@ import {
 import { PendIcon, PendButton, Loading } from '../../common';
 import { milisecToTime } from '../../common/helper';
 import './Chat.less';
-import { Button } from '@material-ui/core';
 
 function ChatItemMe(props) {
   const { messageSender, message } = { ...props };
@@ -95,27 +94,43 @@ export default function Chat(props) {
   const { chatUser, user } = { ...props };
   const [message, setMessage] = useState('');
 
-  const { fetchMessages, chats } = useFetchMessages();
+  const { fetchMessages, chats, fetchMessagePending } = useFetchMessages();
   const { fetchUnreadMessages } = useFetchUnreadMessages();
   const { sendMessage, sendMessagePending } = useSendMessage();
 
+  const messageBottomRef = useRef(null);
+  const messageContainerRef = useRef(null);
+  const scrollSub = useRef(0);
+
+  const CHECK_INTERVAL = 2000;
+
   let messages = [];
-  let fetchMessagePending = false;
   let fetchMessageAfter = null;
-  //let unreadMessagePending = false;
-  let unreadCount = 0;
   let currentChat = null;
 
   chats.forEach((item) => {
     if (chatUser && chatUser.id === item.withId) {
       messages = item.messages;
-      fetchMessagePending = item.messagePending;
       fetchMessageAfter = item.messageAfter;
-      //unreadMessagePending = item.unreadMessagePending;
-      unreadCount = item.unreadCount;
       currentChat = item;
     }
   });
+  console.log('scrollSub: ', scrollSub);
+  const scrollToBottom = useCallback(() => {
+    if (messageBottomRef.current) {
+      if (scrollSub.current > 10) {
+        return;
+      }
+      messageBottomRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+    }
+  }, [scrollSub]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [scrollToBottom, messages]);
 
   useEffect(() => {
     if (currentChat != null && messages.length === 0) {
@@ -129,7 +144,7 @@ export default function Chat(props) {
       if (lastMessage.id === currentChat.coverId) {
         return;
       }
-      console.log('fetchUnread');
+      //console.log('fetchUnread');
       let lastId = lastMessage.id;
       //console.log('unread count', unreadCount, lastMessage);
       fetchUnreadMessages(currentChat.id, lastId);
@@ -139,7 +154,7 @@ export default function Chat(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchUnread();
-    }, 2000);
+    }, CHECK_INTERVAL);
     return () => clearInterval(interval);
   }, [fetchUnread]);
 
@@ -159,13 +174,24 @@ export default function Chat(props) {
             <Typography style={{ marginTop: 10, fontSize: 18 }}>
               {chatUser.name}
             </Typography>
-            {(fetchMessagePending && messages.length === 0) ||
-            currentChat.messagePending ? (
+            {fetchMessagePending && messages.length === 0 ? (
               <Loading style={{ marginTop: 20 }} />
             ) : null}
           </div>
           <hr style={{ width: '80%' }} />
-          <div className="feature-message-chat-content">
+          <div
+            className="feature-message-chat-content"
+            onScroll={(e) => {
+              if (messageContainerRef.current) {
+                let element = messageContainerRef.current;
+                scrollSub.current =
+                  element.scrollHeight -
+                  (element.scrollTop + element.clientHeight);
+                //console.log('scrollSub: ', scrollSub);
+              }
+            }}
+            ref={messageContainerRef}
+          >
             {fetchMessageAfter ? (
               <div style={{ display: 'block', textAlign: 'center' }}>
                 <PendIcon
@@ -188,6 +214,10 @@ export default function Chat(props) {
                   <ChatItem user={user} chatUser={chatUser} message={item} />
                 );
               })}
+            <div
+              style={{ float: 'left', clear: 'both' }}
+              ref={messageBottomRef}
+            />
           </div>
           <hr style={{ width: '90%' }} />
           <div className="feature-message-chat-operate">

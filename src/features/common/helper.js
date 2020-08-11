@@ -174,7 +174,6 @@ export function milisecToDate(timeLong) {
 }
 
 export function milisecToMonDay(timeLong) {
-  timeLong *= 1000;
   let date = new Date(timeLong);
   //const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
   const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
@@ -183,7 +182,6 @@ export function milisecToMonDay(timeLong) {
 }
 
 export function milisecToTime(timeLong) {
-  timeLong *= 1000;
   let date = new Date(timeLong);
   //const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
   const hour = new Intl.DateTimeFormat('en', {
