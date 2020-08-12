@@ -16,6 +16,7 @@ import PendButton from './components/PendButton';
 import PendIcon from './components/PendIcon';
 import Content from './components/Content';
 import GlobalError from './components/GlobalError';
+import GlobalSuccess from './components/GlobalSuccess';
 
 export {
   toHtml,
@@ -34,4 +35,5 @@ export {
   PendIcon,
   Content,
   GlobalError,
+  GlobalSuccess,
 };

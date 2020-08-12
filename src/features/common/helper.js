@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { COMMON_SHOW_ERROR } from './redux/constants';
+import { COMMON_SHOW_ERROR, COMMON_SHOW_SUCCESS } from './redux/constants';
 
 const methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
@@ -63,8 +63,10 @@ function makeRequest({
             extra,
           });
 
-          if (res.data.status != 'SUCCESS') {
+          if (res.data.status !== 'SUCCESS') {
             dispatch({ type: COMMON_SHOW_ERROR, message: res.data.msg });
+          } else if (res.data.msg) {
+            dispatch({ type: COMMON_SHOW_SUCCESS, message: res.data.msg });
           }
           resolve(res);
         },
