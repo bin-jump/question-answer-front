@@ -5,9 +5,14 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { useEditUser } from '../redux/hooks';
 import './content.less';
 
 export default function Private(props) {
+  const { user } = { ...props };
+
+  const { changePassword, updatePending } = useEditUser();
+
   const [values, setValues] = useState({
     password: '',
     newPassword: '',
@@ -15,6 +20,13 @@ export default function Private(props) {
     showPassword: false,
     cmfPasswordError: '',
   });
+
+  const updatePassword = () => {
+    if (!values.password || values.cmfPasswordError) {
+      return;
+    }
+    changePassword(user.id, values.password, values.newPassword);
+  };
 
   const missMatchMessage = 'not match';
   const onNewPasswordInput = (e) => {
@@ -105,7 +117,11 @@ export default function Private(props) {
         />
         <div style={{ color: 'red', margin: 5 }}>{values.cmfPasswordError}</div>
       </div>
-      <PendButton style={{ float: 'right', color: 'white' }}>
+      <PendButton
+        onClick={updatePassword}
+        pending={updatePending}
+        style={{ float: 'right', color: 'white' }}
+      >
         Change Password
       </PendButton>
     </div>

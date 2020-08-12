@@ -115,7 +115,7 @@ export default function Chat(props) {
       currentChat = item;
     }
   });
-  console.log('scrollSub: ', scrollSub);
+
   const scrollToBottom = useCallback(() => {
     if (messageBottomRef.current) {
       if (scrollSub.current > 10) {

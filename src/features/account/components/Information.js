@@ -1,14 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PendButton } from '../../common';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useEditUser } from '../redux/hooks';
+import { usePinUser } from '../../auth/redux/hooks';
 import './content.less';
 
 export default function Information(props) {
   const { user: curUser } = { ...props };
   const [user, setUser] = useState(null);
   const [edit, setEdit] = useState(false);
+  const prevupdatePendingRef = useRef();
+
+  const { editUser, updatePending } = useEditUser();
+  const { pinUser } = usePinUser();
+
+  const update = () => {
+    if (user == null) {
+      return;
+    }
+    let data = {
+      name: user.name,
+      email: user.email,
+      age: user.age,
+      gender: user.gender,
+      description: user.description,
+    };
+    editUser(user.id, data);
+  };
+
+  useEffect(() => {
+    prevupdatePendingRef.current = updatePending;
+  }, [updatePending]);
+  const prevsignoutPending = prevupdatePendingRef.current;
+
+  // update user info after update
+  useEffect(() => {
+    if (prevsignoutPending && !updatePending) {
+      pinUser();
+    }
+  }, [pinUser, prevsignoutPending, updatePending]);
 
   useEffect(() => {
     setUser(curUser);
@@ -68,7 +100,11 @@ export default function Information(props) {
             />
           </div>
           {edit ? (
-            <PendButton style={{ float: 'right', color: 'white' }}>
+            <PendButton
+              style={{ float: 'right', color: 'white' }}
+              onClick={update}
+              pending={updatePending}
+            >
               Save
             </PendButton>
           ) : (
