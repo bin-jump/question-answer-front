@@ -68,7 +68,7 @@ export default function Search(props) {
     return () => {
       resetState();
     };
-  }, [resetState]);
+  }, [resetState, searchKey]);
 
   useEffect(() => {
     fetchSearchResults(searchKey);
