@@ -100,12 +100,20 @@ export default function Account(props) {
               <div style={{ padding: 50 }}>
                 <div style={{ display: 'flex' }}>
                   <Skeleton variant="rect" height={90} width={90} />
-                  <Skeleton
-                    style={{ margin: '30px 0 0 25px' }}
-                    variant="text"
-                    height={50}
-                    width={120}
-                  />
+                  <div>
+                    <Skeleton
+                      style={{ margin: '20px 0 0 25px' }}
+                      variant="text"
+                      height={40}
+                      width={100}
+                    />
+                    <Skeleton
+                      style={{ margin: '0 0 0 25px' }}
+                      variant="text"
+                      height={35}
+                      width={120}
+                    />
+                  </div>
                 </div>
 
                 <div style={{ paddingLeft: 50, paddingTop: 70 }}>

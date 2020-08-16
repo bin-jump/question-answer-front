@@ -4,28 +4,14 @@ import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import RssFeedIcon from '@material-ui/icons/RssFeed';
 import { useFetchSearchResults, useReset } from './redux/hooks';
-import { QuestionLoading, LoadableList, Pendable } from '../common';
+import { QuestionLoading, LoadableList, Pendable, Content } from '../common';
+import { milisecToDate } from '../common/helper';
 import './Search.less';
-
-function SearchAnswer(props) {
-  const { answer } = { ...props };
-  return (
-    <div className="feature-search-item-answer">
-      <Link to={`/profile/${answer.author.id}`}>{`${answer.author.name}`}</Link>
-      {': '}
-
-      {answer.body}
-      <Link to={`/question/${answer.parentId}/answer/${answer.id}`}>
-        (see answer)
-      </Link>
-    </div>
-  );
-}
 
 function SearchItem(props) {
   const { item } = { ...props };
+  const questionId = item.parentId ? item.parentId : item.id;
 
   return (
     <Paper
@@ -37,22 +23,26 @@ function SearchItem(props) {
         width: 650,
       }}
     >
-      <Typography
-        variant="h6"
-        component={Link}
-        to={`/question/${item.question.id}`}
-      >
-        {item.question.title}
+      <Typography variant="h6" component={Link} to={`/question/${questionId}`}>
+        <Content content={item.title} />
       </Typography>
-      {item.answer ? (
-        <SearchAnswer answer={item.answer} />
+      {item.searchType === 'ANSWER' ? (
+        <div className="feature-search-item-answer">
+          <Link to={`/profile/${item.author.id}`}>{`${item.author.name}`}</Link>
+          {': '}
+          <Content style={{ display: 'inline-block' }} content={item.body} />
+
+          <Link to={`/question/${questionId}/answer/${item.id}`}>
+            (see answer)
+          </Link>
+        </div>
       ) : (
-        <div className="feature-search-item-info">
-          <RssFeedIcon />
-          <div className="feature-search-item-info-word">
-            {item.question.followCount}
-          </div>
-          <div className="feature-search-item-info-word">Follow</div>
+        <div className="common-question-author">
+          {`Asked by `}
+          <Link style={{ color: '#33b4de' }} to={`/profile/${item.author.id}`}>
+            {item.author.name}
+          </Link>
+          {` on ${milisecToDate(item.created)}.`}
         </div>
       )}
     </Paper>

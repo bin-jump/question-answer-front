@@ -3,10 +3,10 @@ import dompurify from 'dompurify';
 import './Content.less';
 
 export default function Content(props) {
-  const { content } = { ...props };
+  const { content, style } = { ...props };
 
   return (
-    <div className="common-content-container">
+    <div style={{ ...style }} className="common-content-container">
       <div dangerouslySetInnerHTML={{ __html: dompurify.sanitize(content) }} />
     </div>
   );
