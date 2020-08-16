@@ -25,7 +25,7 @@ function Answer(props) {
   }, [answer]);
 
   const content = show ? (
-    <Content content={`${answer.body}`} />
+    <Content style={{ display: 'inline-block' }} content={`${answer.body}`} />
   ) : (
     `${answer.body.slice(0, LEN_LIMIT)} `
   );

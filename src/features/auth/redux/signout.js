@@ -52,7 +52,7 @@ export function reducer(state, action) {
     case AUTH_SIGNOUT_SUCCESS:
       return {
         ...state,
-        user: action.data.data,
+        user: null,
         signoutPending: false,
       };
 

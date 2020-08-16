@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { COMMON_SHOW_ERROR, COMMON_SHOW_SUCCESS } from './redux/constants';
+import { AUTH_SIGNOUT_SUCCESS } from '../auth/redux/constants';
 
 const methods = ['GET', 'POST', 'PUT', 'DELETE'];
-
 function requestFromMethod({
   url,
   method = 'GET',
@@ -72,12 +72,25 @@ function makeRequest({
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
+          const { status } = err.response;
+
           dispatch({
             type: failureConst,
             data: { error: err },
             id,
             extra,
           });
+          // signout if sessoin timeout
+          if (status === 401) {
+            dispatch({
+              type: AUTH_SIGNOUT_SUCCESS,
+              data: null,
+              id,
+              extra,
+            });
+            dispatch({ type: COMMON_SHOW_ERROR, message: 'Signin required.' });
+          }
+
           reject(err);
         },
       );
