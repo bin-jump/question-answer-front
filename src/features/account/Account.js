@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, Route, Link, Redirect } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Typography from '@material-ui/core/Typography';
 import Information from './components/Information';
 import Private from './components/Private';
@@ -12,12 +13,19 @@ import { milisecToDate, extractUrlKey } from '../common/helper';
 import './Account.less';
 
 export default function Account(props) {
+  const [editAvatar, setEditAvatar] = useState(false);
+  const fileInput = useRef(null);
+
   const user = useSelector((state) => state.auth.user);
   const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
   const location = useLocation();
 
   const urlKey = extractUrlKey(location.pathname);
   //console.log(urlKey);
+
+  const changeAvatar = () => {
+    console.log('change');
+  };
 
   if (userAlreadyPin && user === null) {
     return <Redirect to="/signin" />;
@@ -42,10 +50,47 @@ export default function Account(props) {
                       border: '1px solid #dce3e8',
                       width: 90,
                       height: 90,
-                      marginRight: 16,
+                      filter: editAvatar ? 'blur(1px)' : '',
+                      backgroundSize: 'contain',
                     }}
+                    onMouseEnter={() => setEditAvatar(true)}
+                    onMouseLeave={() => setEditAvatar(false)}
+                  ></Avatar>
+                  {editAvatar ? (
+                    <div
+                      style={{
+                        marginLeft: -90,
+                        zIndex: 999,
+                        width: 90,
+                        height: 90,
+                        textAlign: 'center',
+                        borderRadius: 3,
+                        background: 'rgba(0, 0, 0, .5)',
+                      }}
+                      onMouseEnter={() => setEditAvatar(true)}
+                      onMouseLeave={() => setEditAvatar(false)}
+                    >
+                      <PhotoCamera
+                        style={{
+                          cursor: 'pointer',
+                          fontSize: 45,
+                          marginTop: 25,
+                          color: 'white',
+                        }}
+                        onClick={() => fileInput.current.click()}
+                      />
+                    </div>
+                  ) : null}
+                  <input
+                    type="file"
+                    onChange={changeAvatar}
+                    style={{ display: 'none' }}
+                    ref={fileInput}
                   />
-                  <div style={{ marginTop: 50, display: 'flex' }}>
+
+                  <div
+                    style={{ marginTop: 50, marginLeft: 18, display: 'flex' }}
+                  >
                     <div style={{ width: '100%' }}>
                       <Typography
                         style={{
