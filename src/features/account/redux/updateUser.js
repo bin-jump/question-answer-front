@@ -8,8 +8,8 @@ import {
   ACCOUNT_RESET,
 } from './constants';
 
-export function editUser(id, data) {
-  let url = `/api/user/${id}`;
+export function editUser(data) {
+  let url = `/api/user`;
   return putRequest(
     url,
     data,
@@ -19,8 +19,8 @@ export function editUser(id, data) {
   );
 }
 
-export function changePassword(id, oldPassword, newPassword) {
-  let url = `/api/user/${id}/password`;
+export function changePassword(oldPassword, newPassword) {
+  let url = `/api/user/password`;
   let data = { oldPassword, newPassword };
   return putRequest(
     url,
@@ -42,15 +42,15 @@ export function useEditUser() {
   );
 
   const boundAction = useCallback(
-    (id, data) => {
-      dispatch(editUser(id, data));
+    (data) => {
+      dispatch(editUser(data));
     },
     [dispatch],
   );
 
   const boundPasswordAction = useCallback(
-    (id, oldPassword, newPassword) => {
-      dispatch(changePassword(id, oldPassword, newPassword));
+    (oldPassword, newPassword) => {
+      dispatch(changePassword(oldPassword, newPassword));
     },
     [dispatch],
   );

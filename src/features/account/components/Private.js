@@ -25,7 +25,7 @@ export default function Private(props) {
     if (!values.password || values.cmfPasswordError) {
       return;
     }
-    changePassword(user.id, values.password, values.newPassword);
+    changePassword(values.password, values.newPassword);
   };
 
   const missMatchMessage = 'not match';

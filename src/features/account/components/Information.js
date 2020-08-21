@@ -27,7 +27,7 @@ export default function Information(props) {
       gender: user.gender,
       description: user.description,
     };
-    editUser(user.id, data);
+    editUser(data);
   };
 
   useEffect(() => {
