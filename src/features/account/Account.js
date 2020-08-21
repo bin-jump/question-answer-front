@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, Route, Link, Redirect } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -9,12 +9,17 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Typography from '@material-ui/core/Typography';
 import Information from './components/Information';
 import Private from './components/Private';
+import { useUpdateAvatar } from './redux/hooks';
 import { milisecToDate, extractUrlKey } from '../common/helper';
+import { usePinUser } from '../auth/redux/hooks';
 import './Account.less';
 
 export default function Account(props) {
   const [editAvatar, setEditAvatar] = useState(false);
   const fileInput = useRef(null);
+  const { updateAvatar, updateAvatarPending } = useUpdateAvatar();
+  const { pinUser } = usePinUser();
+  const prevupdateAvatarPendingRef = useRef();
 
   const user = useSelector((state) => state.auth.user);
   const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
@@ -23,8 +28,20 @@ export default function Account(props) {
   const urlKey = extractUrlKey(location.pathname);
   //console.log(urlKey);
 
-  const changeAvatar = () => {
-    console.log('change');
+  useEffect(() => {
+    prevupdateAvatarPendingRef.current = updateAvatarPending;
+  }, [updateAvatarPending]);
+  const preupdateAvatarPending = prevupdateAvatarPendingRef.current;
+
+  // update user info after update avatar
+  useEffect(() => {
+    if (preupdateAvatarPending && !updateAvatarPending) {
+      pinUser();
+    }
+  }, [pinUser, preupdateAvatarPending, updateAvatarPending]);
+
+  const changeAvatar = (event) => {
+    updateAvatar(event.target.files[0]);
   };
 
   if (userAlreadyPin && user === null) {
@@ -65,7 +82,7 @@ export default function Account(props) {
                         height: 90,
                         textAlign: 'center',
                         borderRadius: 3,
-                        background: 'rgba(0, 0, 0, .5)',
+                        background: 'rgba(0, 0, 0, .3)',
                       }}
                       onMouseEnter={() => setEditAvatar(true)}
                       onMouseLeave={() => setEditAvatar(false)}
@@ -83,7 +100,7 @@ export default function Account(props) {
                   ) : null}
                   <input
                     type="file"
-                    onChange={changeAvatar}
+                    onChange={(e) => changeAvatar(e)}
                     style={{ display: 'none' }}
                     ref={fileInput}
                   />

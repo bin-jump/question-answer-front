@@ -41,7 +41,7 @@ export default function WriteAnswer(props) {
           <Typography variant="h6" style={{ display: 'flex' }}>
             Write your answer
             <Avatar
-              alt="User"
+              alt={user.name}
               src={user.avatarUrl}
               style={{ height: 25, width: 25, marginLeft: 10 }}
             />
