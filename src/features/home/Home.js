@@ -5,6 +5,7 @@ import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 import { useFetchQuestionList } from './redux/hooks';
 import { useReset } from './redux/resetState';
 import { Pendable, QuestionLoading, Question, LoadableList } from '../common';
+import SideQuestion from './components/SideQuestion';
 import './Home.less';
 
 export default function Home(props) {
@@ -37,8 +38,15 @@ export default function Home(props) {
 
   return (
     <div className="feature-home">
-      <Grid container spacing={1} style={{ margin: '50px 0', width: '100%' }}>
-        <Grid item xs={2} />
+      <Grid
+        container
+        spacing={0}
+        direction="row"
+        alignItems="flex-start"
+        justify="center"
+        style={{ margin: '30px 0', width: '100%' }}
+      >
+        <Grid item xs={1} />
         <Grid item xs={7}>
           <LoadableList
             hasMore={questionAfter}
@@ -62,6 +70,10 @@ export default function Home(props) {
               )}
             </Pendable>
           </LoadableList>
+        </Grid>
+
+        <Grid item xs={3}>
+          <SideQuestion />
         </Grid>
       </Grid>
     </div>

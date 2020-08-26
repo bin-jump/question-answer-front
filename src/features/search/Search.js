@@ -35,8 +35,8 @@ function SearchItem(props) {
       style={{
         minHeight: 100,
         marginBottom: 10,
-        padding: '10px 15px',
-        width: 650,
+        padding: '15px 20px',
+        width: 680,
       }}
     >
       <Typography variant="h6" component={Link} to={`/question/${questionId}`}>
@@ -94,7 +94,7 @@ export default function Search(props) {
   }, [fetchSearchResults, searchKey]);
 
   return (
-    <div className="feature-search-item">
+    <div className="feature-search">
       <Grid container spacing={1} style={{ margin: '50px 0', width: '100%' }}>
         <Grid item xs={2} />
         <Grid item xs={7}>

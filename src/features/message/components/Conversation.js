@@ -144,10 +144,11 @@ export default function Conversation(props) {
   };
 
   const findUserByName = () => {
-    if (!userName) {
+    let name = userName.trim();
+    if (!name) {
       return;
     }
-    fetchChatUser(userName);
+    fetchChatUser(name);
   };
 
   return (
