@@ -214,3 +214,8 @@ export function extractUrlKey(path) {
   let key = path.split('/').slice(-1)[0];
   return key;
 }
+
+export const striphtml = (content) => {
+  const res = content.replace(/(<([^>]+)>)/gi, '');
+  return res;
+};

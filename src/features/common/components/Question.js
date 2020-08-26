@@ -6,15 +6,14 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CommentIcon from '@material-ui/icons/Comment';
-//import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import CreateIcon from '@material-ui/icons/Create';
 import TagList from './TagList';
 import Content from './Content';
-import { milisecToDate } from '../helper';
+import { milisecToDate, striphtml } from '../helper';
 
 function Answer(props) {
-  const answer = props.answer;
+  const { answer } = { ...props };
   const [show, setShow] = useState(true);
   const LEN_LIMIT = 120;
 
@@ -25,9 +24,13 @@ function Answer(props) {
   }, [answer]);
 
   const content = show ? (
-    <Content style={{ display: 'inline-block' }} content={`${answer.body}`} />
+    <Content
+      flattenAnswer={!(show && answer.body.length > LEN_LIMIT)}
+      style={{ display: 'inline-block' }}
+      content={`${answer.body}`}
+    />
   ) : (
-    `${answer.body.slice(0, LEN_LIMIT)} `
+    `${striphtml(answer.body).slice(0, LEN_LIMIT)}... `
   );
   return (
     <div className="common-question-answer">

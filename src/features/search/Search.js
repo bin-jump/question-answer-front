@@ -6,12 +6,28 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { useFetchSearchResults, useReset } from './redux/hooks';
 import { QuestionLoading, LoadableList, Pendable, Content } from '../common';
-import { milisecToDate } from '../common/helper';
+import { milisecToDate, striphtml } from '../common/helper';
 import './Search.less';
 
 function SearchItem(props) {
   const { item } = { ...props };
   const questionId = item.parentId ? item.parentId : item.id;
+  const [colorStartHtml, startMark] = [
+    `<em style='background:yellow'>`,
+    '%!?&%',
+  ];
+  const [colorEndHtml, endMark] = [`</em>`, '%/!?&%'];
+
+  const stripLayout = (content) => {
+    let html = content
+      .replace(colorStartHtml, startMark)
+      .replace(colorEndHtml, endMark);
+    html = striphtml(html);
+
+    return html
+      .replace(startMark, colorStartHtml)
+      .replace(endMark, colorEndHtml);
+  };
 
   return (
     <Paper
@@ -30,7 +46,10 @@ function SearchItem(props) {
         <div className="feature-search-item-answer">
           <Link to={`/profile/${item.author.id}`}>{`${item.author.name}`}</Link>
           {': '}
-          <Content style={{ display: 'inline-block' }} content={item.body} />
+          <Content
+            style={{ display: 'inline-block' }}
+            content={stripLayout(item.body)}
+          />
 
           <Link to={`/question/${questionId}/answer/${item.id}`}>
             (see answer)

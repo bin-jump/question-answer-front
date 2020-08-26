@@ -59,12 +59,14 @@ class ContentEditor extends Component {
           toolbar={{
             options: [
               'inline',
-              //'blockType',
+              'blockType',
               //'fontSize',
+              'link',
               'list',
               //'textAlign',
               //'history',
               'image',
+              'history',
             ],
             inline: {
               options: ['bold', 'italic', 'underline'],

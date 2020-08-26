@@ -19,7 +19,8 @@ export default function UserInfo(props) {
   const { user, fetchUserInfo, fetchUserInfoPending } = useFetchUserInfo();
   const { followUser, followUserPending } = useFollowUser();
   const loginUser = useSelector((state) => state.auth.user);
-  const isMe = loginUser && loginUser.id === id;
+  // compare as number
+  const isMe = loginUser && loginUser.id === parseInt(id, 10);
   const { resetState } = useReset();
 
   useEffect(() => {
