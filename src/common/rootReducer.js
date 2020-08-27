@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import homeReducer from '../features/home/redux/reducer';
+import answerReducer from '../features/answer/redux/reducer';
 import authReducer from '../features/auth/redux/reducer';
 import questionReducer from '../features/question/redux/reducer';
 import profileReducer from '../features/profile/redux/reducer';
@@ -12,6 +13,7 @@ import commonReducer from '../features/common/redux/reducer';
 const rootReducer = combineReducers({
   common: commonReducer,
   home: homeReducer,
+  answer: answerReducer,
   account: accountReducer,
   auth: authReducer,
   question: questionReducer,

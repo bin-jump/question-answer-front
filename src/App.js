@@ -15,6 +15,7 @@ import Account from './features/account/Account';
 import Message from './features/message/Message';
 import Search from './features/search/Search';
 import Feed from './features/feed/Feed';
+import RecommandQuestions from './features/answer/RecommandQuestions';
 import { GlobalError } from './features/common';
 import { GlobalSuccess } from './features/common';
 
@@ -55,6 +56,7 @@ class App extends Component {
                 <GlobalError />
                 <GlobalSuccess />
                 <Route path="/" exact component={Home} />
+                <Route path="/answer" exact component={RecommandQuestions} />
                 <Route path="/signin" exact component={Signin} />
                 <Route path="/signup" exact component={Signin} />
                 <Route path="/question/:id" component={QuestionDetail} />

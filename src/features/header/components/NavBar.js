@@ -14,6 +14,9 @@ export default function NavBar(props) {
         <li>
           <Link to="/feed">News</Link>
         </li>
+        <li>
+          <Link to="/answer">Answer</Link>
+        </li>
       </ul>
     </div>
   );
