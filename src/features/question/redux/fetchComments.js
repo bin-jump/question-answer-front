@@ -42,8 +42,8 @@ export function useFetchQuestionComment() {
   );
 
   const boundAction = useCallback(
-    (id) => {
-      dispatch(fetchQuestionComment(id));
+    (id, after) => {
+      dispatch(fetchQuestionComment(id, after));
     },
     [dispatch],
   );
@@ -103,9 +103,7 @@ export function reducer(state, action) {
           ...state.questionComments,
           ...action.data.data.children,
         ],
-        fetchQuesionCommentAfter: action.data.data.dist
-          ? action.data.data.after
-          : null,
+        fetchQuesionCommentAfter: action.data.data.after,
         fetchQuesionCommentPendiong: false,
         lastError: null,
       };

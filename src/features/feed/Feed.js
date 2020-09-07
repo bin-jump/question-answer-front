@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -36,6 +38,8 @@ function FeedItem(props) {
 export default function Feed(props) {
   const { feeds, feedAfter, fetchFeedsPending, fetchFeed } = useFetchFeeds();
   const { resetState } = useReset();
+  const user = useSelector((state) => state.auth.user);
+  const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
 
   useEffect(() => {
     fetchFeed();
@@ -46,6 +50,10 @@ export default function Feed(props) {
       resetState();
     };
   }, [resetState]);
+
+  if (userAlreadyPin && user === null) {
+    return <Redirect to="/signin" />;
+  }
 
   return (
     <div className="feature-timeline">

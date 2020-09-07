@@ -132,7 +132,9 @@ export default function QuestionTitle(props) {
                   <LoadableList
                     hasMore={quesionCommentAfter}
                     loading={fetchQuestionCommentPending}
-                    onLoadClick={() => fetchQuestionComment(questionId)}
+                    onLoadClick={() =>
+                      fetchQuestionComment(questionId, quesionCommentAfter)
+                    }
                   >
                     <Comments
                       comments={questionComments}
