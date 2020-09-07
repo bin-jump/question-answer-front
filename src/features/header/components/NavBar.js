@@ -12,7 +12,7 @@ export default function NavBar(props) {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/feed">News</Link>
+          <Link to="/feed">Feed</Link>
         </li>
         <li>
           <Link to="/answer">Answer</Link>

@@ -63,7 +63,7 @@ const mergeChat = (curChats, newChats) => {
   });
 
   let chats = [...curChats, ...news].sort((a, b) =>
-    a.lastTime > b.lastTime ? 1 : -1,
+    a.lastTime > b.lastTime ? -1 : 1,
   );
   return chats;
 };

@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 import { useFetchQuestions } from './redux/fetchQuestions';
 import { Pendable, QuestionLoading, Question, LoadableList } from '../common';
 
 export default function RecommandQuestions(props) {
+  const user = useSelector((state) => state.auth.user);
+  const userAlreadyPin = useSelector((state) => state.auth.userAlreadyPin);
+
   const {
     questions,
     hasMore,
@@ -22,6 +27,10 @@ export default function RecommandQuestions(props) {
       reset();
     };
   }, [reset]);
+
+  if (userAlreadyPin && user === null) {
+    return <Redirect to="/signin" />;
+  }
 
   return (
     <div>

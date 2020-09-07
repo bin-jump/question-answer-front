@@ -54,6 +54,11 @@ export default function SingleAnswer(props) {
 
   const answer = answers.length > 0 ? answers[0] : null;
 
+  useEffect(() => {
+    const answerId = parseInt(aid, 10);
+    fetchAnswerComment(answerId);
+  }, [fetchAnswerComment, aid]);
+
   return (
     <div>
       <Paper square style={{ marginTop: 20, padding: 20, textAlign: 'center' }}>

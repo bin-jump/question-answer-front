@@ -20,7 +20,7 @@ export default function UserInfo(props) {
   const { followUser, followUserPending } = useFollowUser();
   const loginUser = useSelector((state) => state.auth.user);
   // compare as number
-  const isMe = loginUser && loginUser.id === parseInt(id, 10);
+  const showFollowButton = loginUser && loginUser.id !== parseInt(id, 10);
   const { resetState } = useReset();
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export default function UserInfo(props) {
             </Typography>
             <Typography>{user.description}</Typography>
           </div>
-          {isMe ? null : (
+          {showFollowButton ? (
             <div className="feature-profile-userinfo-follow-button">
               <PendButton
                 style={{
@@ -126,7 +126,7 @@ export default function UserInfo(props) {
                 {user.following ? `Unfollow` : `Follow the guy`}
               </PendButton>
             </div>
-          )}
+          ) : null}
         </Paper>
       ) : (
         <UserLoading />

@@ -20,7 +20,6 @@ export default function LoadableList(props) {
           color="primary"
           style={{
             marginTop: 12,
-            minWidth: 120,
             marginBottom: 10,
             // display: 'block',
           }}

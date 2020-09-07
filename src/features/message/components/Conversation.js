@@ -222,14 +222,16 @@ export default function Conversation(props) {
               );
             })}
             {chats.length === 0 ? (
-              <ContactMailIcon
-                style={{
-                  marginTop: 60,
-                  width: 80,
-                  height: 80,
-                  color: '#dedede',
-                }}
-              />
+              <div style={{ textAlign: 'center' }}>
+                <ContactMailIcon
+                  style={{
+                    marginTop: 60,
+                    width: 80,
+                    height: 80,
+                    color: '#dedede',
+                  }}
+                />
+              </div>
             ) : null}
           </LoadableList>
         )}
