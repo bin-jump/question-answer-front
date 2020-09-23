@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -43,37 +43,33 @@ const theme = createMuiTheme({
   },
 });
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <div className="app-container">
-          <MuiThemeProvider theme={theme}>
-            <Provider store={store}>
-              <Router history={history}>
-                <Header />
-                <PinUser />
-                <GlobalError />
-                <GlobalSuccess />
-                <Route path="/" exact component={Home} />
-                <Route path="/answer" exact component={RecommandQuestions} />
-                <Route path="/signin" exact component={Signin} />
-                <Route path="/signup" exact component={Signin} />
-                <Route path="/question/:id" component={QuestionDetail} />
-                <Route path="/profile/:id" component={Profile} />
-                <Route path="/account" component={Account} />
-                <Route path="/message" exact component={Message} />
-                <Route path="/search" exact component={Search} />
-                <Route path="/feed" exact component={Feed} />
-              </Router>
-              <CssBaseline />
-            </Provider>
-          </MuiThemeProvider>
-        </div>
-        <Footer />
+export default function App() {
+  return (
+    <div>
+      <div className="app-container">
+        <MuiThemeProvider theme={theme}>
+          <Provider store={store}>
+            <Router history={history}>
+              <Header />
+              <PinUser />
+              <GlobalError />
+              <GlobalSuccess />
+              <Route path="/" exact component={Home} />
+              <Route path="/answer" exact component={RecommandQuestions} />
+              <Route path="/signin" exact component={Signin} />
+              <Route path="/signup" exact component={Signin} />
+              <Route path="/question/:id" component={QuestionDetail} />
+              <Route path="/profile/:id" component={Profile} />
+              <Route path="/account" component={Account} />
+              <Route path="/message" exact component={Message} />
+              <Route path="/search" exact component={Search} />
+              <Route path="/feed" exact component={Feed} />
+            </Router>
+            <CssBaseline />
+          </Provider>
+        </MuiThemeProvider>
       </div>
-    );
-  }
+      <Footer />
+    </div>
+  );
 }
-
-export default App;
